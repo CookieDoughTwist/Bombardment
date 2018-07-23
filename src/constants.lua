@@ -12,5 +12,9 @@ WINDOW_HEIGHT = 1080
 VIRTUAL_WIDTH = 1024
 VIRTUAL_HEIGHT = 576
 
--- drawing constants
+-- title screen
 SHADOW_OFFSET = 5       -- offset of shadow text (bits)
+TITLE_DELAY = 2.5       -- time before title fades in (seconds)
+TITLE_FADE_IN = 5       -- time for title to fade in (seconds)
+ENTER_DELAY = 8         -- time before enter prompt fades in (seconds)
+

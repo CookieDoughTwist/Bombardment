@@ -7,11 +7,24 @@ TitleState = Class{__includes = BaseState}
 function TitleState:init()
 
     self.canInput = true
+    self.titleAlpha = 0
+    self.enterAlpha = 0
+    
+    Timer.after(TITLE_DELAY, function()
+        Timer.tween(TITLE_FADE_IN, {
+            [self] = {titleAlpha = 255}
+        })
+    end)
+    
+    Timer.after(ENTER_DELAY, function()
+        Timer.tween(ENTER_FADE_IN, {
+            [self] = {enterAlpha = 255}
+        })
+    end)
 end
 
 function TitleState:update(dt)
-    
-    
+        
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
     end
@@ -19,9 +32,6 @@ function TitleState:update(dt)
     if self.canInput then
 
     end
-
-    
-    
 end
 
 function TitleState:render()
@@ -30,12 +40,15 @@ function TitleState:render()
     
     love.graphics.setFont(gFonts['futureearth48'])
     
-    love.graphics.setColor(0, 0, 0, 255)
+    love.graphics.setColor(0, 0, 0, self.titleAlpha)
     love.graphics.printf('BOMBARDMENT', SHADOW_OFFSET, VIRTUAL_HEIGHT / 4 - 40 + SHADOW_OFFSET, VIRTUAL_WIDTH, 'center')
-    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.setColor(255, 255, 255, self.titleAlpha)
     love.graphics.printf('BOMBARDMENT', 0, VIRTUAL_HEIGHT / 4 - 40, VIRTUAL_WIDTH, 'center')
     
     love.graphics.setFont(gFonts['futureearth32'])
     
-    love.graphics.printf('Press Enter', 1, VIRTUAL_HEIGHT / 2 + 17, VIRTUAL_WIDTH, 'center')
+    love.graphics.setColor(0, 0, 0, self.enterAlpha)
+    love.graphics.printf('Press Enter', SHADOW_OFFSET, VIRTUAL_HEIGHT / 2 + 17 + SHADOW_OFFSET, VIRTUAL_WIDTH, 'center')
+    love.graphics.setColor(255, 255, 255, self.enterAlpha)
+    love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2 + 17, VIRTUAL_WIDTH, 'center')
 end
