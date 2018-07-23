@@ -8,19 +8,10 @@
 ]]
 
 -- initialize our nearest-neighbor filter
---love.graphics.setDefaultFilter('nearest', 'nearest')
+love.graphics.setDefaultFilter('nearest', 'nearest')
 
--- this time, we're keeping all requires and assets in our Dependencies.lua file
+-- requires and resource initializations
 require 'src/Dependencies'
-
--- physical screen dimensions
-WINDOW_WIDTH = 1280
-WINDOW_HEIGHT = 720
-
--- virtual resolution dimensions
-VIRTUAL_WIDTH = 512
-VIRTUAL_HEIGHT = 288
-
 
 function love.load()
     
@@ -39,8 +30,8 @@ function love.load()
     })
 
     -- set music to loop and start
-    --gSounds['music']:setLooping(true)
-    --gSounds['music']:play()
+    gSounds['spacebg']:setLooping(true)
+    gSounds['spacebg']:play()
 
     -- initialize state machine with all state-returning functions
     gStateMachine = StateMachine {
@@ -51,11 +42,9 @@ function love.load()
     }
     gStateMachine:change('title')
 
-    -- keep track of scrolling our background on the X axis
-    backgroundX = 0
-
     -- initialize input table
     love.keyboard.keysPressed = {}
+    love.mouse.buttonsPressed = {}
 end
 
 function love.resize(w, h)
@@ -74,11 +63,11 @@ end
 
 function love.mousepressed(x, y, button)    
     gameX, gameY = push:toGame(x, y)
-    love.mouse.buttonPressed[button] = {gameX, gameY}
+    love.mouse.buttonsPressed[button] = {gameX, gameY}
 end
 
 function love.mouse.wasPressed(button)
-    return love.mouse.buttonPressed[button]
+    return love.mouse.buttonsPressed[button]
 end
 
 function love.update(dt)
@@ -86,7 +75,7 @@ function love.update(dt)
     gStateMachine:update(dt)
 
     love.keyboard.keysPressed = {}
-    love.mouse.buttonPressed = {}
+    love.mouse.buttonsPressed = {}
     
     -- update global tween timer
     Timer.update(dt)
