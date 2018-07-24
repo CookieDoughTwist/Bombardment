@@ -20,7 +20,20 @@ function TitleState:init()
         Timer.tween(ENTER_FADE_IN, {
             [self] = {enterAlpha = 255}
         })
+        :finish(function()
+            Timer.tween(ENTER_PERIOD, {
+                [self] = {enterAlpha = 100}
+            })
+            Timer.every(ENTER_PERIOD, function()
+                newEnterAlpha = self.enterAlpha > 200 and
+                    100 or 255
+                Timer.tween(ENTER_PERIOD, {
+                    [self] = {enterAlpha = newEnterAlpha}
+                })
+            end)
+        end)
     end)
+    
 end
 
 function TitleState:update(dt)
@@ -30,7 +43,10 @@ function TitleState:update(dt)
     end
     
     if self.canInput then
-
+        if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+            self.canInput = false
+            gStateMachine:change('select')
+        end
     end
 end
 
@@ -48,7 +64,7 @@ function TitleState:render()
     love.graphics.setFont(gFonts['futureearth32'])
     
     love.graphics.setColor(0, 0, 0, self.enterAlpha)
-    love.graphics.printf('Press Enter', SHADOW_OFFSET, VIRTUAL_HEIGHT / 2 + 17 + SHADOW_OFFSET, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Press Enter', SHADOW_OFFSET, VIRTUAL_HEIGHT / 2 + 167 + SHADOW_OFFSET, VIRTUAL_WIDTH, 'center')
     love.graphics.setColor(255, 255, 255, self.enterAlpha)
-    love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2 + 17, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2 + 167, VIRTUAL_WIDTH, 'center')
 end

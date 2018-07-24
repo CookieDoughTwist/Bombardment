@@ -17,4 +17,13 @@ SHADOW_OFFSET = 5       -- offset of shadow text (bits)
 TITLE_DELAY = 2.5       -- time before title fades in (seconds)
 TITLE_FADE_IN = 5       -- time for title to fade in (seconds)
 ENTER_DELAY = 8         -- time before enter prompt fades in (seconds)
+ENTER_FADE_IN = 1.25    
+ENTER_PERIOD = 1.25
+
+-- selection screen
+SELECTIONS_START = {
+    'CAMPAIGN',
+    'SANDBOX'
+}
+MENU_TEXT_JUMP = 48
 
