@@ -56,6 +56,9 @@ function love.keypressed(key)
     
     -- add to our table of keys pressed this frame
     love.keyboard.keysPressed[key] = true
+    if key == 'enter' or key == 'return' or key == 'kpenter' or key == 'space' then
+        love.keyboard.keysPressed['select'] = true
+    end
 end
 
 function love.keyboard.wasPressed(key)

@@ -25,6 +25,7 @@ sfxLoc = 'resources/sounds/'
 gSounds = {
     -- https://freesound.org/people/almusic34/sounds/176682/
     ['spacebg'] = love.audio.newSource(sfxLoc .. 'almusic34_space4.mp3'),
+    ['reselect'] = love.audio.newSource(sfxLoc .. 'laserswitch.wav'),
 }
 
 -- images

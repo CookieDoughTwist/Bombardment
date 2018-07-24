@@ -34,13 +34,15 @@ function SelectionState:update(dt)
         if love.keyboard.wasPressed('up') and
             self.currentMenuItem ~= 1 then
             self.currentMenuItem = self.currentMenuItem - 1
-            --gSounds['select']:play()
+            gSounds['reselect']:stop()
+            gSounds['reselect']:play()
         end
         
         if love.keyboard.wasPressed('down') and
             self.currentMenuItem ~= #self.options then
             self.currentMenuItem = self.currentMenuItem + 1
-            --gSounds['select']:play()
+            gSounds['reselect']:stop()
+            gSounds['reselect']:play()
         end
         
         -- switch to another state via one of the menu options
@@ -67,13 +69,14 @@ end
 
 function SelectionState:render()
    
-
-    -- keep the background and tiles a little darker than normal
+    -- TODO: render background here 7/24/18 -AW
+   
+    -- keep the background darker than normal
     love.graphics.setColor(0, 0, 0, 128)
     love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 
-    drawSelectionsText('Main Menu', -60)
-    DrawMenu(self.currentMenuItem, 12, self.options)
+    drawSelectionsText('Main Menu', -200)
+    drawMenu(self.currentMenuItem, 12, self.options)
 
     -- draw our transition rect; is normally fully transparent, unless we're moving to a new state
     love.graphics.setColor(255, 255, 255, self.transitionAlpha)

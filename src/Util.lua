@@ -8,11 +8,14 @@
 function drawSelectionsText(title, y)
     
     love.graphics.setFont(gFonts['futureearth32'])
-    local width = love.graphics.getFont():getWidth(title)
+    local textWidth = love.graphics.getFont():getWidth(title)
+    local textHeight = love.graphics.getFont():getHeight(title)
     
     -- draw semi-transparent rect
     love.graphics.setColor(255, 255, 255, 128)
-    love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 76, VIRTUAL_HEIGHT / 2 + y - 11, 150, 58, 6)
+    love.graphics.rectangle('fill',                                                
+        VIRTUAL_WIDTH / 2 - textWidth / 2 - MENU_BOX_PAD / 2 - 2, VIRTUAL_HEIGHT / 2 - MENU_BOX_PAD / 2 + y,
+        textWidth + MENU_BOX_PAD, textHeight + MENU_BOX_PAD, 6)
 
     -- draw text shadows
     
@@ -25,7 +28,7 @@ function drawSelectionsText(title, y)
 end
 
 
-function DrawMenu(currentOption, y, tags)
+function drawMenu(currentOption, y, tags)
     -- draw rect behind start and quit game text
     love.graphics.setColor(255, 255, 255, 128)
     love.graphics.rectangle('fill',

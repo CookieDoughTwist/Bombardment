@@ -43,7 +43,7 @@ function TitleState:update(dt)
     end
     
     if self.canInput then
-        if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        if love.keyboard.wasPressed('select') then
             self.canInput = false
             gStateMachine:change('select')
         end

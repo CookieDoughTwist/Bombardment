@@ -26,4 +26,4 @@ SELECTIONS_START = {
     'SANDBOX'
 }
 MENU_TEXT_JUMP = 48
-
+MENU_BOX_PAD = 10       -- menu box padding (bits)    
