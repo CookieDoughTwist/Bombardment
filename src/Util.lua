@@ -12,10 +12,10 @@ function drawSelectionsText(title, y)
     local textHeight = love.graphics.getFont():getHeight(title)
     
     -- draw semi-transparent rect
-    love.graphics.setColor(255, 255, 255, 128)
+    love.graphics.setColor(255, 255, 255, 128)        
     love.graphics.rectangle('fill',                                                
-        VIRTUAL_WIDTH / 2 - textWidth / 2 - MENU_BOX_PAD / 2 - 2, VIRTUAL_HEIGHT / 2 - MENU_BOX_PAD / 2 + y,
-        textWidth + MENU_BOX_PAD, textHeight + MENU_BOX_PAD, 6)
+        VIRTUAL_WIDTH / 2 - textWidth / 2 - (MENU_BOX_PAD + 6) / 2 - 2, VIRTUAL_HEIGHT / 2 - MENU_BOX_PAD / 2 + y + 2,
+        textWidth + MENU_BOX_PAD + 6, textHeight + MENU_BOX_PAD, 6)
 
     -- draw text shadows
     

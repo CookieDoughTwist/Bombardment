@@ -25,5 +25,5 @@ SELECTIONS_START = {
     'CAMPAIGN',
     'SANDBOX'
 }
-MENU_TEXT_JUMP = 48
+MENU_TEXT_JUMP = 48     -- menu option spacing (bits)
 MENU_BOX_PAD = 10       -- menu box padding (bits)    
