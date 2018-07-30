@@ -29,13 +29,23 @@ end
 
 
 function drawMenu(currentOption, y, tags)
+
+    local maxTextWidth = 0
+    for k, tag in pairs(tags) do
+        local textWidth = love.graphics.getFont():getWidth(tag)
+        if textWidth > maxTextWidth then
+            maxTextWidth = textWidth
+        end
+    end
+
     -- draw rect behind start and quit game text
     love.graphics.setColor(255, 255, 255, 128)
     love.graphics.rectangle('fill',
         VIRTUAL_WIDTH / 2 - 76, VIRTUAL_HEIGHT / 2 + y, 150, 8 + MENU_TEXT_JUMP * #tags, 6)
-
+        
     for k, tag in pairs(tags) do
         love.graphics.setFont(gFonts['futureearth32'])
+        
         height = VIRTUAL_HEIGHT / 2 + y + 8 + MENU_TEXT_JUMP * (k - 1)
         drawTextShadow(tag, height
             )
