@@ -14,8 +14,10 @@ function drawSelectionsText(title, y)
     -- draw semi-transparent rect
     love.graphics.setColor(255, 255, 255, 128)        
     love.graphics.rectangle('fill',                                                
-        VIRTUAL_WIDTH / 2 - textWidth / 2 - (MENU_BOX_PAD + 6) / 2 - 2, VIRTUAL_HEIGHT / 2 - MENU_BOX_PAD / 2 + y + 2,
-        textWidth + MENU_BOX_PAD + 6, textHeight + MENU_BOX_PAD, 6)
+        VIRTUAL_WIDTH / 2 - textWidth / 2 - (MENU_BOX_PAD_X + 6) / 2 + TEXT_BUFFER_X,
+        VIRTUAL_HEIGHT / 2 - MENU_BOX_PAD_Y / 2 + y + TEXT_BUFFER_Y,
+        textWidth + MENU_BOX_PAD_X + 6,
+        textHeight + MENU_BOX_PAD_Y, 6)
 
     -- draw text shadows
     
@@ -31,17 +33,25 @@ end
 function drawMenu(currentOption, y, tags)
 
     local maxTextWidth = 0
+    local maxTextHeight = 0
     for k, tag in pairs(tags) do
         local textWidth = love.graphics.getFont():getWidth(tag)
+        local textHeight = love.graphics.getFont():getHeight(tag)
         if textWidth > maxTextWidth then
             maxTextWidth = textWidth
+        end
+        if textHeight > maxTextHeight then
+            maxTextHeight = textHeight
         end
     end
 
     -- draw rect behind start and quit game text
     love.graphics.setColor(255, 255, 255, 128)
-    love.graphics.rectangle('fill',
-        VIRTUAL_WIDTH / 2 - 76, VIRTUAL_HEIGHT / 2 + y, 150, 8 + MENU_TEXT_JUMP * #tags, 6)
+    love.graphics.rectangle('fill',                                                
+        VIRTUAL_WIDTH / 2 - maxTextWidth / 2 - (MENU_BOX_PAD_X + 6) / 2 + TEXT_BUFFER_X,
+        VIRTUAL_HEIGHT / 2 - ((#tags + 1) * (MENU_BOX_PAD_Y / 2)) + y + TEXT_BUFFER_Y,
+        maxTextWidth + MENU_BOX_PAD_X + 6,
+        #tags * (maxTextHeight + MENU_BOX_PAD_Y / 2) + MENU_BOX_PAD_Y, 6)
         
     for k, tag in pairs(tags) do
         love.graphics.setFont(gFonts['futureearth32'])

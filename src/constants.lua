@@ -26,4 +26,7 @@ SELECTIONS_START = {
     'SANDBOX'
 }
 MENU_TEXT_JUMP = 48     -- menu option spacing (bits)
-MENU_BOX_PAD = 10       -- menu box padding (bits)    
+MENU_BOX_PAD_X = 10     -- menu box padding (bits)    
+MENU_BOX_PAD_Y = -5    -- menu box padding (bits)    
+TEXT_BUFFER_X = -2      -- menu horizontal text buffer
+TEXT_BUFFER_Y = 2       -- menu vertical text buffer
