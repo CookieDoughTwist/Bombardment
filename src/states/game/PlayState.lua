@@ -23,7 +23,7 @@ function PlayState:update(dt)
         gStateMachine:change('title')
     end
 
-    self.engine:update()
+    self.engine:update(dt)
 end
 
 function PlayState:render()

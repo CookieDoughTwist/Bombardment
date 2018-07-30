@@ -25,6 +25,8 @@ require 'src/states/game/PlayState'
 require 'src/Engine'
 require 'src/states/engine/EngineFocusState'
 
+-- universe
+require 'src/universe/Universe'
 
 -- sounds
 sfxLoc = 'resources/sounds/'
