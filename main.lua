@@ -36,7 +36,8 @@ function love.load()
     -- initialize state machine with all state-returning functions
     gStateMachine = StateMachine {
         ['title'] = function() return TitleState() end,
-        ['select'] = function() return SelectionState() end
+        ['select'] = function() return SelectionState() end,
+        ['play'] = function() return PlayState() end
         --['begin-game'] = function() return BeginGameState() end,
         --['play'] = function() return PlayState() end,
         --['game-over'] = function() return GameOverState() end
@@ -90,5 +91,6 @@ function love.draw()
     push:start()
     
     gStateMachine:render()
+    
     push:finish()
 end

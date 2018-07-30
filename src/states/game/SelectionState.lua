@@ -55,10 +55,9 @@ function SelectionState:update(dt)
                 Timer.tween(T_TRANSITION, {
                     [self] = {transitionAlpha = 255}
                 }):finish(function()
-                    --gStateMachine:change('play', {
-                        --index = self.currentMenuItem,
-                        --word = string.upper(randomWords[rn])
-                    --})
+                    gStateMachine:change('play', {
+                        index = self.currentMenuItem
+                    })
                 end)
             end
 

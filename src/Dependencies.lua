@@ -19,6 +19,12 @@ require 'src/Util'
 require 'src/states/game/BaseState'
 require 'src/states/game/TitleState'
 require 'src/states/game/SelectionState'
+require 'src/states/game/PlayState'
+
+-- engine
+require 'src/Engine'
+require 'src/states/engine/EngineFocusState'
+
 
 -- sounds
 sfxLoc = 'resources/sounds/'
