@@ -29,10 +29,15 @@ function EngineFocusState:render()
     love.graphics.push()    
     
     love.graphics.translate(-math.floor(self.camX), -math.floor(self.camY))
-        
+    
+    for k, body in pairs(universe.bodies) do
+        love.graphics.setColor(100, 100, 100)
+        love.graphics.circle('fill', body.body:getX(), body.body:getY(), body.shape:getRadius())
+    end
+    
     for k, entity in pairs(universe.entities) do
         love.graphics.setColor(128, 163, 15) -- set the drawing color to green for the ground
-        love.graphics.polygon("fill", entity.body:getWorldPoints(entity.shape:getPoints()))
+        love.graphics.polygon('fill', entity.body:getWorldPoints(entity.shape:getPoints()))
         
     end
     

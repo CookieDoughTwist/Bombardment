@@ -14,9 +14,11 @@ function Universe:init()
     
     self.time = 0
     
-    self.player = Entity(self.world, 500, 500, ENTITY_DEFS['player'])
-    
+    self.player = Entity(self.world, 500, 500, ENTITY_DEFS['cal_ship_10_50_10000'])    
     table.insert(self.entities, self.player)
+    
+    local body = Body(self.world, 0, 0, BODY_DEFS['cal_roid_100_10000000'])
+    table.insert(self.bodies, body)
 end
 
 function Universe:update(dt)
