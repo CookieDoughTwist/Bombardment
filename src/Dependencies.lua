@@ -29,6 +29,9 @@ require 'src/states/engine/EngineFocusState'
 require 'src/universe/Universe'
 require 'src/universe/Entity'
 
+-- definitions
+require 'data/definitions/entity_defs'
+
 -- sounds
 sfxLoc = 'resources/sounds/'
 gSounds = {

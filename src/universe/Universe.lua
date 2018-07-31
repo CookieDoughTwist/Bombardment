@@ -14,7 +14,7 @@ function Universe:init()
     
     self.time = 0
     
-    self.player = Entity({world = self.world})
+    self.player = Entity(self.world, 500, 500, ENTITY_DEFS['player'])
     
     table.insert(self.entities, self.player)
 end
