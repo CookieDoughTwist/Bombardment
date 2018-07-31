@@ -2,9 +2,15 @@
 
 ]]
 
---[[
-    
-]]
+-- rotate vector the specified radian angle (positive is clockwise)
+function rotateVector(x, y, radians)
+    local rsin = math.sin(radians)
+    local rcos = math.cos(radians)
+    local xrot = rcos * x - rsin * y
+    local yrot = rsin * x + rcos * y
+    return xrot, yrot
+end
+
 function drawSelectionsText(title, y)
     
     love.graphics.setFont(gFonts['futureearth32'])

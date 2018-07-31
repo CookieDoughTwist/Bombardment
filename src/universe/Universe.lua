@@ -22,20 +22,18 @@ end
 function Universe:update(dt)
     
     if love.keyboard.isDown('left') then
-        self.player.ddx = -100
-        self.player.ddy = 0
+        self.player:rotate(-1)
     elseif love.keyboard.isDown('right') then
-        self.player.ddx = 100
-        self.player.ddy = 0
-    elseif love.keyboard.isDown('up') then
-        self.player.ddx = 0
-        self.player.ddy = -100
-    elseif love.keyboard.isDown('down') then
-        self.player.ddx = 0
-        self.player.ddy = 100
+        self.player:rotate(1)
     else
-        self.player.ddx = 0
-        self.player.ddy = 0
+        self.player:rotate(0)
+    end
+    if love.keyboard.isDown('up') then
+        self.player:move(1)
+    elseif love.keyboard.isDown('down') then
+        self.player:move(-1)
+    else
+        self.player:move(0)
     end
     
     -- update the celestial bodies
