@@ -12,6 +12,9 @@ function EngineFocusState:init(engine)
     self.camX = VIRTUAL_WIDTH / 2   -- meters
     self.camY = VIRTUAL_HEIGHT / 2  -- meters
     self.zoom = 1                   -- meters/bit
+    self.angle = 0
+    self.centerPlayer = false
+    self.alignPlayer = false
 end
 
 function EngineFocusState:enter(params)
@@ -19,8 +22,9 @@ function EngineFocusState:enter(params)
 end
 
 function EngineFocusState:update(dt)
-
+    --
     -- player control
+    --
     local player = self.engine.universe.player
     local rotVal = 0    
     if love.keyboard.isDown('a') then
@@ -40,18 +44,41 @@ function EngineFocusState:update(dt)
     end
     player:move(movVal)
     
-    -- camera panning
-    if love.keyboard.isDown('left') then
-        self.camX = self.camX - SCROLL_SPEED * self.zoom
+    --
+    -- camera control
+    --
+
+    -- toggle camera pan lock
+    if love.keyboard.wasPressed('y') then
+        self.centerPlayer = not self.centerPlayer
     end
-    if love.keyboard.isDown('right') then
-        self.camX = self.camX + SCROLL_SPEED * self.zoom
-    end
-    if love.keyboard.isDown('up') then
-        self.camY = self.camY - SCROLL_SPEED * self.zoom
-    end
-    if love.keyboard.isDown('down') then
-        self.camY = self.camY + SCROLL_SPEED * self.zoom
+
+    -- check of locked to player
+    if self.centerPlayer then
+        self.camX, self.camY = player.body:getPosition()
+
+    -- otherwise pan as normal
+    else
+        local x = 0
+        local y = 0
+        -- collect camera vector
+        if love.keyboard.isDown('left') then
+            x = - SCROLL_SPEED * self.zoom
+        end
+        if love.keyboard.isDown('right') then
+            x = SCROLL_SPEED * self.zoom
+        end
+        if love.keyboard.isDown('up') then
+            y = -SCROLL_SPEED * self.zoom
+        end
+        if love.keyboard.isDown('down') then
+            y = SCROLL_SPEED * self.zoom
+        end
+        -- need to account for camera rotation
+        x, y = rotateVector(x, y, self.angle)
+        -- increment camera pan
+        self.camX = self.camX + x
+        self.camY = self.camY + y
     end
 
     -- camera zooming
@@ -61,6 +88,28 @@ function EngineFocusState:update(dt)
     if love.wasPressed('increment') then
         self.zoom = math.max(self.zoom / ZOOM_RATIO, ZOOM_MIN)
     end
+
+    -- camera rotation
+    -- toggle camera alignment
+    if love.keyboard.wasPressed('u') then
+        self.alignPlayer = not self.alignPlayer
+    end
+
+    -- check for alignment lock
+    if self.alignPlayer then
+        self.angle = player.body:getAngle() - math.pi
+
+    -- otherwise rotate as normal
+    else
+        if love.keyboard.isDown('pagedown') then
+            self.angle = self.angle + ROTATION_SPEED
+        end
+        if love.keyboard.isDown('pageup') then
+            self.angle = self.angle - ROTATION_SPEED
+        end
+    end
+
+
 end
 
 function EngineFocusState:render()
@@ -71,7 +120,11 @@ function EngineFocusState:render()
     
     local xBit = -math.floor(self.camX / self.zoom - VIRTUAL_WIDTH / 2)
     local yBit = -math.floor(self.camY / self.zoom - VIRTUAL_HEIGHT / 2)
-
+    
+    love.graphics.translate(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2)
+    love.graphics.rotate(-self.angle)
+    -- TODO: consolidate this translation 8/1/18 -AW
+    love.graphics.translate(-VIRTUAL_WIDTH / 2, -VIRTUAL_HEIGHT / 2)
     love.graphics.translate(xBit, yBit)
     
     for k, body in pairs(universe.bodies) do
