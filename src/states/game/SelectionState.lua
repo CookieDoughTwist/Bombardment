@@ -46,7 +46,7 @@ function SelectionState:update(dt)
         end
         
         -- switch to another state via one of the menu options
-        if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        if love.wasPressed('select') then
             if self.currentMenuItem > #self.options then
                 gStateMachine:change('start')
             else                

@@ -9,9 +9,9 @@ function EngineFocusState:init(engine)
     
     self.engine = engine
     self.engine.state = 'focus'
-    self.camX = -100
-    self.camY = 0
-    self.zoom = 1       -- meters/bit
+    self.camX = VIRTUAL_WIDTH / 2   -- meters
+    self.camY = VIRTUAL_HEIGHT / 2  -- meters
+    self.zoom = 1                   -- meters/bit
 end
 
 function EngineFocusState:enter(params)
@@ -42,24 +42,24 @@ function EngineFocusState:update(dt)
     
     -- camera panning
     if love.keyboard.isDown('left') then
-        self.camX = self.camX - SCROLL_SPEED
+        self.camX = self.camX - SCROLL_SPEED * self.zoom
     end
     if love.keyboard.isDown('right') then
-        self.camX = self.camX + SCROLL_SPEED
+        self.camX = self.camX + SCROLL_SPEED * self.zoom
     end
     if love.keyboard.isDown('up') then
-        self.camY = self.camY - SCROLL_SPEED
+        self.camY = self.camY - SCROLL_SPEED * self.zoom
     end
     if love.keyboard.isDown('down') then
-        self.camY = self.camY + SCROLL_SPEED
+        self.camY = self.camY + SCROLL_SPEED * self.zoom
     end
 
     -- camera zooming
-    if love.keyboard.wasPressed('=') then
-        self.zoom = math.min(ZOOM_RATIO * self.zoom, ZOOM_MAX)
+    if love.wasPressed('decrement') then
+        self.zoom = math.min(self.zoom * ZOOM_RATIO, ZOOM_MAX)
     end
-    if love.keyboard.wasPressed('-') then
-        self.zoom = math.max(ZOOM_RATIO / self.zoom, ZOOM_MIN)
+    if love.wasPressed('increment') then
+        self.zoom = math.max(self.zoom / ZOOM_RATIO, ZOOM_MIN)
     end
 end
 
@@ -69,13 +69,16 @@ function EngineFocusState:render()
     
     love.graphics.push()    
     
-    love.graphics.translate(-math.floor(self.camX / self.zoom), -math.floor(self.camY / self.zoom))
+    local xBit = -math.floor(self.camX / self.zoom - VIRTUAL_WIDTH / 2)
+    local yBit = -math.floor(self.camY / self.zoom - VIRTUAL_HEIGHT / 2)
+
+    love.graphics.translate(xBit, yBit)
     
     for k, body in pairs(universe.bodies) do
         love.graphics.setColor(100, 100, 100)
-        local x = body.body:getX()
-        local y = body.body:getY()
-        local r = body.shape:getRadius()
+        local x = body.body:getX() / self.zoom
+        local y = body.body:getY() / self.zoom
+        local r = body.shape:getRadius() / self.zoom
         love.graphics.circle('fill', x, y, r)
     end
     

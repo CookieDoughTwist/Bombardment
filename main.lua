@@ -47,6 +47,7 @@ function love.load()
     -- initialize input table
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}
+    love.bindings = {}
 end
 
 function love.resize(w, h)
@@ -58,7 +59,13 @@ function love.keypressed(key)
     -- add to our table of keys pressed this frame
     love.keyboard.keysPressed[key] = true
     if key == 'enter' or key == 'return' or key == 'kpenter' or key == 'space' then
-        love.keyboard.keysPressed['select'] = true
+        love.bindings['select'] = true
+    end
+    if key == '=' or key == 'kp+' then
+        love.bindings['increment'] = true
+    end
+    if key == '-' or key == 'kp-' then
+        love.bindings['decrement'] = true
     end
 end
 
@@ -75,12 +82,27 @@ function love.mouse.wasPressed(button)
     return love.mouse.buttonsPressed[button]
 end
 
+function love.wheelmoved(x, y)
+    if y > 0 then
+        love.mouse.buttonsPressed['wheelup'] = y
+        love.bindings['increment'] = true
+    elseif y < 0 then
+        love.mouse.buttonsPressed['wheeldown'] = y
+        love.bindings['decrement'] = true
+    end
+end
+
+function love.wasPressed(key)
+    return love.bindings[key]
+end
+
 function love.update(dt)
 
     gStateMachine:update(dt)
 
     love.keyboard.keysPressed = {}
     love.mouse.buttonsPressed = {}
+    love.bindings = {}
     
     -- update global tween timer
     Timer.update(dt)
