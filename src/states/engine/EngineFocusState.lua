@@ -19,7 +19,22 @@ end
 
 function EngineFocusState:update(dt)
 
-    
+    local player = self.engine.universe.player
+
+    if love.keyboard.isDown('a') then
+        player:rotate(-1)
+    elseif love.keyboard.isDown('d') then
+        player:rotate(1)
+    else
+        player:rotate(0)
+    end
+    if love.keyboard.isDown('w') then
+        player:move(1)
+    elseif love.keyboard.isDown('s') then
+        player:move(-1)
+    else
+        player:move(0)
+    end
 end
 
 function EngineFocusState:render()

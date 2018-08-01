@@ -28,9 +28,11 @@ require 'src/states/engine/EngineFocusState'
 -- universe
 require 'src/universe/Universe'
 require 'src/universe/Entity'
+require 'src/universe/Body'
 
 -- definitions
 require 'data/definitions/entity_defs'
+require 'data/definitions/body_defs'
 
 -- sounds
 sfxLoc = 'resources/sounds/'

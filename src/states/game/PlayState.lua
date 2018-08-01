@@ -20,7 +20,7 @@ end
 function PlayState:update(dt)
 
     if love.keyboard.wasPressed('escape') then
-        gStateMachine:change('title')
+        gStateMachine:change('select')
     end
 
     self.engine:update(dt)

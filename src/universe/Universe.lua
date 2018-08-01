@@ -23,21 +23,6 @@ end
 
 function Universe:update(dt)
     
-    if love.keyboard.isDown('left') then
-        self.player:rotate(-1)
-    elseif love.keyboard.isDown('right') then
-        self.player:rotate(1)
-    else
-        self.player:rotate(0)
-    end
-    if love.keyboard.isDown('up') then
-        self.player:move(1)
-    elseif love.keyboard.isDown('down') then
-        self.player:move(-1)
-    else
-        self.player:move(0)
-    end
-    
     -- update the celestial bodies
     for k, body in pairs(self.bodies) do
         body:update(dt)

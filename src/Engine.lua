@@ -25,15 +25,16 @@ function Engine:changeState(name, params)
 end
 
 function Engine:update(dt)
-    
-    self.universe:update(dt)
-    
-    -- state machine updated last
+
+    -- state machine updated first
+    -- player controls are dictated by state
     self.stateMachine:update(dt)
+
+    self.universe:update(dt)
 end
 
 function Engine:render()
     
-    -- state machine rendered last
+    -- state machine handles all rendering
     self.stateMachine:render()
 end

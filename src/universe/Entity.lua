@@ -16,7 +16,7 @@ function Entity:init(world, x, y, def)
     self.body:setMass(mass)    
     
     self.thrust = 1000000
-    self.rotThrust = 1000
+    self.rotThrust = 100
     
     self.fx = 0
     self.fy = 0
