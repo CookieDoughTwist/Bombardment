@@ -38,3 +38,7 @@ ZOOM_RATIO = 2         -- the ratio increment to zoom
 ZOOM_MAX = 100          -- max zoom out (meters/bit)
 ZOOM_MIN = 1            -- min zoom out (meters/bit)
 ROTATION_SPEED = math.rad(1)    -- rotation rate (radians/frame)
+
+-- physics
+G = 6.674E-11           -- gravitational constant
+M_SOL = 1.98847E30      -- solar mass

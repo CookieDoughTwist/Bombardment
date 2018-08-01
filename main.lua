@@ -8,7 +8,7 @@
 ]]
 
 -- initialize our nearest-neighbor filter
-love.graphics.setDefaultFilter('nearest', 'nearest')
+--love.graphics.setDefaultFilter('nearest', 'nearest')
 
 -- requires and resource initializations
 require 'src/Dependencies'

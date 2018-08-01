@@ -14,17 +14,25 @@ function Universe:init()
     
     self.time = 0
     
-    self.player = Entity(self.world, 500, 500, ENTITY_DEFS['cal_ship_10_50_10000'])    
+    self.player = Entity(self.world, 600, 400, ENTITY_DEFS['cal_ship_10_50_10000'])    
     table.insert(self.entities, self.player)
+    self.player.body:setLinearVelocity(0, 19)
     
-    local body = Body(self.world, 0, 0, BODY_DEFS['cal_roid_100_10000000'])
-    table.insert(self.bodies, body)
+    --local body = Body(self.world, 0, 0, BODY_DEFS['cal_roid_100_10000000'])
+    --table.insert(self.bodies, body)
     local body = Body(self.world, 400, 400, BODY_DEFS['cal_roid_100_10000000'])
     table.insert(self.bodies, body)
 end
 
 function Universe:update(dt)
     
+    -- apply gravity
+    for k, entity in pairs(self.entities) do
+        for k, body in pairs(self.bodies) do
+            body:exertGravity(entity)
+        end
+    end
+
     -- update the celestial bodies
     for k, body in pairs(self.bodies) do
         body:update(dt)

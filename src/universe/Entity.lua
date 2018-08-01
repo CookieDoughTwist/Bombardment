@@ -17,24 +17,19 @@ function Entity:init(world, x, y, def)
     
     self.thrust = 1000000
     self.rotThrust = 100
-    
-    self.fx = 0
-    self.fy = 0
-    self.fr = 0
 end
 
 function Entity:update(dt)    
-    self.body:applyForce(self.fx, self.fy)
-    self.body:applyTorque(self.fr)    
+  
 end
 
 -- throttle is between -1 and 1
 function Entity:move(throttle)
     local rot = self.body:getAngle()
-    self.fx, self.fy = rotateVector(0, self.thrust * throttle, rot)
+    self.body:applyForce(rotateVector(0, self.thrust * throttle, rot))
 end
 
 -- throttle is between -1 and 1
 function Entity:rotate(throttle)
-    self.fr = self.rotThrust * throttle
+    self.body:applyTorque(self.rotThrust * throttle)
 end

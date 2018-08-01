@@ -138,9 +138,7 @@ function EngineFocusState:render()
     for k, entity in pairs(universe.entities) do
         love.graphics.setColor(128, 163, 15) -- set the drawing color to green for the ground
         local polyPoints = {entity.body:getWorldPoints(entity.shape:getPoints())}
-        for n = 1, #polyPoints do
-            polyPoints[n] = polyPoints[n] / self.zoom
-        end
+        multiplyTable(polyPoints, 1 / self.zoom)
         love.graphics.polygon('fill', polyPoints)        
     end
     

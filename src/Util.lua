@@ -11,6 +11,17 @@ function rotateVector(x, y, radians)
     return xrot, yrot
 end
 
+function multiplyTable(table, factor)
+    for k, v in pairs(table) do
+        table[k] = v * factor
+    end    
+end
+
+function unitizeVector(x, y)
+    local mag = math.sqrt(x^2 + y^2)
+    return x / mag, y / mag
+end
+
 function drawSelectionsText(title, y)
     
     love.graphics.setFont(gFonts['futureearth32'])
