@@ -31,3 +31,9 @@ MENU_BOX_PAD_Y = -5    -- menu box padding (bits)
 TEXT_BUFFER_X = -2      -- menu horizontal text buffer
 TEXT_BUFFER_Y = 2       -- menu vertical text buffer
 T_TRANSITION = 0.1        -- time to transition to selection
+
+-- focus state
+SCROLL_SPEED = 10       -- scroll speed (bits/frame)
+ZOOM_RATIO = 10         -- the ratio increment to zoom
+ZOOM_MAX = 100          -- max zoom out (meters/bit)
+ZOOM_MIN = 1            -- min zoom out (meters/bit)

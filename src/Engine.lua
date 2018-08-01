@@ -17,8 +17,6 @@ function Engine:init(index)
     self:changeState('focus', {})
 end
 
-
-
 function Engine:changeState(name, params)
     
     self.stateMachine:change(name, params)
@@ -26,10 +24,12 @@ end
 
 function Engine:update(dt)
 
-    -- state machine updated first
-    -- player controls are dictated by state
+    -- state machine handles all external inputs
+    -- this includes player control
     self.stateMachine:update(dt)
 
+    -- update the universe
+    -- only responsible for incrementing physics
     self.universe:update(dt)
 end
 

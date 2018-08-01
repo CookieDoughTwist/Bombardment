@@ -19,6 +19,8 @@ function Universe:init()
     
     local body = Body(self.world, 0, 0, BODY_DEFS['cal_roid_100_10000000'])
     table.insert(self.bodies, body)
+    local body = Body(self.world, 400, 400, BODY_DEFS['cal_roid_100_10000000'])
+    table.insert(self.bodies, body)
 end
 
 function Universe:update(dt)
