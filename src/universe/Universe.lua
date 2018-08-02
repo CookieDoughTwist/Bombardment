@@ -24,6 +24,8 @@ function Universe:init()
     table.insert(self.bodies, body)
 end
 
+
+
 function Universe:update(dt)
     
     -- apply gravity

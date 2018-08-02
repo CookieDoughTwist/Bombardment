@@ -8,6 +8,7 @@ function Engine:init(index)
 
     -- holds the state of the universe
     self.universe = Universe()
+    self.universe:loadScenario('simple_orbit')
 
     self.state = ''
     self.stateMachine = StateMachine {
