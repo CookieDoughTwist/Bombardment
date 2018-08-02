@@ -13,8 +13,30 @@ function Universe:init()
     self.world = love.physics.newWorld(0, 0)
     
     self.time = 0
+end
+
+function Universe:loadScenario(scenarioName)
+    local scenario_def = SCENARIO_DEFS[scenarioName]
+    local bodies = scenario_def.bodies
+    local entities = scenario_def.entities
+    local player = scenario_def.player
+
+    for k, v in paris(bodies) do
+        local val = Body(self.world, v.x, v.y, BODY_DEFS[k])
+        table.insert(self.bodies, body)
+    end
+
+    for k, v in paris(bodies) do
+        local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[k])
+        table.insert(self.entities, entity)
+    end
+
+    for k, v in paris(bodies) do
+        local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[k])
+        table.insert(self.entities, entity)
+    end
     
-    self.player = Entity(self.world, 600, 400, ENTITY_DEFS['cal_ship_10_50_10000'])    
+    self.player = Entity(self.world, player.x, player.y, ENTITY_DEFS['cal_ship_10_50_10000'])    
     table.insert(self.entities, self.player)
     self.player.body:setLinearVelocity(0, 19)
     
@@ -23,8 +45,6 @@ function Universe:init()
     local body = Body(self.world, 400, 400, BODY_DEFS['cal_roid_100_10000000'])
     table.insert(self.bodies, body)
 end
-
-
 
 function Universe:update(dt)
     
