@@ -14,5 +14,9 @@ BODY_DEFS = {
     ['pluto'] = {
         radius = 1188.3E3,
         mass = 1.303E22
+    },
+    ['earth'] = {
+        radius = 6378.1E3,
+        mass = 5.97237E24
     }
 }

@@ -11,6 +11,11 @@ WINDOW_HEIGHT = 1080
 --VIRTUAL_HEIGHT = 288
 VIRTUAL_WIDTH = 1024
 VIRTUAL_HEIGHT = 576
+--VIRTUAL_WIDTH = 1920
+--VIRTUAL_HEIGHT = 1080
+
+VIRTUAL_WIDTH_2 = VIRTUAL_WIDTH / 2
+VIRTUAL_HEIGHT_2 = VIRTUAL_HEIGHT / 2
 
 -- title screen
 SHADOW_OFFSET = 5       -- offset of shadow text (bits)
@@ -35,7 +40,7 @@ T_TRANSITION = 0.1        -- time to transition to selection
 -- focus state
 SCROLL_SPEED = 10       -- scroll speed (bits/frame)
 ZOOM_RATIO = 2          -- the ratio increment to zoom
-ZOOM_MAX = 100          -- max zoom out (meters/bit)
+ZOOM_MAX = 1024          -- max zoom out (meters/bit)
 ZOOM_MIN = 0.25         -- min zoom out (meters/bit)
 ROTATION_SPEED = math.rad(1)    -- rotation rate (radians/frame)
 

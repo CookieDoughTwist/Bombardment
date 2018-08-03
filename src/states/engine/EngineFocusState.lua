@@ -13,7 +13,7 @@ function EngineFocusState:init(engine)
     self.camY = VIRTUAL_HEIGHT / 2  -- meters
     self.zoom = 1                   -- meters/bit
     self.angle = 0
-    self.centerPlayer = false
+    self.centerPlayer = true
     self.alignPlayer = false
     self.focusIdx = 1
 end
@@ -23,10 +23,33 @@ function EngineFocusState:enter(params)
 end
 
 function EngineFocusState:update(dt)
+
     --
     -- player control
     --
+
+    -- focus craft cycling (select player craft)
+    if love.keyboard.wasPressed('[') then
+        -- decrement focus index
+        self.focusIdx = self.focusIdx - 1
+        -- wrap around to greatest index
+        if self.focusIdx < 1 then
+            self.focusIdx = #self.engine.universe.player
+        end
+    end
+    if love.keyboard.wasPressed(']') then
+        -- increment focus index
+        self.focusIdx = self.focusIdx + 1
+        -- wrap around to one
+        if self.focusIdx > #self.engine.universe.player then
+            self.focusIdx = 1
+        end
+    end
+
+    -- currently focussed player craft
     local player = self.engine.universe.player[self.focusIdx]
+
+    -- craft rotation
     local rotVal = 0    
     if love.keyboard.isDown('a') then
         rotVal = rotVal - 1
@@ -36,6 +59,7 @@ function EngineFocusState:update(dt)
     end
     player:rotate(rotVal)
     
+    -- craft thrust
     local movVal = 0
     if love.keyboard.isDown('w') then
         movVal = movVal + 1
@@ -114,6 +138,47 @@ function EngineFocusState:update(dt)
 end
 
 function EngineFocusState:render()
+
+    local universe = self.engine.universe
+    local bitRange = 2000    
+    local bpm = 1 / self.zoom -- bits per meter
+    local m2Range = (bitRange / bpm)^2
+
+    love.graphics.translate(VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2)
+    love.graphics.rotate(-self.angle)
+    love.graphics.translate(-VIRTUAL_WIDTH_2, -VIRTUAL_HEIGHT_2)
+
+    for k, body in pairs(universe.bodies) do
+        love.graphics.setColor(100, 100, 100)
+        local x, y = body.body:getPosition()
+
+        if (x-self.camX)^2 + (y-self.camY)^2 < m2Range then
+            local lx = (x - self.camX) * bpm + VIRTUAL_WIDTH_2
+            local ly = (y - self.camY) * bpm + VIRTUAL_HEIGHT_2
+            local r = body.shape:getRadius() * bpm
+            love.graphics.circle('fill', lx, ly, r)
+        end
+    end
+
+    for k, entity in pairs(universe.entities) do
+        love.graphics.setColor(128, 163, 15)
+        local x, y = entity.body:getPosition()
+
+        if (x-self.camX)^2 + (y-self.camY)^2 < m2Range then
+            local polyPoints = {entity.body:getWorldPoints(entity.shape:getPoints())}            
+            --addPointTable(polyPoints, {-cornX, -cornY})
+            addPointTable(polyPoints, {-self.camX, -self.camY})
+            multiplyTable(polyPoints, bpm)
+            addPointTable(polyPoints, {VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2})
+            love.graphics.polygon('fill', polyPoints)
+        end
+    end
+end
+
+--[[
+    original renderer here for temporary reference, love's btuiltin translate function
+        cannot handle large scales and the zoom ordering exacerbates rounding errors
+function EngineFocusState:render_old()
     
     local universe = self.engine.universe
     
@@ -137,10 +202,10 @@ function EngineFocusState:render()
     end
     
     for k, entity in pairs(universe.entities) do
-        love.graphics.setColor(128, 163, 15) -- set the drawing color to green for the ground
+        love.graphics.setColor(128, 163, 15)
         local polyPoints = {entity.body:getWorldPoints(entity.shape:getPoints())}
         multiplyTable(polyPoints, 1 / self.zoom)
-        love.graphics.polygon('fill', polyPoints)        
+        love.graphics.polygon('fill', polyPoints)
     end
     
     love.graphics.pop()
@@ -148,3 +213,4 @@ function EngineFocusState:render()
     -- UI
 end
 
+]]

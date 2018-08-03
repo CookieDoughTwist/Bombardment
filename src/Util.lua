@@ -14,7 +14,26 @@ end
 function multiplyTable(table, factor)
     for k, v in pairs(table) do
         table[k] = v * factor
-    end    
+    end
+end
+
+function addTable(table, increment)
+    for k, v in pairs(table) do
+        table[k] = v + increment
+    end
+end
+
+function addPointTable(table, point)
+    odd = true
+    for k, v in pairs(table) do
+        if odd then
+            table[k] = v + point[1]
+            odd = false
+        else
+            table[k] = v + point[2]
+            odd = true
+        end
+    end
 end
 
 function unitizeVector(x, y)

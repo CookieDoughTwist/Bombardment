@@ -23,19 +23,21 @@ function Universe:loadScenario(scenarioName)
     local players = scenario_def.player
 
     for k, v in pairs(bodies) do
-        local val = Body(self.world, v.x, v.y, BODY_DEFS[k])
+        local val = Body(self.world, v.x, v.y, BODY_DEFS[v.def_key])
         table.insert(self.bodies, val)
     end
 
     for k, v in pairs(entities) do
-        local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[k])
+        local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[v.def_key])
         val.body:setLinearVelocity(v.dx, v.dy)
+        val.body:setAngularVelocity(v.dr)
         table.insert(self.entities, val)
     end
 
     for k, v in pairs(players) do
-        local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[k])
+        local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[v.def_key])
         val.body:setLinearVelocity(v.dx, v.dy)
+        val.body:setAngularVelocity(v.dr)        
         table.insert(self.entities, val)
         table.insert(self.player, val)
     end
@@ -59,6 +61,7 @@ function Universe:update(dt)
     -- update entities
     for k, entity in pairs(self.entities) do
         entity:update(dt)
+        x, y = entity.body:getLinearVelocity()
     end
     
     self.world:update(dt)
