@@ -36,6 +36,12 @@ function addPointTable(table, point)
     end
 end
 
+function floorTable(table)
+    for k, v in pairs(table) do
+        table[k] = math.floor(v)
+    end
+end
+
 function unitizeVector(x, y)
     local mag = math.sqrt(x^2 + y^2)
     return x / mag, y / mag
