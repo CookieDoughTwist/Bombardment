@@ -8,13 +8,13 @@ function Engine:init(index)
 
     -- holds the state of the universe
     self.universe = Universe()
-    self.universe:loadScenario('simple_orbit')
-    --self.universe:loadScenario('test_black_hole')
-    --self.universe:loadScenario('earth_low_orbit')
+    --self.universe:loadScenario('simple_orbit')
+    self.universe:loadScenario('test_planetoid')
 
     self.state = ''
     self.stateMachine = StateMachine {
-        ['focus'] = function() return EngineFocusState(self) end
+        ['focus'] = function() return EngineFocusState(self) end,
+        ['map'] = function() return EngineMapState(self) end
     }
 
     self:changeState('focus', {})

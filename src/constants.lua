@@ -17,6 +17,8 @@ VIRTUAL_HEIGHT = 576
 VIRTUAL_WIDTH_2 = VIRTUAL_WIDTH / 2
 VIRTUAL_HEIGHT_2 = VIRTUAL_HEIGHT / 2
 
+RENDER_RANGE = 2000     -- bit radius for render culling (bits)
+
 -- title screen
 SHADOW_OFFSET = 5       -- offset of shadow text (bits)
 TITLE_DELAY = 2.5       -- time before title fades in (seconds)
@@ -38,11 +40,18 @@ TEXT_BUFFER_Y = 2       -- menu vertical text buffer
 T_TRANSITION = 0.1        -- time to transition to selection
 
 -- focus state
-SCROLL_SPEED = 10       -- scroll speed (bits/frame)
-ZOOM_RATIO = 2          -- the ratio increment to zoom
-ZOOM_MAX = 1024          -- max zoom out (meters/bit)
-ZOOM_MIN = 0.25         -- min zoom out (meters/bit)
-ROTATION_SPEED = math.rad(1)    -- rotation rate (radians/frame)
+FOCUS_SCROLL_SPEED = 10         -- scroll speed (bits/frame)
+FOCUS_ZOOM_RATIO = 2            -- the ratio increment to zoom
+FOCUS_ZOOM_MAX = 128           -- max zoom out (meters/bit)
+FOCUS_ZOOM_MIN = 0.25           -- min zoom out (meters/bit)
+FOCUS_ROTATION_SPEED = math.rad(1)    -- rotation rate (radians/frame)
+
+-- map state
+MAP_SCROLL_SPEED = 10       -- scroll speed (bits/frame)
+MAP_ZOOM_RATIO = 2          -- the ratio increment to zoom
+MAP_ZOOM_MAX = 2048         -- max zoom out (meters/bit)
+MAP_ZOOM_MIN = 256         -- min zoom out (meters/bit)
+MAP_ROTATION_SPEED = math.rad(1)    -- rotation rate (radians/frame)
 
 -- physics
 G = 6.674E-11           -- gravitational constant

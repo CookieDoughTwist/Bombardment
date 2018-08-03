@@ -3,10 +3,29 @@
 ]]
 
 BODY_DEFS = {
-    ['cal_roid_100_10000000'] = {
-        radius = 100,
-        mass = 10000000 * 100000000
+    ['cal_roid_1E2_1E15'] = {
+        radius = 1E2,
+        mass = 1E15
     },
+    ['cal_plan_1E5_1E18'] = {
+        radius = 1E4,
+        mass = 1E20
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+    --
+    -- Unusable realistic bodies
+    --
     ['stellar_black_hole'] = {
         radius = 30E3,
         mass = 10 * M_SOL

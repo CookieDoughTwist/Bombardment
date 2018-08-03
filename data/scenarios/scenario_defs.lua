@@ -1,10 +1,22 @@
 -- TODO: make scenarios more modular/exposed 8/2/18 -AW
 SCENARIO_DEFS = {
 
+    ['empty'] = {
+        bodies = {
+
+        },
+        entities = {
+
+        },
+        player = {
+
+        }
+    },
+
     ['simple_orbit'] = {
         bodies = {
             {
-                def_key = 'cal_roid_100_10000000',
+                def_key = 'cal_roid_1E2_1E15',
                 x = 400,
                 y = 400
             }
@@ -19,7 +31,7 @@ SCENARIO_DEFS = {
                 y = 400,
                 dx = 0,
                 --dy = 19,
-                dy = math.sqrt(G * BODY_DEFS['cal_roid_100_10000000'].mass / 200),
+                dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 200),
                 dr = 0
             }
         }
@@ -28,7 +40,7 @@ SCENARIO_DEFS = {
     ['simple_orbit_far'] = {
         bodies = {
             {
-                def_key = 'cal_roid_100_10000000',
+                def_key = 'cal_roid_1E2_1E15',
                 x = 400+10000000,
                 y = 400
             }
@@ -43,7 +55,7 @@ SCENARIO_DEFS = {
                 y = 400,
                 dx = 0,
                 --dy = 19,
-                dy = math.sqrt(G * BODY_DEFS['cal_roid_100_10000000'].mass / 200),
+                dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 200),
                 dr = 0
             }
         }
@@ -52,7 +64,7 @@ SCENARIO_DEFS = {
     ['multi_orbit'] = {
         bodies = {
             {
-                def_key = 'cal_roid_100_10000000',
+                def_key = 'cal_roid_1E2_1E15',
                 x = 400,
                 y = 400
             }
@@ -63,7 +75,7 @@ SCENARIO_DEFS = {
                 x = 800,
                 y = 400,
                 dx = 0,
-                dy = math.sqrt(G * BODY_DEFS['cal_roid_100_10000000'].mass / 400),
+                dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 400),
                 dr = 0.1
             },
             {
@@ -71,7 +83,7 @@ SCENARIO_DEFS = {
                 x = 1000,
                 y = 400,
                 dx = 0,                
-                dy = math.sqrt(G * BODY_DEFS['cal_roid_100_10000000'].mass / 600),
+                dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 600),
                 dr = 0.5
             },
             {
@@ -79,7 +91,7 @@ SCENARIO_DEFS = {
                 x = 1200,
                 y = 400,
                 dx = 0,                
-                dy = math.sqrt(G * BODY_DEFS['cal_roid_100_10000000'].mass / 800),
+                dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 800),
                 dr = 1.0
             },
             {
@@ -87,7 +99,7 @@ SCENARIO_DEFS = {
                 x = 1400,
                 y = 400,
                 dx = 0,                
-                dy = math.sqrt(G * BODY_DEFS['cal_roid_100_10000000'].mass / 1000),
+                dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 1000),
                 dr = 1.5
             }            
         },
@@ -97,12 +109,54 @@ SCENARIO_DEFS = {
                 x = 600,
                 y = 400,
                 dx = 0,
-                --dy = 19,
-                dy = math.sqrt(G * BODY_DEFS['cal_roid_100_10000000'].mass / 200),
+                dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 200),
                 dr = 0
             }
         }
     },
+
+    ['test_planetoid'] = {
+        bodies = {
+            {
+                def_key = 'cal_plan_1E5_1E18',
+                x = 0,
+                y = 0
+            }
+        },
+        entities = {
+
+        },
+        player = {
+            {
+                def_key = 'cal_ship_10_50_10000',
+                x = 2 * BODY_DEFS['cal_plan_1E5_1E18'].radius,
+                y = 0,
+                dx = 0,
+                dy = math.sqrt(G * BODY_DEFS['cal_plan_1E5_1E18'].mass / (2 * BODY_DEFS['cal_plan_1E5_1E18'].radius)),
+                dr = 0
+            },
+            {
+                def_key = 'cal_ship_10_50_10000',
+                x = 2 * BODY_DEFS['cal_plan_1E5_1E18'].radius + 100,
+                y = 0,
+                dx = 0,
+                dy = math.sqrt(G * BODY_DEFS['cal_plan_1E5_1E18'].mass / (2 * BODY_DEFS['cal_plan_1E5_1E18'].radius)),
+                dr = 0
+            }
+        }
+    },
+
+
+
+
+
+
+
+
+
+
+
+
 
     ['test_black_hole'] = {
         bodies = {

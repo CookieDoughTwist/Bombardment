@@ -24,6 +24,7 @@ require 'src/states/game/PlayState'
 -- engine
 require 'src/Engine'
 require 'src/states/engine/EngineFocusState'
+require 'src/states/engine/EngineMapState'
 
 -- universe
 require 'src/universe/Universe'
