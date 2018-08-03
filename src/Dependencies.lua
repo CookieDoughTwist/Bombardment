@@ -33,6 +33,7 @@ require 'src/universe/Body'
 -- definitions
 require 'data/definitions/entity_defs'
 require 'data/definitions/body_defs'
+require 'data/scenarios/scenario_defs'
 
 -- sounds
 sfxLoc = 'resources/sounds/'

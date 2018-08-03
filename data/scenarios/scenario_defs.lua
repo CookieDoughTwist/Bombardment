@@ -7,10 +7,10 @@ SCENARIO_DEFS = {
                 x = 400,
                 y = 400
             }
-        }
+        },
         entities = {
 
-        }
+        },
         player = {
             ['cal_ship_10_50_10000'] = {
                 x = 600,

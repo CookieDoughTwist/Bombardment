@@ -9,6 +9,7 @@ function Universe:init()
     -- object tables
     self.bodies = {}    -- bodies are immune to physics (but can exert physics)
     self.entities = {}  -- entities have physics
+    self.player = {}    -- entities of the player (also in entities)
     
     self.world = love.physics.newWorld(0, 0)
     
@@ -19,31 +20,26 @@ function Universe:loadScenario(scenarioName)
     local scenario_def = SCENARIO_DEFS[scenarioName]
     local bodies = scenario_def.bodies
     local entities = scenario_def.entities
-    local player = scenario_def.player
+    local players = scenario_def.player
 
-    for k, v in paris(bodies) do
+    for k, v in pairs(bodies) do
         local val = Body(self.world, v.x, v.y, BODY_DEFS[k])
-        table.insert(self.bodies, body)
+        table.insert(self.bodies, val)
     end
 
-    for k, v in paris(bodies) do
+    for k, v in pairs(entities) do
         local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[k])
-        table.insert(self.entities, entity)
+        val.body:setLinearVelocity(v.dx, v.dy)
+        table.insert(self.entities, val)
     end
 
-    for k, v in paris(bodies) do
+    for k, v in pairs(players) do
         local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[k])
-        table.insert(self.entities, entity)
+        val.body:setLinearVelocity(v.dx, v.dy)
+        table.insert(self.entities, val)
+        table.insert(self.player, val)
     end
     
-    self.player = Entity(self.world, player.x, player.y, ENTITY_DEFS['cal_ship_10_50_10000'])    
-    table.insert(self.entities, self.player)
-    self.player.body:setLinearVelocity(0, 19)
-    
-    --local body = Body(self.world, 0, 0, BODY_DEFS['cal_roid_100_10000000'])
-    --table.insert(self.bodies, body)
-    local body = Body(self.world, 400, 400, BODY_DEFS['cal_roid_100_10000000'])
-    table.insert(self.bodies, body)
 end
 
 function Universe:update(dt)

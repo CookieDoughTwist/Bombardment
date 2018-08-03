@@ -14,7 +14,7 @@ function Engine:init(index)
     self.stateMachine = StateMachine {
         ['focus'] = function() return EngineFocusState(self) end
     }
-    
+
     self:changeState('focus', {})
 end
 

@@ -15,6 +15,7 @@ function EngineFocusState:init(engine)
     self.angle = 0
     self.centerPlayer = false
     self.alignPlayer = false
+    self.focusIdx = 1
 end
 
 function EngineFocusState:enter(params)
@@ -25,7 +26,7 @@ function EngineFocusState:update(dt)
     --
     -- player control
     --
-    local player = self.engine.universe.player
+    local player = self.engine.universe.player[self.focusIdx]
     local rotVal = 0    
     if love.keyboard.isDown('a') then
         rotVal = rotVal - 1
