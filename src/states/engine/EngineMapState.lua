@@ -11,7 +11,7 @@ function EngineMapState:init(engine)
     self.engine.state = 'map'
     self.camX = 0                   -- meters
     self.camY = 0                   -- meters
-    self.zoom = 1                   -- meters/bit
+    self.zoom = MAP_ZOOM_MIN        -- meters/bit
     self.angle = 0
     self.centerObject = nil
 end
@@ -31,6 +31,11 @@ function EngineMapState:update(dt)
     end
     if love.wasPressed('increment') then
         self.zoom = math.max(self.zoom / MAP_ZOOM_RATIO, MAP_ZOOM_MIN)
+    end
+
+    -- camera position update
+    if self.centerObject then
+        self.camX, self.camY = self.centerObject.body:getPosition()
     end
 
     -- toggle off map state

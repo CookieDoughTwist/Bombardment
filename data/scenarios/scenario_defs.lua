@@ -54,7 +54,6 @@ SCENARIO_DEFS = {
                 x = 600+10000000,
                 y = 400,
                 dx = 0,
-                --dy = 19,
                 dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 200),
                 dr = 0
             }
