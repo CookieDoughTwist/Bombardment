@@ -19,7 +19,10 @@ function EngineFocusState:init(engine)
 end
 
 function EngineFocusState:enter(params)
-    
+    self.focusIdx = params.focusIdx or 1
+    -- initialize camera coodinates to the first frame from hopping
+    -- TODO: formalize initialization 8/4/18 -AW
+    self.camX, self.camY = self.engine.universe.player[self.focusIdx].body:getPosition()
 end
 
 function EngineFocusState:update(dt)
@@ -156,8 +159,8 @@ function EngineFocusState:render()
         local r = body.shape:getRadius()
 
         if (x-self.camX)^2 + (y-self.camY)^2 + r < m2Range then
-            local lx = math.floor((x - self.camX) * bpm + VIRTUAL_WIDTH_2)
-            local ly = math.floor((y - self.camY) * bpm + VIRTUAL_HEIGHT_2)
+            local lx = (x - self.camX) * bpm + VIRTUAL_WIDTH_2
+            local ly = (y - self.camY) * bpm + VIRTUAL_HEIGHT_2
             local lr = r * bpm
             love.graphics.circle('fill', lx, ly, lr)
         end

@@ -18,6 +18,12 @@ end
 
 function EngineMapState:enter(params)
     self.centerObject = params.centerObject
+    -- initialize camera coodinates to the first frame from hopping
+    -- TODO: formalize initialization 8/4/18 -AW
+    -- camera position update
+    if self.centerObject then
+        self.camX, self.camY = self.centerObject.body:getPosition()
+    end
 end
 
 function EngineMapState:update(dt)
@@ -63,7 +69,7 @@ function EngineMapState:render()
             local lx = (x - self.camX) * bpm + VIRTUAL_WIDTH_2
             local ly = (y - self.camY) * bpm + VIRTUAL_HEIGHT_2
             local lr = r * bpm
-            love.graphics.circle('fill', lx, ly, r)
+            love.graphics.circle('fill', lx, ly, lr)
         end
     end
 
