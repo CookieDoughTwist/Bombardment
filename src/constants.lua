@@ -9,10 +9,10 @@ WINDOW_HEIGHT = 1080
 -- size we're trying to emulate with push
 --VIRTUAL_WIDTH = 512
 --VIRTUAL_HEIGHT = 288
-VIRTUAL_WIDTH = 1024
-VIRTUAL_HEIGHT = 576
---VIRTUAL_WIDTH = 1920
---VIRTUAL_HEIGHT = 1080
+--VIRTUAL_WIDTH = 1024
+--VIRTUAL_HEIGHT = 576
+VIRTUAL_WIDTH = 1920
+VIRTUAL_HEIGHT = 1080
 
 VIRTUAL_WIDTH_2 = VIRTUAL_WIDTH / 2
 VIRTUAL_HEIGHT_2 = VIRTUAL_HEIGHT / 2
@@ -32,8 +32,8 @@ SELECTIONS_START = {
     'CAMPAIGN',
     'SANDBOX'
 }
-MENU_TEXT_JUMP = 48     -- menu option spacing (bits)
-MENU_BOX_PAD_X = 10     -- menu box padding (bits)    
+MENU_TEXT_JUMP = 96     -- menu option spacing (bits)
+MENU_BOX_PAD_X = 15     -- menu box padding (bits)    
 MENU_BOX_PAD_Y = -5    -- menu box padding (bits)    
 TEXT_BUFFER_X = -2      -- menu horizontal text buffer
 TEXT_BUFFER_Y = 2       -- menu vertical text buffer
@@ -52,7 +52,26 @@ MAP_ZOOM_RATIO = 2          -- the ratio increment to zoom
 MAP_ZOOM_MAX = 2048         -- max zoom out (meters/bit)
 MAP_ZOOM_MIN = 4         -- min zoom out (meters/bit)
 MAP_ROTATION_SPEED = math.rad(1)    -- rotation rate (radians/frame)
+CRAFT_RADIUS = 15
+CRAFT_EDGE = 8
+--[[
+CRAFT_VECTOR = {
+    -CRAFT_EDGE, -CRAFT_RADIUS,
+    CRAFT_EDGE, -CRAFT_RADIUS,
+    -CRAFT_EDGE, 2 * CRAFT_RADIUS,
+    CRAFT_EDGE, 2 * CRAFT_RADIUS,
+}
+]]
 
 -- physics
 G = 6.674E-11           -- gravitational constant
 M_SOL = 1.98847E30      -- solar mass
+
+
+
+-- colors
+SKY_BLUE = {135, 206, 250}
+CRIMSON = {220, 20, 60}
+LIGHT_GRAY = {211, 211, 211}
+GRAY = {128, 128, 128}
+BLACK = {0, 0, 0}

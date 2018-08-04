@@ -36,6 +36,14 @@ function addPointTable(table, point)
     end
 end
 
+function rotateTable(table, radians)
+    for n = 1, #table, 2 do
+        local xrot, yrot = rotateVector(table[n], table[n + 1], radians)
+        table[n] = xrot
+        table[n + 1] = yrot
+    end
+end
+
 function floorTable(table)
     for k, v in pairs(table) do
         table[k] = math.floor(v)
@@ -47,9 +55,10 @@ function unitizeVector(x, y)
     return x / mag, y / mag
 end
 
+-- TODO: requires modularization 8/4/18 -AW
 function drawSelectionsText(title, y)
     
-    love.graphics.setFont(gFonts['futureearth32'])
+    love.graphics.setFont(gFonts['futureearth64'])
     local textWidth = love.graphics.getFont():getWidth(title)
     local textHeight = love.graphics.getFont():getHeight(title)
     
@@ -96,11 +105,10 @@ function drawMenu(currentOption, y, tags)
         #tags * (maxTextHeight + MENU_BOX_PAD_Y / 2) + MENU_BOX_PAD_Y, 6)
         
     for k, tag in pairs(tags) do
-        love.graphics.setFont(gFonts['futureearth32'])
+        love.graphics.setFont(gFonts['futureearth64'])
         
         height = VIRTUAL_HEIGHT / 2 + y + 8 + MENU_TEXT_JUMP * (k - 1)
-        drawTextShadow(tag, height
-            )
+        drawTextShadow(tag, height)
 
         if currentOption == k then
             love.graphics.setColor(99, 155, 255, 255)

@@ -54,14 +54,14 @@ function TitleState:render()
     
     love.graphics.draw(gTextures['spacelandbg'], 0, 0)
     
-    love.graphics.setFont(gFonts['futureearth48'])
+    love.graphics.setFont(gFonts['futureearth64'])
     
     love.graphics.setColor(0, 0, 0, self.titleAlpha)
     love.graphics.printf('BOMBARDMENT', SHADOW_OFFSET, VIRTUAL_HEIGHT / 4 - 40 + SHADOW_OFFSET, VIRTUAL_WIDTH, 'center')
     love.graphics.setColor(255, 255, 255, self.titleAlpha)
     love.graphics.printf('BOMBARDMENT', 0, VIRTUAL_HEIGHT / 4 - 40, VIRTUAL_WIDTH, 'center')
     
-    love.graphics.setFont(gFonts['futureearth32'])
+    love.graphics.setFont(gFonts['futureearth48'])
     
     love.graphics.setColor(0, 0, 0, self.enterAlpha)
     love.graphics.printf('Press Enter', SHADOW_OFFSET, VIRTUAL_HEIGHT / 2 + 167 + SHADOW_OFFSET, VIRTUAL_WIDTH, 'center')

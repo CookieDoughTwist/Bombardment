@@ -14,7 +14,6 @@ function SelectionState:init()
     
     self.options = SELECTIONS_START
     
-    
     self.canInput = true
 end
 

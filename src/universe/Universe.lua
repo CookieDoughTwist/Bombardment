@@ -37,7 +37,8 @@ function Universe:loadScenario(scenarioName)
     for k, v in pairs(players) do
         local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[v.def_key])
         val.body:setLinearVelocity(v.dx, v.dy)
-        val.body:setAngularVelocity(v.dr)        
+        val.body:setAngularVelocity(v.dr)
+        val.allegiance = 1   
         table.insert(self.entities, val)
         table.insert(self.player, val)
     end

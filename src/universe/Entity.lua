@@ -17,6 +17,8 @@ function Entity:init(world, x, y, def)
     
     self.thrust = 1000000
     self.rotThrust = 100
+
+    self.allegiance = 0
 end
 
 function Entity:update(dt)    

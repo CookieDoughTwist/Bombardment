@@ -74,15 +74,46 @@ function EngineMapState:render()
     end
 
     for k, entity in pairs(universe.entities) do
-        love.graphics.setColor(128, 163, 15)
+        local curColor = nil
+        if entity.allegiance == 1 then
+            curColor = SKY_BLUE
+        elseif entity.allegiance == 0 then
+            curColor = GRAY
+        else
+            curColor = CRIMSON
+        end
+
         local x, y = entity.body:getPosition()
 
         if (x-self.camX)^2 + (y-self.camY)^2 < m2Range then
+            --[[
             local polyPoints = {entity.body:getWorldPoints(entity.shape:getPoints())}                        
             addPointTable(polyPoints, {-self.camX, -self.camY})
             multiplyTable(polyPoints, bpm)
             addPointTable(polyPoints, {VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2})
             love.graphics.polygon('fill', polyPoints)
+            ]]
+            local lx = (x - self.camX) * bpm + VIRTUAL_WIDTH_2
+            local ly = (y - self.camY) * bpm + VIRTUAL_HEIGHT_2
+
+            local rec = {
+                -CRAFT_EDGE, -2 * CRAFT_EDGE,
+                CRAFT_EDGE, -2 * CRAFT_EDGE,
+                CRAFT_EDGE, 6 * CRAFT_EDGE,
+                -CRAFT_EDGE, 6 * CRAFT_EDGE
+            }
+            rotateTable(rec, entity.body:getAngle())       
+            addPointTable(rec, {lx, ly})
+            love.graphics.setColor(curColor)
+            love.graphics.polygon('fill', rec)
+            love.graphics.setColor(BLACK)
+            --love.graphics.polygon('line', rec)
+
+            love.graphics.setColor(curColor)
+            love.graphics.circle('fill', lx, ly, CRAFT_RADIUS)
+            love.graphics.setColor(BLACK)
+            --love.graphics.circle('line', lx, ly, CRAFT_RADIUS)
+
         end
     end
 end
