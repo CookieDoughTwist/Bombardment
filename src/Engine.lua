@@ -27,13 +27,13 @@ end
 
 function Engine:update(dt)
 
-    -- state machine handles all external inputs
-    -- this includes player control
-    self.stateMachine:update(dt)
-
     -- update the universe
     -- only responsible for incrementing physics
     self.universe:update(dt)
+
+    -- state machine handles all external inputs
+    -- this includes player control (any changes applied next step)
+    self.stateMachine:update(dt)
 end
 
 function Engine:render()

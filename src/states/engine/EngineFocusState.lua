@@ -172,7 +172,6 @@ function EngineFocusState:render()
             addPointTable(polyPoints, {-self.camX, -self.camY})
             multiplyTable(polyPoints, bpm)
             addPointTable(polyPoints, {VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2})
-            --floorTable(polyPoints)
             love.graphics.polygon('fill', polyPoints)
         end
     end
