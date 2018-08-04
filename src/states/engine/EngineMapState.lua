@@ -106,12 +106,12 @@ function EngineMapState:render()
             addPointTable(rec, {lx, ly})
             love.graphics.setColor(curColor)
             love.graphics.polygon('fill', rec)
-            love.graphics.setColor(BLACK)
+            --love.graphics.setColor(BLACK)
             --love.graphics.polygon('line', rec)
 
             love.graphics.setColor(curColor)
             love.graphics.circle('fill', lx, ly, CRAFT_RADIUS)
-            love.graphics.setColor(BLACK)
+            --love.graphics.setColor(BLACK)
             --love.graphics.circle('line', lx, ly, CRAFT_RADIUS)
 
         end

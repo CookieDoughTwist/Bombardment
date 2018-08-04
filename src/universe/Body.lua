@@ -17,6 +17,12 @@ function Body:init(world, x, y, def)
     self.mass = mass
 end
 
+function Body:setState(state)
+    self.body:setLinearVelocity(state.dx, state.dy)
+    self.body:setAngularVelocity(state.dr)
+    self.fixture:setUserData(userData or 'body')
+end
+
 function Body:exertGravity(entity)
     local bx, by = self.body:getPosition()
     local ex, ey = entity.body:getPosition()

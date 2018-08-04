@@ -12,5 +12,5 @@ ENTITY_DEFS = {
         width = 10,
         height = 50,
         mass = 10000
-    }    
+    }
 }

@@ -21,6 +21,13 @@ function Entity:init(world, x, y, def)
     self.allegiance = 0
 end
 
+function Entity:setState(state, userData)
+    self.body:setLinearVelocity(state.dx, state.dy)
+    self.body:setAngularVelocity(state.dr)
+    self.fixture:setUserData(userData or 'entity')
+    self.allegiance = state.allegiance or 0
+end
+
 function Entity:update(dt)    
   
 end
