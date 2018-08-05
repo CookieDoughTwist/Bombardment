@@ -46,6 +46,8 @@ FOCUS_ZOOM_MAX = 16             -- max zoom out (meters/bit)
 FOCUS_ZOOM_MIN = 0.125          -- min zoom out (meters/bit)
 FOCUS_ROTATION_SPEED = math.rad(1)    -- rotation rate (radians/frame)
 
+CRAFT_THROTTLE_RATE = 0.01       -- percent increment per frame
+
 -- map state
 MAP_SCROLL_SPEED = 10       -- scroll speed (bits/frame)
 MAP_ZOOM_RATIO = 2          -- the ratio increment to zoom

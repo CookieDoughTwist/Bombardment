@@ -21,7 +21,8 @@ function Entity:init(world, x, y, def)
     self.rotThrust = 100
 
     -- thruster state
-    self.thrustLevel = 0
+    self.thrusterOn = false
+    self.throttle = 0
     self.thrustLoc = {0, -33}
 
     -- object hostility
@@ -41,21 +42,10 @@ end
 
 function Entity:update(dt)    
 
+    self:move()
+
     -- reset greatest pull
     self.greatestPull = 0
-end
-
--- throttle is between -1 and 1
-function Entity:move(throttle)
-
-    self.thrustLevel = throttle
-    local rot = self.body:getAngle()
-    self.body:applyForce(rotateVector(0, self.thrust * throttle, rot))
-end
-
--- throttle is between -1 and 1
-function Entity:rotate(throttle)
-    self.body:applyTorque(self.rotThrust * throttle)
 end
 
 -- called by Body
@@ -89,7 +79,7 @@ function Entity:render(camX, camY, bpm, showHitbox)
     love.graphics.setColor(FULL_COLOR)
     love.graphics.draw(gTextures['standard_craft'], lx, ly, la, iZoom, iZoom, iWidth_2, iHeight_2)
 
-    if self.thrustLevel > 0 then
+    if self.throttle > 0 then
 
         local px, py = rotateVector(self.thrustLoc[1], self.thrustLoc[2], la + math.pi)
         local tx = px * bpm + lx
@@ -106,6 +96,44 @@ function Entity:render(camX, camY, bpm, showHitbox)
         love.graphics.setColor(128, 163, 15, 200)
         love.graphics.polygon('fill', polyPoints)
     end
+end
+
+--
+-- craft functions
+--
+
+-- throttle is between -1 and 1
+function Entity:move()
+    
+    local rot = self.body:getAngle()
+    self.body:applyForce(rotateVector(0, self.thrust * self.throttle, rot))
+end
+
+-- throttle is between -1 and 1
+function Entity:rotate(throttle)
+    self.body:applyTorque(self.rotThrust * throttle)
+end
+
+function Entity:toggleThruster()
+    self.thrusterOn = not self.thrusterOn
+end
+
+function Entity:throttleDown()
+    -- TODO: rework to for nonzero minimum throttle 8/5/18 -AW
+    self.throttle = math.max(self.throttle - CRAFT_THROTTLE_RATE, 0)
+end
+
+function Entity:throttleUp()
+    -- TODO: rework to for nonzero minimum throttle 8/5/18 -AW
+    self.throttle = math.min(self.throttle + CRAFT_THROTTLE_RATE, 1)
+end
+
+function Entity:throttleMax()
+    self.throttle = 1
+end
+
+function Entity:throttleMin()
+    self.throttle = 0
 end
 
 --

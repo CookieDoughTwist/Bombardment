@@ -55,24 +55,32 @@ function EngineFocusState:update(dt)
 
     -- craft rotation
     local rotVal = 0    
-    if love.keyboard.isDown('a') then
+    if love.keyboard.isDown('q') then
         rotVal = rotVal - 1
     end
-    if love.keyboard.isDown('d') then
+    if love.keyboard.isDown('e') then
         rotVal = rotVal + 1
     end
     player:rotate(rotVal)
     
-    -- craft thrust
-    local movVal = 0
-    if love.keyboard.isDown('w') then
-        movVal = movVal + 1
+    -- craft thrust    
+    if love.keyboard.wasPressed('w') then
+        player:toggleThruster()
     end
-    if love.keyboard.isDown('s') then
-        --movVal = movVal - 1
+    if love.keyboard.isDown('lshift') then
+        player:throttleUp()
     end
-    player:move(movVal)
-    
+    if love.keyboard.isDown('lctrl') then
+        player:throttleDown()
+    end
+    if love.keyboard.wasPressed('z') then
+        player:throttleMax()
+    end
+    if love.keyboard.wasPressed('x') then
+        player:throttleMin()
+    end
+
+
     --
     -- camera control
     --
