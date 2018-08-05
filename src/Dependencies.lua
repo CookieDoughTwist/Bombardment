@@ -51,6 +51,8 @@ gTextures = {
     ['spacelandbg'] = love.graphics.newImage(imgLoc .. 'spacemountainplanet.png'),
     ['standard_craft'] = love.graphics.newImage(imgLoc .. 'standard_ship_base_red.png'),
     ['large_plume'] = love.graphics.newImage(imgLoc .. 'exaggerated_exhaust_plume.png'),
+    --https://www.vectorstock.com/royalty-free-vector/protractor-actual-size-graduation-vector-12617847
+
 }
 
 -- fonts
@@ -61,7 +63,10 @@ gFonts = {
     ['retroblock32'] = love.graphics.newFont(fntLoc .. 'retroblock.ttf', 32),
     ['futureearth32'] = love.graphics.newFont(fntLoc .. 'Future-Earth.ttf', 32),
     ['futureearth48'] = love.graphics.newFont(fntLoc .. 'Future-Earth.ttf', 48),
-    ['futureearth64'] = love.graphics.newFont(fntLoc .. 'Future-Earth.ttf', 64)
+    ['futureearth64'] = love.graphics.newFont(fntLoc .. 'Future-Earth.ttf', 64),
+    -- http://www.fontspace.com/chequered-ink/casanova-scotia
+    ['casanovascotia16'] = love.graphics.newFont(fntLoc .. 'Casanova-Scotia.otf', 16),
+    ['casanovascotia32'] = love.graphics.newFont(fntLoc .. 'Casanova-Scotia.otf', 32),
 }
 
     

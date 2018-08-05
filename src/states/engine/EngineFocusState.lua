@@ -159,63 +159,33 @@ function EngineFocusState:render()
     love.graphics.rotate(-self.angle)
     love.graphics.translate(-VIRTUAL_WIDTH_2, -VIRTUAL_HEIGHT_2)
 
+    -- render bodies
     for k, body in pairs(universe.bodies) do
-        love.graphics.setColor(100, 100, 100)
+        
         local x, y = body.body:getPosition()
         local r = body.shape:getRadius()
 
-        if (x-self.camX)^2 + (y-self.camY)^2 + r < m2Range then
-            local lx = (x - self.camX) * bpm + VIRTUAL_WIDTH_2
-            local ly = (y - self.camY) * bpm + VIRTUAL_HEIGHT_2
-            local lr = r * bpm
-            love.graphics.circle('fill', lx, ly, lr)
+        -- only render if the body will appear on the screen
+        if (x - self.camX)^2 + (y - self.camY)^2 + r < m2Range then
+            body:render(self.camX, self.camY, bpm)
         end
     end
 
+    -- render entities
     for k, entity in pairs(universe.entities) do
+
         local x, y = entity.body:getPosition()
+
+        -- only render if the entity will appear on the screen
         if (x - self.camX)^2 + (y - self.camY)^2 < m2Range then
             entity:render(self.camX, self.camY, bpm, self.showHitbox)
         end
     end
-end
 
---[[
-    original renderer here for temporary reference, love's btuiltin translate function
-        cannot handle large scales and the zoom ordering exacerbates rounding errors
-function EngineFocusState:render_old()
-    
-    local universe = self.engine.universe
-    
-    love.graphics.push()    
-    
-    local xBit = -math.floor(self.camX / self.zoom - VIRTUAL_WIDTH / 2)
-    local yBit = -math.floor(self.camY / self.zoom - VIRTUAL_HEIGHT / 2)
-    
-    love.graphics.translate(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2)
-    love.graphics.rotate(-self.angle)
-    -- TODO: consolidate this translation 8/1/18 -AW
-    love.graphics.translate(-VIRTUAL_WIDTH / 2, -VIRTUAL_HEIGHT / 2)
-    love.graphics.translate(xBit, yBit)
-    
-    for k, body in pairs(universe.bodies) do
-        love.graphics.setColor(100, 100, 100)
-        local x = body.body:getX() / self.zoom
-        local y = body.body:getY() / self.zoom
-        local r = body.shape:getRadius() / self.zoom
-        love.graphics.circle('fill', x, y, r)
-    end
-    
-    for k, entity in pairs(universe.entities) do
-        love.graphics.setColor(128, 163, 15)
-        local polyPoints = {entity.body:getWorldPoints(entity.shape:getPoints())}
-        multiplyTable(polyPoints, 1 / self.zoom)
-        love.graphics.polygon('fill', polyPoints)
-    end
-    
-    love.graphics.pop()
-    
-    -- UI
+    -- render UI
+    local focusEntity = self.engine.universe.player[self.focusIdx]
+    --print_r(focuseEntity)
+    local orbVel = focusEntity:getOrbitalVelocity()
+    love.graphics.setFont(gFonts['casanovascotia32'])
+    love.graphics.printf(string.format('%.2f m/s', orbVel), 0, 0, VIRTUAL_WIDTH, 'left')
 end
-
-]]

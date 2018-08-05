@@ -18,7 +18,12 @@ function Entity:init(world, x, y, def)
     self.thrust = 1000000
     self.rotThrust = 100
 
+    -- object hostility
     self.allegiance = 0
+
+    -- track orbiting body
+    self.orbitingBody = nil
+    self.greatestPull = 0
 end
 
 function Entity:setState(state, userData)
@@ -29,7 +34,9 @@ function Entity:setState(state, userData)
 end
 
 function Entity:update(dt)    
-  
+
+    -- reset greatest pull
+    self.greatestPull = 0
 end
 
 -- throttle is between -1 and 1
@@ -41,6 +48,19 @@ end
 -- throttle is between -1 and 1
 function Entity:rotate(throttle)
     self.body:applyTorque(self.rotThrust * throttle)
+end
+
+-- called by Body
+function Entity:exertGravity(g, ux, uy, body)
+
+    -- apply force
+    self.body:applyForce(ux * g, uy * g)
+
+    -- check for greatest gravitational pull
+    if g > self.greatestPull then
+        self.orbitingBody = body
+        self.greatestPull = g
+    end
 end
 
 function Entity:render(camX, camY, bpm, showHitbox)
@@ -65,4 +85,21 @@ function Entity:render(camX, camY, bpm, showHitbox)
         love.graphics.setColor(128, 163, 15, 200)
         love.graphics.polygon('fill', polyPoints)
     end
+end
+
+--
+-- query functions
+--
+
+function Entity:getOrbitalVelocity()
+
+    if not self.orbitingBody then
+        return 0
+    end
+
+    local ovx, ovy = self.orbitingBody.body:getLinearVelocity()
+    local vx, vy = self.body:getLinearVelocity()
+
+    -- TODO: CHECK: this is might not be "orbital velocity" 8/5/18 -AW
+    return math.sqrt((vx - ovx)^2 + (vy - ovy)^2)
 end

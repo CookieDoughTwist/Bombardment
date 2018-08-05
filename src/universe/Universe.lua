@@ -100,3 +100,8 @@ function Universe:update(dt)
         end
     end
 end
+
+--
+-- query functions
+--
+

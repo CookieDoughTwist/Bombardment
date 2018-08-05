@@ -31,10 +31,19 @@ function Body:exertGravity(entity)
     local r2 = ebx^2 + eby^2
     local g = G * self.mass * entity.body:getMass() / r2    
     local ux, uy = unitizeVector(ebx, eby)
-    entity.body:applyForce(ux * g, uy * g)
+    entity:exertGravity(g, ux, uy, self)    
 end
 
 function Body:update(dt)
     
 end
 
+function Body:render(camX, camY, bpm)
+    local x, y = self.body:getPosition()
+    local r = self.shape:getRadius()
+    local lx = (x - camX) * bpm + VIRTUAL_WIDTH_2
+    local ly = (y - camY) * bpm + VIRTUAL_HEIGHT_2
+    local lr = r * bpm
+    love.graphics.setColor(100, 100, 100)
+    love.graphics.circle('fill', lx, ly, lr)
+end
