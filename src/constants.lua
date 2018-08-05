@@ -43,7 +43,7 @@ T_TRANSITION = 0.1        -- time to transition to selection
 FOCUS_SCROLL_SPEED = 10         -- scroll speed (bits/frame)
 FOCUS_ZOOM_RATIO = 2            -- the ratio increment to zoom
 FOCUS_ZOOM_MAX = 128           -- max zoom out (meters/bit)
-FOCUS_ZOOM_MIN = 0.25           -- min zoom out (meters/bit)
+FOCUS_ZOOM_MIN = 0.125          -- min zoom out (meters/bit)
 FOCUS_ROTATION_SPEED = math.rad(1)    -- rotation rate (radians/frame)
 
 -- map state
@@ -70,6 +70,7 @@ M_SOL = 1.98847E30      -- solar mass
 
 
 -- colors
+FULL_COLOR = {255, 255, 255, 255}   -- enable all colors and no transparency
 SKY_BLUE = {135, 206, 250}
 CRIMSON = {220, 20, 60}
 LIGHT_GRAY = {211, 211, 211}

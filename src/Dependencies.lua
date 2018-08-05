@@ -49,6 +49,8 @@ imgLoc = 'resources/graphics/'
 gTextures = {
     --https://wallpaper.wiki/download-1080p-space-backgrounds-free.html/wallpaper-wiki-free-download-1080p-space-background-pic-wpd008677/
     ['spacelandbg'] = love.graphics.newImage(imgLoc .. 'spacemountainplanet.png'),
+    ['standard_craft'] = love.graphics.newImage(imgLoc .. 'standard_ship_base_red.png'),
+    ['large_plume'] = love.graphics.newImage(imgLoc .. 'exaggerated_exhaust_plume.png'),
 }
 
 -- fonts

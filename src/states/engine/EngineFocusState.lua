@@ -16,6 +16,7 @@ function EngineFocusState:init(engine)
     self.centerPlayer = true
     self.alignPlayer = false
     self.focusIdx = 1
+    self.showHitbox = false
 end
 
 function EngineFocusState:enter(params)
@@ -137,6 +138,11 @@ function EngineFocusState:update(dt)
         end
     end
 
+    -- toggle hitboxes
+    if love.keyboard.wasPressed('h') then
+        self.showHitbox = not self.showHitbox
+    end
+
     -- toggle on map state
     if love.keyboard.wasPressed('m') then
         self.engine:changeState('map', {centerObject = player})
@@ -166,16 +172,29 @@ function EngineFocusState:render()
         end
     end
 
-    for k, entity in pairs(universe.entities) do
-        love.graphics.setColor(128, 163, 15)
+    for k, entity in pairs(universe.entities) do        
         local x, y = entity.body:getPosition()
 
         if (x-self.camX)^2 + (y-self.camY)^2 < m2Range then
-            local polyPoints = {entity.body:getWorldPoints(entity.shape:getPoints())}                        
-            addPointTable(polyPoints, {-self.camX, -self.camY})
-            multiplyTable(polyPoints, bpm)
-            addPointTable(polyPoints, {VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2})
-            love.graphics.polygon('fill', polyPoints)
+            local lx = (x - self.camX) * bpm + VIRTUAL_WIDTH_2
+            local ly = (y - self.camY) * bpm + VIRTUAL_HEIGHT_2
+            local la = entity.body:getAngle()
+            -- TODO: modularize zoom 8/4/18 -AW
+            local iZoom = 0.125 * bpm -- meters/bit
+            local cimage = gTextures['standard_craft']
+            local iWidth, iHeight = cimage:getDimensions()
+            local iWidth_2, iHeight_2 = iWidth / 2, iHeight / 2
+
+            love.graphics.setColor(FULL_COLOR)
+            love.graphics.draw(gTextures['standard_craft'], lx, ly, la, iZoom, iZoom, iWidth_2, iHeight_2)
+            if self.showHitbox then                
+                local polyPoints = {entity.body:getWorldPoints(entity.shape:getPoints())}                        
+                addPointTable(polyPoints, {-self.camX, -self.camY})
+                multiplyTable(polyPoints, bpm)
+                addPointTable(polyPoints, {VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2})
+                love.graphics.setColor(128, 163, 15, 200)
+                love.graphics.polygon('fill', polyPoints)
+            end
         end
     end
 end
