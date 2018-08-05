@@ -9,14 +9,20 @@ function Entity:init(world, x, y, def)
     local width = def.width
     local height = def.height
     local mass = def.mass
+
+    -- initialize Box2D
     self.body = love.physics.newBody(world, x, y, 'dynamic')
     self.shape = love.physics.newRectangleShape(width, height)
     self.fixture = love.physics.newFixture(self.body, self.shape)
-    
     self.body:setMass(mass)    
     
+    -- verhicle properties
     self.thrust = 1000000
     self.rotThrust = 100
+
+    -- thruster state
+    self.thrustLevel = 0
+    self.thrustLoc = {0, -33}
 
     -- object hostility
     self.allegiance = 0
@@ -41,6 +47,8 @@ end
 
 -- throttle is between -1 and 1
 function Entity:move(throttle)
+
+    self.thrustLevel = throttle
     local rot = self.body:getAngle()
     self.body:applyForce(rotateVector(0, self.thrust * throttle, rot))
 end
@@ -64,19 +72,32 @@ function Entity:exertGravity(g, ux, uy, body)
 end
 
 function Entity:render(camX, camY, bpm, showHitbox)
+
+    -- get position in world coordinates and meters
     local x, y = self.body:getPosition()
 
+    -- convert to screen position in bits
     local lx = (x - camX) * bpm + VIRTUAL_WIDTH_2
     local ly = (y - camY) * bpm + VIRTUAL_HEIGHT_2
+    -- TODO: formalize angle (resource images are pointed up),
+    -- but the game points down 8/5/18 -AW
     local la = self.body:getAngle() + math.pi
     -- TODO: modularize zoom 8/4/18 -AW
-    local iZoom = 0.125 * bpm -- meters/bit
-    local cimage = gTextures['standard_craft']
-    local iWidth, iHeight = cimage:getDimensions()
-    local iWidth_2, iHeight_2 = iWidth / 2, iHeight / 2
+    local iZoom = 0.125 * bpm -- meters/bit    
+    local iWidth_2, iHeight_2 = getImageHalfDimensions('standard_craft')
 
     love.graphics.setColor(FULL_COLOR)
     love.graphics.draw(gTextures['standard_craft'], lx, ly, la, iZoom, iZoom, iWidth_2, iHeight_2)
+
+    if self.thrustLevel > 0 then
+
+        local px, py = rotateVector(self.thrustLoc[1], self.thrustLoc[2], la + math.pi)
+        local tx = px * bpm + lx
+        local ty = py * bpm + ly
+        local hiWidth_2, hiHeight_2 = getImageHalfDimensions('large_plume')
+        love.graphics.draw(gTextures['large_plume'], tx, ty, la, iZoom, iZoom, hiWidth_2, hiHeight_2)
+    end
+
     if showHitbox then                
         local polyPoints = {self.body:getWorldPoints(self.shape:getPoints())}                        
         addPointTable(polyPoints, {-camX, -camY})

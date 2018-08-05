@@ -186,6 +186,7 @@ function EngineFocusState:render()
     local focusEntity = self.engine.universe.player[self.focusIdx]
     --print_r(focuseEntity)
     local orbVel = focusEntity:getOrbitalVelocity()
+    love.graphics.setColor(FULL_COLOR)
     love.graphics.setFont(gFonts['casanovascotia32'])
     love.graphics.printf(string.format('%.2f m/s', orbVel), 0, 0, VIRTUAL_WIDTH, 'left')
 end

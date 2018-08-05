@@ -55,6 +55,13 @@ function unitizeVector(x, y)
     return x / mag, y / mag
 end
 
+function getImageHalfDimensions(imageTag)
+    local image = gTextures[imageTag]
+    local iWidth, iHeight = image:getDimensions()
+    local iWidth_2, iHeight_2 = iWidth / 2, iHeight / 2
+    return iWidth_2, iHeight_2
+end
+
 -- TODO: requires modularization 8/4/18 -AW
 function drawSelectionsText(title, y)
     
