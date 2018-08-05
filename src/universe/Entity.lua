@@ -42,3 +42,27 @@ end
 function Entity:rotate(throttle)
     self.body:applyTorque(self.rotThrust * throttle)
 end
+
+function Entity:render(camX, camY, bpm, showHitbox)
+    local x, y = self.body:getPosition()
+
+    local lx = (x - camX) * bpm + VIRTUAL_WIDTH_2
+    local ly = (y - camY) * bpm + VIRTUAL_HEIGHT_2
+    local la = self.body:getAngle() + math.pi
+    -- TODO: modularize zoom 8/4/18 -AW
+    local iZoom = 0.125 * bpm -- meters/bit
+    local cimage = gTextures['standard_craft']
+    local iWidth, iHeight = cimage:getDimensions()
+    local iWidth_2, iHeight_2 = iWidth / 2, iHeight / 2
+
+    love.graphics.setColor(FULL_COLOR)
+    love.graphics.draw(gTextures['standard_craft'], lx, ly, la, iZoom, iZoom, iWidth_2, iHeight_2)
+    if showHitbox then                
+        local polyPoints = {self.body:getWorldPoints(self.shape:getPoints())}                        
+        addPointTable(polyPoints, {-camX, -camY})
+        multiplyTable(polyPoints, bpm)
+        addPointTable(polyPoints, {VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2})
+        love.graphics.setColor(128, 163, 15, 200)
+        love.graphics.polygon('fill', polyPoints)
+    end
+end
