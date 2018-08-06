@@ -16,22 +16,22 @@ ENTITY_DEFS = {
             {
                 def_key = 'conventional_ball_turret',
                 location = {-5, 10},
-                orientation = {-1, 0}
+                orientation = math.rad(math.pi / 2)
             },
             {
                 def_key = 'conventional_ball_turret',
                 location = {-5, -10},
-                orientation = {-1, 0}
+                orientation = math.rad(math.pi / 2)
             },
             {
                 def_key = 'conventional_ball_turret',
                 location = {5, 10},
-                orientation = {1, 0}
+                orientation = math.rad(-math.pi / 2)
             },
             {
                 def_key = 'conventional_ball_turret',
                 location = {5, -10},
-                orientation = {1, 0}
+                orientation = math.rad(-math.pi / 2)
             }
         }
     },

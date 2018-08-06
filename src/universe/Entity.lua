@@ -13,6 +13,7 @@ function Entity:init(world, x, y, def)
     local gimbal = def.gimbal
     local vectoring = def.vectoring
     local thrustLoc = def.thrustLoc
+    local addons = def.addons
 
     -- initialize Box2D
     self.body = love.physics.newBody(world, x, y, 'dynamic')
@@ -34,8 +35,14 @@ function Entity:init(world, x, y, def)
     self.gimbal = gimbal
     self.vectoring = math.rad(vectoring)
     self.thrustLoc = thrustLoc
-    self.hp = 0
+    self.hp = 50
     self.hpMax = 100
+    if addons then
+        self.addons = {}
+        for k, addon_def in pairs(addons) do
+            table.insert(self.addons, Addon(self, addon_def))
+        end
+    end
 
     -- control state
     self.thrusterOn = false
@@ -91,11 +98,11 @@ end
 function Entity:render(camX, camY, bpm, showHitbox)
 
     -- get position in world coordinates and meters
-    local x, y = self.body:getPosition()
+    local x, y = self.body:getPosition()                -- meters
 
     -- convert to screen position in bits
-    local lx = (x - camX) * bpm + VIRTUAL_WIDTH_2
-    local ly = (y - camY) * bpm + VIRTUAL_HEIGHT_2
+    local lx = (x - camX) * bpm + VIRTUAL_WIDTH_2       -- bits
+    local ly = (y - camY) * bpm + VIRTUAL_HEIGHT_2      -- bits
     -- TODO: formalize angle (resource images are pointed up),
     -- but the game points down 8/5/18 -AW
     local la = self.body:getAngle() + math.pi
@@ -106,8 +113,10 @@ function Entity:render(camX, camY, bpm, showHitbox)
     love.graphics.setColor(FULL_COLOR)
     love.graphics.draw(gTextures['standard_craft'], lx, ly, la, iZoom, iZoom, iWidth_2, iHeight_2)
 
+    -- draw engine activity if on
     if self.thrusterOn then
 
+        -- choose exhaust sprite based on engine level
         local iTag = nil
         -- TODO: remove hard coding 8/5/18 -AW
         local hardOff = 0
@@ -121,13 +130,22 @@ function Entity:render(camX, camY, bpm, showHitbox)
             iTag = 'large_plume'
             hardOff = -3
         end
+
+        -- check if any sprite is chosen
         if iTag then
+            -- plume angle
             local pa = la - self.rotateThrottle * self.vectoring
             local px, py = rotateVector(self.thrustLoc[1], self.thrustLoc[2] + hardOff, pa + math.pi)
-            local tx = px * bpm + lx
-            local ty = py * bpm + ly
+            local tx, ty = px * bpm + lx, py * bpm + ly            
             local hiWidth_2, hiHeight_2 = getImageHalfDimensions(iTag)
             love.graphics.draw(gTextures[iTag], tx, ty, pa, iZoom * plumeScale, iZoom * plumeScale, hiWidth_2, hiHeight_2)
+        end
+    end
+
+    -- draw addons
+    if self.addons then
+        for k, addon in pairs(self.addons) do
+            addon:render(lx, ly, la, bpm)
         end
     end
 

@@ -30,6 +30,7 @@ require 'src/states/engine/EngineMapState'
 require 'src/universe/Universe'
 require 'src/universe/Entity'
 require 'src/universe/Body'
+require 'src/universe/Addon'
 
 -- definitions
 require 'data/definitions/entity_defs'
@@ -49,12 +50,17 @@ gSounds = {
 imgLoc = 'resources/graphics/'
 gTextures = {
     --https://wallpaper.wiki/download-1080p-space-backgrounds-free.html/wallpaper-wiki-free-download-1080p-space-background-pic-wpd008677/
-    ['spacelandbg'] = love.graphics.newImage(imgLoc .. 'spacemountainplanet.png'),
-    ['standard_craft'] = love.graphics.newImage(imgLoc .. 'standard_ship_base_red.png'),
-    ['large_plume'] = love.graphics.newImage(imgLoc .. 'exaggerated_exhaust_plume.png'),
-    ['medium_plume'] = love.graphics.newImage(imgLoc .. 'yellow_exhaust_plume.png'),
-    --https://www.vectorstock.com/royalty-free-vector/protractor-actual-size-graduation-vector-12617847
+    ['spacelandbg'] = love.graphics.newImage(imgLoc .. 'backgrounds/spacemountainplanet.png'),
+    ['standard_craft'] = love.graphics.newImage(imgLoc .. 'entities/ships/standard_ship_base_red.png'),
+    ['large_plume'] = love.graphics.newImage(imgLoc .. 'entities/ships/exaggerated_exhaust_plume.png'),
+    ['medium_plume'] = love.graphics.newImage(imgLoc .. 'entities/ships/yellow_exhaust_plume.png'),
+    ['tungsten_shell'] = love.graphics.newImage(imgLoc .. 'entities/projectiles/kinetics/tungsten_shell.png'),
+    ['tungsten_shell_flare'] = love.graphics.newImage(imgLoc .. 'entities/projectiles/kinetics/tungsten_shell_flare.png'),
+    ['generic_missile'] = love.graphics.newImage(imgLoc .. 'entities/projectiles/missiles/generic_missile.png'),
+    ['missile_exhaust'] = love.graphics.newImage(imgLoc .. 'entities/projectiles/missiles/missile_exhaust.png'),
 
+    
+    --https://www.vectorstock.com/royalty-free-vector/protractor-actual-size-graduation-vector-12617847
 }
 
 -- fonts
