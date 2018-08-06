@@ -11,6 +11,14 @@ function rotateVector(x, y, radians)
     return xrot, yrot
 end
 
+function rotateTable(table, radians)
+    for n = 1, #table, 2 do
+        local xrot, yrot = rotateVector(table[n], table[n + 1], radians)
+        table[n] = xrot
+        table[n + 1] = yrot
+    end
+end
+
 function multiplyTable(table, factor)
     for k, v in pairs(table) do
         table[k] = v * factor
@@ -36,14 +44,6 @@ function addPointTable(table, point)
     end
 end
 
-function rotateTable(table, radians)
-    for n = 1, #table, 2 do
-        local xrot, yrot = rotateVector(table[n], table[n + 1], radians)
-        table[n] = xrot
-        table[n + 1] = yrot
-    end
-end
-
 function floorTable(table)
     for k, v in pairs(table) do
         table[k] = math.floor(v)
@@ -64,6 +64,11 @@ function getImageHalfDimensions(imageTag)
     local iWidth, iHeight = image:getDimensions()
     local iWidth_2, iHeight_2 = iWidth / 2, iHeight / 2
     return iWidth_2, iHeight_2
+end
+
+-- forcing down to be 0 degrees
+function drawArc(drawmode, arctype, x, y, radius, angle1, angle2, segments)
+    love.graphics.arc(drawmode, arctype, x, y, radius, angle1 + PI_2, angle2 + PI_2, segments)
 end
 
 -- TODO: requires modularization 8/4/18 -AW

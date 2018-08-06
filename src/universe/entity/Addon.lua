@@ -22,7 +22,7 @@ function Addon:init(entity, config)
 
     -- state
     self.active = true
-    self.angle = 0
+    self.angle = PI_4
     self.cycle = 0
     self.engaging = nil
     self.acceptableRange = 1E3
@@ -44,28 +44,49 @@ function Addon:update(dt)
     end
 end
 
-function Addon:render(lx, ly, entityAngle, bpm, showRange)
+function Addon:render(lx, ly, bpm, showHitbox, showRange)
+
+    local entityAngle = self.entity.body:getAngle()
 
     local baseAngle = entityAngle + self.orientation
 
     local ax, ay = rotateVector(self.location[1], self.location[2], entityAngle)
     --local ax, ay = self:getPosition()
     local bx, by = ax * bpm + lx, ay * bpm + ly
+
+    -- TODO: define this somewhere 8/6/18 -AW
+    local turretRadius = 1
+
     love.graphics.setColor(FULL_COLOR)
     if self.base then
+
     else
-        love.graphics.circle('fill', bx, by, 5)
-        --love.graphics.arc('fill', bx, by, 5)
+        love.graphics.setColor(GRAY)
+        drawArc('fill', 'pie', bx, by, turretRadius * bpm, baseAngle - PI_2, baseAngle + PI_2)
     end
+
     if self.barrel then
     else
-
+        love.graphics.setColor(GRAY)
+        local barrel = {
+            -0.25, 0,
+            0.25, 0,
+            0.25, 4,
+            -0.25, 4,
+        }
+        rotateTable(barrel, baseAngle + self.angle)        
+        multiplyTable(barrel, bpm)
+        addPointTable(barrel, {bx, by})        
+        love.graphics.polygon('fill', barrel)
     end
 
-
+    if showHitbox then
+        love.graphics.setColor(200, 0, 200, 255)
+        love.graphics.circle('fill', bx, by, turretRadius)
+    end
     if showRange then
-        love.graphics.setColor(163, 128, 15, 100)
-        love.graphics.arc('fill', bx, by, self.acceptableRange * bpm, baseAngle - self.arc_2, baseAngle + self.arc_2)
+        love.graphics.setColor(163, 15, 128, 100)
+        drawArc('fill', 'pie', bx, by, self.acceptableRange * bpm, baseAngle - self.arc_2, baseAngle + self.arc_2)
     end
 
 end
@@ -88,7 +109,15 @@ function Addon:refreshEngagement()
 end
 
 function Addon:fire()
+
+    -- cannot fire before cooldown (for now)
+    if self.cycle > 0 then
+        return
+    end
+
     self.cycle = self.cooldown
+
+
 end
 
 function Addon:checkArcRange(target)
@@ -118,4 +147,8 @@ end
 
 function Addon:getNeutralBoresight()
     return rotateVector(self.neutralBoresight[1], self.neutralBoresight[1], self.entity.body:getAngle())
+end
+
+function Addon:getBoresight()
+    return 
 end

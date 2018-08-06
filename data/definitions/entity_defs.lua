@@ -2,6 +2,9 @@
 
 ]]
 
+-- REMINDER: orientation of 0 is pointing down
+--           positive angles go clockwise
+
 ENTITY_DEFS = {
     ['cal_ship_10_50_10000'] = {
         width = 10,
@@ -12,19 +15,18 @@ ENTITY_DEFS = {
         vectoring = 3,
         thrustLoc = {0, -30},
 
-        addons = {
-            --[[
+        addons = {            
             {
                 def_key = 'conventional_ball_turret',
                 location = {-5, 10},
-                orientation = math.rad(-math.pi / 2)
+                orientation = PI_2
             },
             {
                 def_key = 'conventional_ball_turret',
                 location = {-5, -10},
-                orientation = math.rad(-math.pi / 2)
+                orientation = PI_2
             },
-            ]]
+            --[[
             {
                 def_key = 'conventional_ball_turret',
                 location = {5, 10},
@@ -35,6 +37,7 @@ ENTITY_DEFS = {
                 location = {5, -10},
                 orientation = math.rad(math.pi / 2)
             }
+            ]]
         }
     },
 }

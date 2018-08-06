@@ -59,7 +59,7 @@ gTextures = {
     ['tungsten_shell_flare'] = love.graphics.newImage(imgLoc .. 'entities/projectiles/kinetics/tungsten_shell_flare.png'),
     ['generic_missile'] = love.graphics.newImage(imgLoc .. 'entities/projectiles/missiles/generic_missile.png'),
     ['missile_exhaust'] = love.graphics.newImage(imgLoc .. 'entities/projectiles/missiles/missile_exhaust.png'),
-
+    ['conventional_gun'] = love.graphics.newImage(imgLoc .. 'entities/addons/conventional_gun.png'),
     
     --https://www.vectorstock.com/royalty-free-vector/protractor-actual-size-graduation-vector-12617847
 }

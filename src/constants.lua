@@ -68,7 +68,9 @@ CRAFT_VECTOR = {
 G = 6.674E-11           -- gravitational constant
 M_SOL = 1.98847E30      -- solar mass
 
-
+-- numbers
+PI_2 = math.pi / 2
+PI_4 = math.pi / 4
 
 -- colors
 FULL_COLOR = {255, 255, 255, 255}   -- enable all colors and no transparency
