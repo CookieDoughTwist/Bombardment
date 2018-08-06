@@ -5,5 +5,7 @@ ADDON_DEFS = {
         arc_2 = math.rad(35),
         projectile = 'tungsten_shell',
         fire_effect = 'tungsten_shell_flare',
+        cooldown = 1,
+        projectile_speed = 1E2,
     }
 }

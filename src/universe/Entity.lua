@@ -55,6 +55,9 @@ function Entity:init(world, x, y, def, universe)
 
     -- object hostility
     self.allegiance = 0
+
+    -- misc.
+    self.thrusted = false
 end
 
 function Entity:setState(state)
@@ -65,11 +68,15 @@ function Entity:setState(state)
     self.allegiance = state.allegiance or 0
 end
 
-function Entity:update(dt)    
+function Entity:update(dt)
+
+    -- TODO: organize misc. variables 8/6/18 -AW
+    self.thrusted = false
     
     self.c2:update(dt)
 
     if self.thrusterOn then
+        self.thrusted = true
         self:move()
     end
 
@@ -124,7 +131,7 @@ function Entity:render(camX, camY, bpm, showHitbox)
     love.graphics.draw(gTextures['standard_craft'], lx, ly, la, iZoom, iZoom, iWidth_2, iHeight_2)
 
     -- draw engine activity if on
-    if self.thrusterOn then
+    if self.thrusted then
 
         -- choose exhaust sprite based on engine level
         local iTag = nil
@@ -144,8 +151,8 @@ function Entity:render(camX, camY, bpm, showHitbox)
         -- check if any sprite is chosen
         if iTag then
             -- plume angle
-            local pa = la - self.rotateThrottle * self.vectoring
-            local px, py = rotateVector(self.thrustLoc[1], self.thrustLoc[2] + hardOff, pa + math.pi)
+            local pa = self.body:getAngle() - self.rotateThrottle * self.vectoring
+            local px, py = rotateVector(self.thrustLoc[1], self.thrustLoc[2] + hardOff, pa)
             local tx, ty = px * bpm + lx, py * bpm + ly            
             local hiWidth_2, hiHeight_2 = getImageHalfDimensions(iTag)
             love.graphics.draw(gTextures[iTag], tx, ty, pa, iZoom * plumeScale, iZoom * plumeScale, hiWidth_2, hiHeight_2)
@@ -155,7 +162,7 @@ function Entity:render(camX, camY, bpm, showHitbox)
     -- draw addons
     if self.addons then
         for k, addon in pairs(self.addons) do
-            addon:render(lx, ly, la, bpm)
+            addon:render(lx, ly, la, bpm, showHitbox)
         end
     end
 
@@ -164,7 +171,7 @@ function Entity:render(camX, camY, bpm, showHitbox)
         addPointTable(polyPoints, {-camX, -camY})
         multiplyTable(polyPoints, bpm)
         addPointTable(polyPoints, {VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2})
-        love.graphics.setColor(128, 163, 15, 200)
+        love.graphics.setColor(128, 163, 15, 150)
         love.graphics.polygon('fill', polyPoints)
     end
 end

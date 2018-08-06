@@ -13,25 +13,27 @@ ENTITY_DEFS = {
         thrustLoc = {0, -30},
 
         addons = {
+            --[[
             {
                 def_key = 'conventional_ball_turret',
                 location = {-5, 10},
-                orientation = math.rad(math.pi / 2)
+                orientation = math.rad(-math.pi / 2)
             },
             {
                 def_key = 'conventional_ball_turret',
                 location = {-5, -10},
+                orientation = math.rad(-math.pi / 2)
+            },
+            ]]
+            {
+                def_key = 'conventional_ball_turret',
+                location = {5, 10},
                 orientation = math.rad(math.pi / 2)
             },
             {
                 def_key = 'conventional_ball_turret',
-                location = {5, 10},
-                orientation = math.rad(-math.pi / 2)
-            },
-            {
-                def_key = 'conventional_ball_turret',
                 location = {5, -10},
-                orientation = math.rad(-math.pi / 2)
+                orientation = math.rad(math.pi / 2)
             }
         }
     },

@@ -53,7 +53,7 @@ function EngineFocusState:update(dt)
     -- currently focussed player craft
     local player = self.engine.universe.player[self.focusIdx]
 
-    if player and not self.engine.paused then
+    if player then
 
         -- craft rotation
         local rotVal = 0    
@@ -65,7 +65,7 @@ function EngineFocusState:update(dt)
         end
         player:rotate(rotVal)
         
-        -- craft thrust    
+        -- craft thrust            
         if love.keyboard.wasPressed('w') then
             player:toggleThruster()
         end
@@ -217,5 +217,12 @@ function EngineFocusState:render()
         love.graphics.setFont(gFonts['casanovascotia32'])
         love.graphics.setColor(FULL_COLOR)
         love.graphics.printf(string.format('%.2f m/s', orbVel), 0, 100, VIRTUAL_WIDTH, 'left')
+    end
+
+    -- show pause
+    if self.engine.paused then
+        love.graphics.setFont(gFonts['casanovascotia64'])
+        love.graphics.setColor(FULL_COLOR)
+        love.graphics.printf('GAME PAUSED', 0, 7 * VIRTUAL_HEIGHT / 8, VIRTUAL_WIDTH, 'center')
     end
 end

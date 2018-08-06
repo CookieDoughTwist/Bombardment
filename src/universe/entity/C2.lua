@@ -33,10 +33,19 @@ function C2:update(dt)
     local availableWeapons = {}
 
     for k, addon in pairs(self.entity.addons) do
-        table.insert(availableWeapons, addon)
+        if addon.active then
+            table.insert(availableWeapons, addon)
+        end
     end
 
-
+    -- TODO: smarter "engagement algorithm" lol 8/6/18 -AW
+    for k, weap in pairs(availableWeapons) do
+        for k, entity in pairs(engagementTable) do
+            if not weap.engaging and weap:checkArcRange(entity) then
+                weap:engage(entity)
+            end
+        end
+    end
 end
 
 -- TODO: update this function to be an actual sensor 8/6/18 -AW

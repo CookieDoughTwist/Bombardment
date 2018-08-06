@@ -76,6 +76,7 @@ gFonts = {
     -- http://www.fontspace.com/chequered-ink/casanova-scotia
     ['casanovascotia16'] = love.graphics.newFont(fntLoc .. 'Casanova-Scotia.otf', 16),
     ['casanovascotia32'] = love.graphics.newFont(fntLoc .. 'Casanova-Scotia.otf', 32),
+    ['casanovascotia64'] = love.graphics.newFont(fntLoc .. 'Casanova-Scotia.otf', 64),
 }
 
     
