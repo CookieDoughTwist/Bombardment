@@ -170,6 +170,9 @@ function EngineFocusState:render()
     local bpm = 1 / self.zoom                       -- bits per meter
     local m2Range = (RENDER_RANGE * self.zoom)^2    -- cull range sqaured in meters squared
 
+    -- push potential rotation of scene
+    love.graphics.push()
+
     love.graphics.translate(VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2)
     love.graphics.rotate(-self.angle)
     love.graphics.translate(-VIRTUAL_WIDTH_2, -VIRTUAL_HEIGHT_2)
@@ -196,6 +199,9 @@ function EngineFocusState:render()
             entity:render(self.camX, self.camY, bpm, self.showHitbox)
         end
     end
+
+    -- revert scene rotation as UI never tilts
+    love.graphics.pop()
 
     -- render UI
     local focusEntity = self.engine.universe.player[self.focusIdx]

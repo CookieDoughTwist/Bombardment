@@ -22,7 +22,7 @@ function Addon:init(entity, config)
 
     -- state
     self.active = true
-    self.angle = PI_4
+    self.angle = 0---PI_4
     self.cycle = 0
     self.engaging = nil
     self.acceptableRange = 1E3
@@ -47,11 +47,11 @@ end
 function Addon:render(lx, ly, bpm, showHitbox, showRange)
 
     local entityAngle = self.entity.body:getAngle()
-
     local baseAngle = entityAngle + self.orientation
+    local barrelAngle = baseAngle + self.angle
+    local iZoom = IMAGE_MPB * bpm -- meters/bit
 
-    local ax, ay = rotateVector(self.location[1], self.location[2], entityAngle)
-    --local ax, ay = self:getPosition()
+    local ax, ay = rotateVector(self.location[1], self.location[2], entityAngle)    
     local bx, by = ax * bpm + lx, ay * bpm + ly
 
     -- TODO: define this somewhere 8/6/18 -AW
@@ -66,6 +66,8 @@ function Addon:render(lx, ly, bpm, showHitbox, showRange)
     end
 
     if self.barrel then
+        love.graphics.setColor(FULL_COLOR)
+        love.graphics.draw(gTextures['conventional_gun'], bx, by, barrelAngle, iZoom, iZoom, 3, 30)
     else
         love.graphics.setColor(GRAY)
         local barrel = {
@@ -74,7 +76,7 @@ function Addon:render(lx, ly, bpm, showHitbox, showRange)
             0.25, 4,
             -0.25, 4,
         }
-        rotateTable(barrel, baseAngle + self.angle)        
+        rotateTable(barrel, barrelAngle)
         multiplyTable(barrel, bpm)
         addPointTable(barrel, {bx, by})        
         love.graphics.polygon('fill', barrel)

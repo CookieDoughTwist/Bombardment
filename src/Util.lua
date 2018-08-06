@@ -66,9 +66,9 @@ function getImageHalfDimensions(imageTag)
     return iWidth_2, iHeight_2
 end
 
--- forcing down to be 0 degrees
+-- forcing up to be 0 degrees
 function drawArc(drawmode, arctype, x, y, radius, angle1, angle2, segments)
-    love.graphics.arc(drawmode, arctype, x, y, radius, angle1 + PI_2, angle2 + PI_2, segments)
+    love.graphics.arc(drawmode, arctype, x, y, radius, angle1 - PI_2, angle2 - PI_2, segments)
 end
 
 -- TODO: requires modularization 8/4/18 -AW

@@ -120,11 +120,8 @@ function Entity:render(camX, camY, bpm, showHitbox)
     -- convert to screen position in bits
     local lx = (x - camX) * bpm + VIRTUAL_WIDTH_2       -- bits
     local ly = (y - camY) * bpm + VIRTUAL_HEIGHT_2      -- bits
-    -- TODO: formalize angle (resource images are pointed up),
-    -- but the game points down 8/5/18 -AW
-    local la = self.body:getAngle() + math.pi
-    -- TODO: modularize zoom 8/4/18 -AW
-    local iZoom = 0.125 * bpm -- meters/bit    
+    local la = self.body:getAngle()
+    local iZoom = IMAGE_MPB * bpm -- meters/bit    
     local iWidth_2, iHeight_2 = getImageHalfDimensions('standard_craft')
 
     love.graphics.setColor(FULL_COLOR)
@@ -145,7 +142,7 @@ function Entity:render(camX, camY, bpm, showHitbox)
             plumeScale = self.throttle
         else
             iTag = 'large_plume'
-            hardOff = -3
+            hardOff = 3
         end
 
         -- check if any sprite is chosen
@@ -190,7 +187,7 @@ function Entity:move()
     -- thrust force
     local thrustF = self.thrust * self.throttle
     -- apply thrust force
-    self.body:applyForce(rotateVector(0, thrustF, rot))
+    self.body:applyForce(rotateVector(0, -thrustF, rot))
     -- get thrust center of gravity offset
     local r = math.sqrt(self.thrustLoc[1]^2 + self.thrustLoc[2]^2)
     -- compute vectored torque

@@ -1,7 +1,7 @@
 ADDON_DEFS = {
     ['conventional_ball_turret'] = {
         base = nil,
-        barrel = nil,
+        barrel = 'conventional_gun',
         arc_2 = math.rad(65),
         projectile = 'tungsten_shell',
         fire_effect = 'tungsten_shell_flare',

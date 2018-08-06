@@ -64,6 +64,9 @@ CRAFT_VECTOR = {
 }
 ]]
 
+-- resource constants
+IMAGE_MPB = 0.125       -- standard resource meters per bit
+
 -- physics
 G = 6.674E-11           -- gravitational constant
 M_SOL = 1.98847E30      -- solar mass
