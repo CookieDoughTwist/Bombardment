@@ -20,7 +20,7 @@ ENTITY_DEFS = {
                 def_key = 'conventional_ball_turret',
                 location = {-5, 10},
                 orientation = -PI_2
-            },
+            },--[[
             {
                 def_key = 'conventional_ball_turret',
                 location = {-5, -10},

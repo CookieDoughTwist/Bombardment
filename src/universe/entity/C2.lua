@@ -40,9 +40,10 @@ function C2:update(dt)
 
     -- TODO: smarter "engagement algorithm" lol 8/6/18 -AW
     for k, weap in pairs(availableWeapons) do
-        for k, entity in pairs(engagementTable) do
-            if not weap.engaging and weap:checkArcRange(entity) then
+        for k, entity in pairs(engagementTable) do             
+            if not weap.engaging and weap:canEngage(entity) then                
                 weap:engage(entity)
+                break
             end
         end
     end

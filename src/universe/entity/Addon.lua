@@ -18,7 +18,7 @@ function Addon:init(entity, config)
 
     -- compute propeties
     self.cos_arc_2 = math.cos(self.arc_2)
-    self.neutralBoresight = {rotateVector(0, 1, self.orientation)}
+    self.neutralBoresight = {rotateVector(0, -1, self.orientation)}
 
     -- state
     self.active = true
@@ -98,15 +98,33 @@ function Addon:engage(target)
 end
 
 function Addon:refreshEngagement()
-
-    if not self.target then
+    
+    if not self.engaging then
         return
     end
 
-    local target = self.target
-
-    if not self:checkArcRange(target) or not self:checkAcceptableRange(target) then
+    if not self:canEngage(self.engaging) then
         self.target = nil
+    end
+
+    -- TODO: perhaps recycle some computations from previous checks 8/6/18 -AW
+    if self.engaging then
+        
+        local px, py = self:getPosition()
+        local tx, ty = self.engaging.body:getPosition()
+        local bx, by = tx - px, ty - py
+        local ta = math.atan(by, bx)
+        local entityAngle = self.entity.body:getAngle()
+        local baseAngle = entityAngle + self.orientation
+        self.angle = ta - baseAngle + math.pi
+        --print('eg')
+        --print(px)
+        --print(py)
+        --print(tx)
+        --print(ty)
+        --print(bx)
+        --print(by)
+        --print(ta)
     end
 end
 
@@ -141,6 +159,10 @@ function Addon:checkAcceptableRange(target)
     return getVectorMag(tx - px, ty - py) < self.acceptableRange
 end
 
+function Addon:canEngage(target)
+    return self:checkAcceptableRange(target) and self:checkArcRange(target)
+end
+
 function Addon:getPosition()
     local ex, ey = self.entity.body:getPosition()
     local ax, ay = rotateVector(self.location[1], self.location[2], self.entity.body:getAngle())
@@ -148,9 +170,5 @@ function Addon:getPosition()
 end
 
 function Addon:getNeutralBoresight()
-    return rotateVector(self.neutralBoresight[1], self.neutralBoresight[1], self.entity.body:getAngle())
-end
-
-function Addon:getBoresight()
-    return 
+    return rotateVector(self.neutralBoresight[1], self.neutralBoresight[2], self.entity.body:getAngle())
 end
