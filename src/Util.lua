@@ -50,6 +50,10 @@ function floorTable(table)
     end
 end
 
+function getVectorMag(x, y)
+    return math.sqrt(x^2 + y^2)
+end
+
 function unitizeVector(x, y)
     local mag = math.sqrt(x^2 + y^2)
     return x / mag, y / mag

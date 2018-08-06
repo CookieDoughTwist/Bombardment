@@ -64,13 +64,13 @@ function Universe:loadScenario(scenarioName)
     end
 
     for k, v in pairs(entities) do
-        local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[v.def_key])
+        local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[v.def_key], self)
         val:setState(v)
         table.insert(self.entities, val)
     end
 
     for k, v in pairs(players) do
-        local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[v.def_key])
+        local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[v.def_key], self)
         val:setState(v)
         val.allegiance = 1
         table.insert(self.entities, val)

@@ -30,7 +30,8 @@ require 'src/states/engine/EngineMapState'
 require 'src/universe/Universe'
 require 'src/universe/Entity'
 require 'src/universe/Body'
-require 'src/universe/Addon'
+require 'src/universe/entity/Addon'
+require 'src/universe/entity/C2'
 
 -- definitions
 require 'data/definitions/entity_defs'

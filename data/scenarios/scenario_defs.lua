@@ -158,7 +158,25 @@ SCENARIO_DEFS = {
             }
         },
         entities = {
-
+            {
+                def_key = 'cal_ship_10_50_10000',
+                x = 2 * BODY_DEFS['cal_plan_1E5_1E18'].radius,
+                y = 200,
+                angle = 0,
+                dx = 0,
+                dy = math.sqrt(G * BODY_DEFS['cal_plan_1E5_1E18'].mass / (2 * BODY_DEFS['cal_plan_1E5_1E18'].radius)),
+                dr = 0
+            },
+            {
+                def_key = 'cal_ship_10_50_10000',
+                x = 2 * BODY_DEFS['cal_plan_1E5_1E18'].radius - 200,
+                y = 200,
+                angle = 0,
+                dx = 0,
+                dy = math.sqrt(G * BODY_DEFS['cal_plan_1E5_1E18'].mass / (2 * BODY_DEFS['cal_plan_1E5_1E18'].radius)),
+                dr = 0,
+                allegiance = -1
+            },
         },
         player = {
             {

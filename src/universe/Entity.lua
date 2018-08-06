@@ -4,7 +4,7 @@
 
 Entity = Class{}
 
-function Entity:init(world, x, y, def)
+function Entity:init(world, x, y, def, universe)
     
     local width = def.width
     local height = def.height
@@ -44,6 +44,9 @@ function Entity:init(world, x, y, def)
         end
     end
 
+    -- C2: Command and Control
+    self.c2 = C2(self, universe)
+
     -- control state
     self.thrusterOn = false
     self.throttle = 0.5
@@ -64,6 +67,8 @@ end
 
 function Entity:update(dt)    
     
+    self.c2:update(dt)
+
     if self.thrusterOn then
         self:move()
     end
@@ -76,6 +81,11 @@ function Entity:update(dt)
         self.body:applyTorque(torque)
     else
         self.body:applyTorque(self.gimbal * self.rotateThrottle)
+    end
+
+    -- update addons
+    for k, addon in pairs(self.addons) do
+        addon:update(dt)
     end
 
     -- reset greatest pull

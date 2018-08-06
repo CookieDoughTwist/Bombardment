@@ -20,6 +20,8 @@ function Engine:init(index)
     }
 
     self:changeState('focus', {})
+
+    self.paused = false
 end
 
 function Engine:changeState(name, params)
@@ -29,9 +31,15 @@ end
 
 function Engine:update(dt)
 
-    -- update the universe
-    -- only responsible for incrementing physics
-    self.universe:update(dt)
+    if love.keyboard.wasPressed('space') then
+        self.paused = not self.paused
+    end
+
+    if not self.paused then
+        -- update the universe
+        -- only responsible for incrementing physics
+        self.universe:update(dt)
+    end
 
     -- state machine handles all external inputs
     -- this includes player control (any changes applied next step)

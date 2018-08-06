@@ -53,7 +53,7 @@ function EngineFocusState:update(dt)
     -- currently focussed player craft
     local player = self.engine.universe.player[self.focusIdx]
 
-    if player then
+    if player and not self.engine.paused then
 
         -- craft rotation
         local rotVal = 0    
