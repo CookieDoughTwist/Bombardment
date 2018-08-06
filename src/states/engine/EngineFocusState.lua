@@ -53,33 +53,40 @@ function EngineFocusState:update(dt)
     -- currently focussed player craft
     local player = self.engine.universe.player[self.focusIdx]
 
-    -- craft rotation
-    local rotVal = 0    
-    if love.keyboard.isDown('q') then
-        rotVal = rotVal - 1
-    end
-    if love.keyboard.isDown('e') then
-        rotVal = rotVal + 1
-    end
-    player:rotate(rotVal)
-    
-    -- craft thrust    
-    if love.keyboard.wasPressed('w') then
-        player:toggleThruster()
-    end
-    if love.keyboard.isDown('lshift') then
-        player:throttleUp()
-    end
-    if love.keyboard.isDown('lctrl') then
-        player:throttleDown()
-    end
-    if love.keyboard.wasPressed('z') then
-        player:throttleMax()
-    end
-    if love.keyboard.wasPressed('x') then
-        player:throttleMin()
-    end
+    if player then
 
+        -- craft rotation
+        local rotVal = 0    
+        if love.keyboard.isDown('q') then
+            rotVal = rotVal - 1
+        end
+        if love.keyboard.isDown('e') then
+            rotVal = rotVal + 1
+        end
+        player:rotate(rotVal)
+        
+        -- craft thrust    
+        if love.keyboard.wasPressed('w') then
+            player:toggleThruster()
+        end
+        if love.keyboard.isDown('lshift') then
+            player:throttleUp()
+        end
+        if love.keyboard.isDown('lctrl') then
+            player:throttleDown()
+        end
+        if love.keyboard.wasPressed('z') then
+            player:throttleMax()
+        end
+        if love.keyboard.wasPressed('x') then
+            player:throttleMin()
+        end
+
+        -- toggle stabilization
+        if love.keyboard.wasPressed('t') then
+            player:toggleStabilization()
+        end
+    end
 
     --
     -- camera control
@@ -91,7 +98,7 @@ function EngineFocusState:update(dt)
     end
 
     -- check of locked to player
-    if self.centerPlayer then
+    if player and self.centerPlayer then
         self.camX, self.camY = player.body:getPosition()
 
     -- otherwise pan as normal
@@ -192,9 +199,23 @@ function EngineFocusState:render()
 
     -- render UI
     local focusEntity = self.engine.universe.player[self.focusIdx]
-    --print_r(focuseEntity)
-    local orbVel = focusEntity:getOrbitalVelocity()
-    love.graphics.setColor(FULL_COLOR)
-    love.graphics.setFont(gFonts['casanovascotia32'])
-    love.graphics.printf(string.format('%.2f m/s', orbVel), 0, 0, VIRTUAL_WIDTH, 'left')
+    if focusEntity then        
+        love.graphics.setColor(SKY_BLUE)
+        love.graphics.rectangle('fill', 10, 10, 500, 80, 15, 15)
+        local hpRatio = focusEntity.hp / focusEntity.hpMax
+        if hpRatio < 0.5 then
+            local cRatio = hpRatio / 0.5
+            love.graphics.setColor(255, 255 * cRatio, 0)
+        else
+            local cRatio = (hpRatio - 0.5) / 0.5
+            love.graphics.setColor(255 - 255 * cRatio, 255, 0)
+        end
+        love.graphics.rectangle('fill', 20, 55, 470 * hpRatio, 20)
+        love.graphics.setColor(FULL_COLOR)
+        love.graphics.printf('ARMOR', 20, 10, VIRTUAL_WIDTH, 'left')        
+        local orbVel = focusEntity:getOrbitalVelocity()        
+        love.graphics.setFont(gFonts['casanovascotia32'])
+        love.graphics.setColor(FULL_COLOR)
+        love.graphics.printf(string.format('%.2f m/s', orbVel), 0, 100, VIRTUAL_WIDTH, 'left')
+    end
 end

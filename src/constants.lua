@@ -34,10 +34,10 @@ SELECTIONS_START = {
 }
 MENU_TEXT_JUMP = 96     -- menu option spacing (bits)
 MENU_BOX_PAD_X = 15     -- menu box padding (bits)    
-MENU_BOX_PAD_Y = -5    -- menu box padding (bits)    
+MENU_BOX_PAD_Y = -5     -- menu box padding (bits)    
 TEXT_BUFFER_X = -2      -- menu horizontal text buffer
 TEXT_BUFFER_Y = 2       -- menu vertical text buffer
-T_TRANSITION = 0.1        -- time to transition to selection
+T_TRANSITION = 0.1      -- time to transition to selection
 
 -- focus state
 FOCUS_SCROLL_SPEED = 10         -- scroll speed (bits/frame)
@@ -45,7 +45,6 @@ FOCUS_ZOOM_RATIO = 2            -- the ratio increment to zoom
 FOCUS_ZOOM_MAX = 16             -- max zoom out (meters/bit)
 FOCUS_ZOOM_MIN = 0.125          -- min zoom out (meters/bit)
 FOCUS_ROTATION_SPEED = math.rad(1)    -- rotation rate (radians/frame)
-
 CRAFT_THROTTLE_RATE = 0.01       -- percent increment per frame
 
 -- map state

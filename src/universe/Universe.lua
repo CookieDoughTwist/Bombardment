@@ -22,6 +22,17 @@ function Universe:init()
 
     function beginContact(a, b, coll)
 
+        local types = {}
+        print_r(a)
+        print_r(b)
+        types[a:getUserData()] = true
+        types[b:getUserData()] = true
+
+        local entityFixture = a:getUserData() == 'entity' and a or b
+
+        if types['body'] and types['entity'] then
+            table.insert(self.destroyedObjects, entityFixture:getBody())
+        end
     end
 
     function endContact(a, b, coll)
@@ -48,6 +59,7 @@ function Universe:loadScenario(scenarioName)
 
     for k, v in pairs(bodies) do
         local val = Body(self.world, v.x, v.y, BODY_DEFS[v.def_key])
+        val:setState(v)
         table.insert(self.bodies, val)
     end
 
@@ -59,7 +71,7 @@ function Universe:loadScenario(scenarioName)
 
     for k, v in pairs(players) do
         local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[v.def_key])
-        val:setState(v, 'player')
+        val:setState(v)
         val.allegiance = 1
         table.insert(self.entities, val)
         table.insert(self.player, val)
@@ -97,6 +109,20 @@ function Universe:update(dt)
     for k, body in pairs(self.destroyedObjects) do
         if not body:isDestroyed() then
             body:destroy()
+        end
+    end
+
+    self.destroyedObjects = {}
+
+    for k, entity in pairs(self.entities) do
+        if entity.body:isDestroyed() then
+            table.remove(self.entities, k)
+        end
+    end
+
+    for k, player in pairs(self.player) do
+        if player.body:isDestroyed() then
+            table.remove(self.player, k)
         end
     end
 end

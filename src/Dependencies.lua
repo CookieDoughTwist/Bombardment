@@ -34,6 +34,7 @@ require 'src/universe/Body'
 -- definitions
 require 'data/definitions/entity_defs'
 require 'data/definitions/body_defs'
+require 'data/definitions/addon_defs'
 require 'data/scenarios/scenario_defs'
 
 -- sounds
@@ -51,6 +52,7 @@ gTextures = {
     ['spacelandbg'] = love.graphics.newImage(imgLoc .. 'spacemountainplanet.png'),
     ['standard_craft'] = love.graphics.newImage(imgLoc .. 'standard_ship_base_red.png'),
     ['large_plume'] = love.graphics.newImage(imgLoc .. 'exaggerated_exhaust_plume.png'),
+    ['medium_plume'] = love.graphics.newImage(imgLoc .. 'yellow_exhaust_plume.png'),
     --https://www.vectorstock.com/royalty-free-vector/protractor-actual-size-graduation-vector-12617847
 
 }

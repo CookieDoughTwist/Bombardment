@@ -18,9 +18,9 @@ function Body:init(world, x, y, def)
 end
 
 function Body:setState(state)
-    self.body:setLinearVelocity(state.dx, state.dy)
-    self.body:setAngularVelocity(state.dr)
-    self.fixture:setUserData(userData or 'body')
+    --self.body:setLinearVelocity(state.dx, state.dy)
+    --self.body:setAngularVelocity(state.dr)
+    self.fixture:setUserData('body')
 end
 
 function Body:exertGravity(entity)

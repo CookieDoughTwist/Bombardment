@@ -9,40 +9,67 @@ function Entity:init(world, x, y, def)
     local width = def.width
     local height = def.height
     local mass = def.mass
+    local thrust = def.thrust
+    local gimbal = def.gimbal
+    local vectoring = def.vectoring
+    local thrustLoc = def.thrustLoc
 
     -- initialize Box2D
     self.body = love.physics.newBody(world, x, y, 'dynamic')
     self.shape = love.physics.newRectangleShape(width, height)
     self.fixture = love.physics.newFixture(self.body, self.shape)
-    self.body:setMass(mass)    
+    self.body:setMass(mass)
+    self.body:setInertia(mass * height^2 / 3)  
     
-    -- verhicle properties
-    self.thrust = 1000000
-    self.rotThrust = 100
-
-    -- thruster state
-    self.thrusterOn = false
-    self.throttle = 0
-    self.thrustLoc = {0, -33}
-
-    -- object hostility
-    self.allegiance = 0
-
     -- track orbiting body
     self.orbitingBody = nil
     self.greatestPull = 0
+
+    --
+    -- craft properties
+    --
+
+    -- verhicle properties
+    self.thrust = thrust
+    self.gimbal = gimbal
+    self.vectoring = math.rad(vectoring)
+    self.thrustLoc = thrustLoc
+    self.hp = 0
+    self.hpMax = 100
+
+    -- control state
+    self.thrusterOn = false
+    self.throttle = 0.5
+    self.rotateThrottle = 0
+    self.stabilize = false
+
+    -- object hostility
+    self.allegiance = 0
 end
 
-function Entity:setState(state, userData)
+function Entity:setState(state)
+    self.body:setAngle(state.angle)
     self.body:setLinearVelocity(state.dx, state.dy)
     self.body:setAngularVelocity(state.dr)
-    self.fixture:setUserData(userData or 'entity')
+    self.fixture:setUserData('entity')
     self.allegiance = state.allegiance or 0
 end
 
 function Entity:update(dt)    
+    
+    if self.thrusterOn then
+        self:move()
+    end
 
-    self:move()
+    -- gimbal torque
+    if self.rotateThrottle == 0 and self.stabilize then
+        -- TODO: improve "stabilization algorithm" lol 8/5/18 -AW
+        local rotVel = self.body:getAngularVelocity()        
+        local torque = rotVel < 0 and self.gimbal or -self.gimbal
+        self.body:applyTorque(torque)
+    else
+        self.body:applyTorque(self.gimbal * self.rotateThrottle)
+    end
 
     -- reset greatest pull
     self.greatestPull = 0
@@ -79,13 +106,29 @@ function Entity:render(camX, camY, bpm, showHitbox)
     love.graphics.setColor(FULL_COLOR)
     love.graphics.draw(gTextures['standard_craft'], lx, ly, la, iZoom, iZoom, iWidth_2, iHeight_2)
 
-    if self.throttle > 0 then
+    if self.thrusterOn then
 
-        local px, py = rotateVector(self.thrustLoc[1], self.thrustLoc[2], la + math.pi)
-        local tx = px * bpm + lx
-        local ty = py * bpm + ly
-        local hiWidth_2, hiHeight_2 = getImageHalfDimensions('large_plume')
-        love.graphics.draw(gTextures['large_plume'], tx, ty, la, iZoom, iZoom, hiWidth_2, hiHeight_2)
+        local iTag = nil
+        -- TODO: remove hard coding 8/5/18 -AW
+        local hardOff = 0
+        local plumeScale = 1                
+        if self.throttle == 0 then
+            iTag = nil
+        elseif self.throttle < 1 then
+            iTag = 'medium_plume'
+            plumeScale = self.throttle
+        else
+            iTag = 'large_plume'
+            hardOff = -3
+        end
+        if iTag then
+            local pa = la - self.rotateThrottle * self.vectoring
+            local px, py = rotateVector(self.thrustLoc[1], self.thrustLoc[2] + hardOff, pa + math.pi)
+            local tx = px * bpm + lx
+            local ty = py * bpm + ly
+            local hiWidth_2, hiHeight_2 = getImageHalfDimensions(iTag)
+            love.graphics.draw(gTextures[iTag], tx, ty, pa, iZoom * plumeScale, iZoom * plumeScale, hiWidth_2, hiHeight_2)
+        end
     end
 
     if showHitbox then                
@@ -105,13 +148,25 @@ end
 -- throttle is between -1 and 1
 function Entity:move()
     
-    local rot = self.body:getAngle()
-    self.body:applyForce(rotateVector(0, self.thrust * self.throttle, rot))
+    -- engine thrust vector angle
+    local rotV = self.rotateThrottle * self.vectoring
+    -- total engine rotation relative to universe
+    local rot = self.body:getAngle() - rotV
+    -- thrust force
+    local thrustF = self.thrust * self.throttle
+    -- apply thrust force
+    self.body:applyForce(rotateVector(0, thrustF, rot))
+    -- get thrust center of gravity offset
+    local r = math.sqrt(self.thrustLoc[1]^2 + self.thrustLoc[2]^2)
+    -- compute vectored torque
+    local torque = r * thrustF * math.sin(rotV)
+    -- apply thrust vectoring
+    self.body:applyTorque(torque)
 end
 
 -- throttle is between -1 and 1
 function Entity:rotate(throttle)
-    self.body:applyTorque(self.rotThrust * throttle)
+    self.rotateThrottle = throttle    
 end
 
 function Entity:toggleThruster()
@@ -134,6 +189,10 @@ end
 
 function Entity:throttleMin()
     self.throttle = 0
+end
+
+function Entity:toggleStabilization()
+    self.stabilize = not self.stabilize
 end
 
 --

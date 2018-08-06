@@ -13,6 +13,35 @@ SCENARIO_DEFS = {
         }
     },
 
+    ['no_bodies'] = {
+        bodies = {
+
+        },
+        entities = {
+
+        },
+        player = {
+            {
+                def_key = 'cal_ship_10_50_10000',
+                x = 2 * BODY_DEFS['cal_plan_1E5_1E18'].radius,
+                y = 0,
+                angle = 0,
+                dx = 0,
+                dy = math.sqrt(G * BODY_DEFS['cal_plan_1E5_1E18'].mass / (2 * BODY_DEFS['cal_plan_1E5_1E18'].radius)),
+                dr = 0
+            },
+            {
+                def_key = 'cal_ship_10_50_10000',
+                x = 2 * BODY_DEFS['cal_plan_1E5_1E18'].radius + 100,
+                y = 0,
+                angle = 0,
+                dx = 0,
+                dy = math.sqrt(G * BODY_DEFS['cal_plan_1E5_1E18'].mass / (2 * BODY_DEFS['cal_plan_1E5_1E18'].radius)),
+                dr = 0
+            }
+        }
+    },
+
     ['simple_orbit'] = {
         bodies = {
             {
@@ -29,8 +58,8 @@ SCENARIO_DEFS = {
                 def_key = 'cal_ship_10_50_10000',
                 x = 600,
                 y = 400,
+                angle = math.pi / 2,
                 dx = 0,
-                --dy = 19,
                 dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 200),
                 dr = 0
             }
@@ -53,6 +82,7 @@ SCENARIO_DEFS = {
                 def_key = 'cal_ship_10_50_10000',
                 x = 600+10000000,
                 y = 400,
+                angle = 0,
                 dx = 0,
                 dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 200),
                 dr = 0
@@ -73,6 +103,7 @@ SCENARIO_DEFS = {
                 def_key = 'cal_ship_10_50_10000',
                 x = 800,
                 y = 400,
+                angle = 0,
                 dx = 0,
                 dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 400),
                 dr = 0.1
@@ -81,6 +112,7 @@ SCENARIO_DEFS = {
                 def_key = 'cal_ship_10_50_10000',
                 x = 1000,
                 y = 400,
+                angle = 0,
                 dx = 0,                
                 dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 600),
                 dr = 0.5
@@ -89,6 +121,7 @@ SCENARIO_DEFS = {
                 def_key = 'cal_ship_10_50_10000',
                 x = 1200,
                 y = 400,
+                angle = 0,
                 dx = 0,                
                 dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 800),
                 dr = 1.0
@@ -97,6 +130,7 @@ SCENARIO_DEFS = {
                 def_key = 'cal_ship_10_50_10000',
                 x = 1400,
                 y = 400,
+                angle = 0,
                 dx = 0,                
                 dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 1000),
                 dr = 1.5
@@ -107,6 +141,7 @@ SCENARIO_DEFS = {
                 def_key = 'cal_ship_10_50_10000',
                 x = 600,
                 y = 400,
+                angle = 0,
                 dx = 0,
                 dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 200),
                 dr = 0
@@ -130,6 +165,7 @@ SCENARIO_DEFS = {
                 def_key = 'cal_ship_10_50_10000',
                 x = 2 * BODY_DEFS['cal_plan_1E5_1E18'].radius,
                 y = 0,
+                angle = 0,
                 dx = 0,
                 dy = math.sqrt(G * BODY_DEFS['cal_plan_1E5_1E18'].mass / (2 * BODY_DEFS['cal_plan_1E5_1E18'].radius)),
                 dr = 0
@@ -138,6 +174,7 @@ SCENARIO_DEFS = {
                 def_key = 'cal_ship_10_50_10000',
                 x = 2 * BODY_DEFS['cal_plan_1E5_1E18'].radius + 100,
                 y = 0,
+                angle = 0,
                 dx = 0,
                 dy = math.sqrt(G * BODY_DEFS['cal_plan_1E5_1E18'].mass / (2 * BODY_DEFS['cal_plan_1E5_1E18'].radius)),
                 dr = 0

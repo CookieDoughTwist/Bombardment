@@ -31,6 +31,7 @@ function love.load()
 
     -- set music to loop and start
     gSounds['spacebg']:setLooping(true)
+    gSounds['spacebg']:setVolume(0.4)
     gSounds['spacebg']:play()
 
     -- initialize state machine with all state-returning functions
