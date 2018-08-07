@@ -21,6 +21,7 @@ function Addon:init(entity, config)
 
     -- TODO: modularize 8/7/18 -AW
     self.barrelLength = 4
+    self.recoilDistance = 4    
 
     -- compute propeties
     self.cos_arc_2 = math.cos(self.arc_2)
@@ -42,7 +43,8 @@ function Addon:update(dt, spawnedEntities)
 
     -- tick cooldown cycle
     if self.cycle > 0 then
-        self.cycle = self.cycle - dt
+        -- prevent going below 0
+        self.cycle = math.max(self.cycle - dt, 0)
     end
 
     -- update engagement code
@@ -76,29 +78,40 @@ function Addon:render(lx, ly, bpm, showHitbox, showRange)
     -- TODO: define this somewhere 8/6/18 -AW
     local turretRadius = 1
 
-    love.graphics.setColor(FULL_COLOR)
-    if self.base then
-
-    else
-        love.graphics.setColor(GRAY)
-        drawArc('fill', 'pie', bx, by, turretRadius * bpm, baseAngle - PI_2, baseAngle + PI_2)
-    end
-
+    -- draw barrel first
     if self.barrel then
+        local bimage = gTextures[self.barrel]
+        local biWidth, biHeight = bimage:getDimensions()
+        local cycleRatio = self.cycle / self.cooldown
+        local recoilOffset = cycleRatio > 0.5 and -self.recoilDistance * math.sin(math.pi * (cycleRatio - 0.5) / 0.5) or 0
         love.graphics.setColor(FULL_COLOR)
-        love.graphics.draw(gTextures['conventional_gun'], bx, by, barrelAngle, iZoom, iZoom, 3, 30)
+        -- TODO: figure out why +8 works 8/7/18 -AW
+        love.graphics.draw(bimage, bx, by, barrelAngle, iZoom, iZoom, biWidth / 2, biHeight + 8 + recoilOffset)
+        if cycleRatio > 0.9 then
+            local fimage = gTextures[self.fire_effect]
+            local fiWidth, fiHeight = fimage:getDimensions()
+            love.graphics.draw(fimage, bx, by, barrelAngle, iZoom, iZoom, fiWidth / 2, fiHeight + biHeight + 6)
+        end        
     else
-        love.graphics.setColor(GRAY)
+        love.graphics.setColor(LIGHT_GRAY)
         local barrel = {
             -0.25, 0,
             0.25, 0,
-            0.25, 4,
-            -0.25, 4,
+            0.25, -self.barrelLength,
+            -0.25, -self.barrelLength,
         }
         rotateTable(barrel, barrelAngle)
         multiplyTable(barrel, bpm)
         addPointTable(barrel, {bx, by})        
         love.graphics.polygon('fill', barrel)
+    end
+
+    -- draw base over barrel
+    if self.base then
+
+    else
+        love.graphics.setColor(GRAY)
+        drawArc('fill', 'pie', bx, by, turretRadius * bpm, baseAngle - PI_2, baseAngle + PI_2)
     end
 
     if showHitbox then

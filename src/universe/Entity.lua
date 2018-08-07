@@ -29,6 +29,10 @@ function Entity:init(world, x, y, def, universe)
     -- track orbiting body
     self.orbitingBody = nil
     self.greatestPull = 0
+    self.gx = 0
+    self.gy = 0
+    self.lgx = 0
+    self.lgy = 0
 
     --
     -- craft properties
@@ -77,12 +81,25 @@ end
 
 function Entity:update(dt)
 
-    -- TODO: organize misc. variables 8/6/18 -AW
-    self.thrusted = false
+    -- apply gravity
+    self.body:applyForce(self.gx, self.gy)
 
+    -- save gravity vector
+    self.lgx = self.gx
+    self.lgy = self.gy
+
+    -- reset gravity tracking for next update
+    self.greatestPull = 0
+    self.gx = 0
+    self.gy = 0
+
+    -- TODO: modularize updates for boring objects 8/7/18 -AW
     if not self.c2 then
         return {}
     end
+
+    -- TODO: organize misc. variables 8/6/18 -AW
+    self.thrusted = false
 
     self.c2:update(dt)
 
@@ -107,9 +124,6 @@ function Entity:update(dt)
     for k, addon in pairs(self.addons) do
         addon:update(dt, spawnedEntities)
     end
-
-    -- reset greatest pull
-    self.greatestPull = 0
 
     return spawnedEntities
 end
@@ -190,8 +204,10 @@ end
 -- called by Body
 function Entity:exertGravity(g, ux, uy, body)
 
-    -- apply force
-    self.body:applyForce(ux * g, uy * g)
+    local gx, gy = ux * g, uy * g
+
+    self.gx = self.gx + gx
+    self.gy = self.gy + gy
 
     -- check for greatest gravitational pull
     if g > self.greatestPull then

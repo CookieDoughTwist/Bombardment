@@ -217,7 +217,9 @@ function EngineFocusState:render()
 
     -- render UI
     local focusEntity = self.engine.universe.player[self.focusIdx]
-    if focusEntity then        
+    if focusEntity then
+
+        -- draw HP
         love.graphics.setColor(SKY_BLUE)
         love.graphics.rectangle('fill', 10, 10, 500, 80, 15, 15)
         local hpRatio = focusEntity.hp / focusEntity.hpMax
@@ -236,6 +238,11 @@ function EngineFocusState:render()
         love.graphics.setFont(gFonts['casanovascotia32'])
         love.graphics.setColor(FULL_COLOR)
         love.graphics.printf(string.format('%.2f m/s', orbVel), 0, 100, VIRTUAL_WIDTH, 'left')
+
+        -- draw key vectors
+        local cx, cy = VIRTUAL_WIDTH_2, 5 * VIRTUAL_HEIGHT / 6
+        love.graphics.setColor(SKY_BLUE)
+        love.graphics.circle('line', cx, cy, 150)
     end
 
     -- show pause

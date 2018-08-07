@@ -60,7 +60,7 @@ gTextures = {
     ['generic_missile'] = love.graphics.newImage(imgLoc .. 'entities/projectiles/missiles/generic_missile.png'),
     ['missile_exhaust'] = love.graphics.newImage(imgLoc .. 'entities/projectiles/missiles/missile_exhaust.png'),
     ['conventional_gun'] = love.graphics.newImage(imgLoc .. 'entities/addons/conventional_gun.png'),
-    
+    --https://opengameart.org/content/explosion-set-1-m484-games
     --https://www.vectorstock.com/royalty-free-vector/protractor-actual-size-graduation-vector-12617847
 }
 
