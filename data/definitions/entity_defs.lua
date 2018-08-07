@@ -21,7 +21,7 @@ ENTITY_DEFS = {
         height = 50,
         mass = 1E4,
         thrust = 1E5,
-        gimbal = 1E5,
+        gimbal = 1E6,
         vectoring = 3,
         thrustLoc = {0, 30},
 

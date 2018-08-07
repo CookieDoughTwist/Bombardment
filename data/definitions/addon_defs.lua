@@ -7,5 +7,6 @@ ADDON_DEFS = {
         fire_effect = 'tungsten_shell_flare',
         cooldown = 1,
         projectile_speed = 1E2,
+        rotation_speed = math.rad(15)
     }
 }

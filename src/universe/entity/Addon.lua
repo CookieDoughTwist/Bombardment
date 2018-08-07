@@ -15,6 +15,7 @@ function Addon:init(entity, config)
     self.arc_2 = def.arc_2
     self.base = def.base
     self.barrel = def.barrel
+    self.rotation_speed = def.rotation_speed
 
     -- compute propeties
     self.cos_arc_2 = math.cos(self.arc_2)
@@ -22,7 +23,8 @@ function Addon:init(entity, config)
 
     -- state
     self.active = true
-    self.angle = 0---PI_4
+    self.angle = 0
+    self.angleTarget = 0
     self.cycle = 0
     self.engaging = nil
     self.acceptableRange = 1E3
@@ -33,11 +35,27 @@ end
 
 function Addon:update(dt)
 
+    -- tick cooldown cycle
     if self.cycle > 0 then
         self.cycle = self.cycle - dt
     end
 
+    -- update engagement code
     self:refreshEngagement()
+
+    print('up')
+    print(self.angle)
+    print(self.angleTarget)
+    io.flush()
+    -- rotate barrel
+    local angleDistance = self.angleTarget - self.angle
+    local angleDelta = self.rotation_speed * dt
+
+    if math.abs(angleDistance) < angleDelta then
+        self.angle = self.angleTarget
+    else
+        self.angle = angleDistance > 0 and (self.angle + angleDelta) or (self.angle - angleDelta)
+    end
 
     if self.engaging then
         self:fire()
@@ -83,11 +101,11 @@ function Addon:render(lx, ly, bpm, showHitbox, showRange)
     end
 
     if showHitbox then
-        love.graphics.setColor(200, 0, 200, 255)
+        love.graphics.setColor(200, 0, 200, 200)
         love.graphics.circle('fill', bx, by, turretRadius)
     end
     if showRange then
-        love.graphics.setColor(163, 15, 128, 100)
+        love.graphics.setColor(163, 15, 128, 150)
         drawArc('fill', 'pie', bx, by, self.acceptableRange * bpm, baseAngle - self.arc_2, baseAngle + self.arc_2)
     end
 
@@ -116,7 +134,7 @@ function Addon:refreshEngagement()
         local ta = math.atan2(by, bx) + PI_2
         local entityAngle = self.entity.body:getAngle()
         local baseAngle = entityAngle + self.orientation
-        self.angle = ta - baseAngle
+        self.angleTarget = clampAngle(ta - baseAngle)
     end
 end
 

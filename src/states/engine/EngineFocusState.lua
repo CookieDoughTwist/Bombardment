@@ -217,6 +217,7 @@ function EngineFocusState:render()
             love.graphics.setColor(255 - 255 * cRatio, 255, 0)
         end
         love.graphics.rectangle('fill', 20, 55, 470 * hpRatio, 20)
+        love.graphics.setFont(gFonts['casanovascotia32'])
         love.graphics.setColor(FULL_COLOR)
         love.graphics.printf('ARMOR', 20, 10, VIRTUAL_WIDTH, 'left')        
         local orbVel = focusEntity:getOrbitalVelocity()        

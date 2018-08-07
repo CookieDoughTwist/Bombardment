@@ -59,6 +59,15 @@ function unitizeVector(x, y)
     return x / mag, y / mag
 end
 
+function clampAngle(angle)
+    if angle > math.pi then
+        angle = -angle % math.pi
+    elseif angle < -math.pi then
+        angle = angle % math.pi
+    end
+    return angle
+end
+
 function getImageHalfDimensions(imageTag)
     local image = gTextures[imageTag]
     local iWidth, iHeight = image:getDimensions()
