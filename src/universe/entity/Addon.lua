@@ -113,18 +113,10 @@ function Addon:refreshEngagement()
         local px, py = self:getPosition()
         local tx, ty = self.engaging.body:getPosition()
         local bx, by = tx - px, ty - py
-        local ta = math.atan(by, bx)
+        local ta = math.atan2(by, bx) + PI_2
         local entityAngle = self.entity.body:getAngle()
         local baseAngle = entityAngle + self.orientation
-        self.angle = ta - baseAngle + math.pi
-        --print('eg')
-        --print(px)
-        --print(py)
-        --print(tx)
-        --print(ty)
-        --print(bx)
-        --print(by)
-        --print(ta)
+        self.angle = ta - baseAngle
     end
 end
 
