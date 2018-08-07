@@ -43,10 +43,6 @@ function Addon:update(dt)
     -- update engagement code
     self:refreshEngagement()
 
-    print('up')
-    print(self.angle)
-    print(self.angleTarget)
-    io.flush()
     -- rotate barrel
     local angleDistance = self.angleTarget - self.angle
     local angleDelta = self.rotation_speed * dt

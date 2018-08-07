@@ -74,6 +74,7 @@ M_SOL = 1.98847E30      -- solar mass
 -- numbers
 PI_2 = math.pi / 2
 PI_4 = math.pi / 4
+TWO_PI = 2 * math.pi
 
 -- colors
 FULL_COLOR = {255, 255, 255, 255}   -- enable all colors and no transparency

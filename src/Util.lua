@@ -60,12 +60,7 @@ function unitizeVector(x, y)
 end
 
 function clampAngle(angle)
-    if angle > math.pi then
-        angle = -angle % math.pi
-    elseif angle < -math.pi then
-        angle = angle % math.pi
-    end
-    return angle
+    return ((angle + math.pi) % TWO_PI) - math.pi
 end
 
 function getImageHalfDimensions(imageTag)
