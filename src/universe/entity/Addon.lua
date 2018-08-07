@@ -15,6 +15,8 @@ function Addon:init(entity, config)
     self.arc_2 = def.arc_2
     self.base = def.base
     self.barrel = def.barrel
+    self.projectile = def.projectile
+    self.fire_effect = def.fire_effect
     self.rotation_speed = def.rotation_speed
 
     -- compute propeties
@@ -22,7 +24,7 @@ function Addon:init(entity, config)
     self.neutralBoresight = {rotateVector(0, -1, self.orientation)}
 
     -- state
-    self.active = true
+    self.active = false
     self.angle = 0
     self.angleTarget = 0
     self.cycle = 0
@@ -33,7 +35,7 @@ end
 -- TODO: potentially consolidate common transcendental functions into state variables
 -- which can refresh every update 8/6/18 -AW
 
-function Addon:update(dt)
+function Addon:update(dt, spawnedEntities)
 
     -- tick cooldown cycle
     if self.cycle > 0 then
@@ -54,7 +56,7 @@ function Addon:update(dt)
     end
 
     if self.engaging then
-        self:fire()
+        self:fire(spawnedEntities)
     end
 end
 
@@ -134,17 +136,53 @@ function Addon:refreshEngagement()
     end
 end
 
-function Addon:fire()
+function Addon:fire(spawnedEntities)
 
     -- cannot fire before cooldown (for now)
     if self.cycle > 0 then
         return
     end
 
+    -- do not fire unless pointing where we want to
+    if self.angle ~= self.angleTarget then
+        return
+    end
+
+    -- FIRE!
+    local lx, ly = self:getPosition()
+    local spawn = Entity(self.entity.body:getWorld(), lx, ly, ENTITY_DEFS[self.projectile])
+    local bx, by = self:getBoresight()
+    local vx, vy = self.entity.body:getLinearVelocity()
+    local state = {
+        angle = self.entity.body:getAngle() + self.orientation + self.angle,
+        dx = vx + bx * self.projectile_speed,
+        dy = vy + by * self.projectile_speed,
+        dr = 0,
+        allegiance = 0
+    }
+    spawn:setState(state)
+
+    table.insert(spawnedEntities, spawn)
+
+    -- start cooldown
     self.cycle = self.cooldown
-
-
 end
+
+-- player input
+
+function Addon:activate()
+    self.active = true
+end
+
+function Addon:deactivate()
+    self.active = false
+    self.engaging = nil
+    self.angleTarget = 0
+end
+
+--
+-- query functions
+--
 
 function Addon:checkArcRange(target)
 
@@ -177,4 +215,8 @@ end
 
 function Addon:getNeutralBoresight()
     return rotateVector(self.neutralBoresight[1], self.neutralBoresight[2], self.entity.body:getAngle())
+end
+
+function Addon:getBoresight()
+    return rotateVector(self.neutralBoresight[1], self.neutralBoresight[2], self.entity.body:getAngle() + self.angle)
 end

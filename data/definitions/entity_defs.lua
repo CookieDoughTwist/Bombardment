@@ -8,21 +8,23 @@
 ENTITY_DEFS = {
     
     ['cal_ship_tube'] = {
+        resource = 'standard_craft',
         width = 10,
         height = 50,
         mass = 1E4,
         thrust = 1E5,
         gimbal = 1E5,
-        vectoring = 3,
+        vectoring = math.rad(5),
         thrustLoc = {0, 30},
     },
     ['cal_ship_10_50_10000'] = {
+        resource = 'standard_craft',
         width = 10,
         height = 50,
         mass = 1E4,
         thrust = 1E5,
         gimbal = 1E6,
-        vectoring = 3,
+        vectoring = math.rad(5),
         thrustLoc = {0, 30},
 
         addons = {            
@@ -50,4 +52,10 @@ ENTITY_DEFS = {
             ]]
         }
     },
+    ['tungsten_shell'] = {
+        resource = 'tungsten_shell',
+        width = 0.25,
+        height = 1,
+        mass = 1E3,       
+    }
 }

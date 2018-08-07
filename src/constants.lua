@@ -83,3 +83,6 @@ CRIMSON = {220, 20, 60}
 LIGHT_GRAY = {211, 211, 211}
 GRAY = {128, 128, 128}
 BLACK = {0, 0, 0}
+
+-- game mechanics
+DAMAGE_FROM_MOMENTUM = 1E-4     -- damage points per unit momentum (damage/(kg*m/s))

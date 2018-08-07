@@ -54,6 +54,12 @@ function getVectorMag(x, y)
     return math.sqrt(x^2 + y^2)
 end
 
+function getBodyRelVelMag(b1, b2)
+    local vx1, vy1 = b1:getLinearVelocity()
+    local vx2, vy2 = b2:getLinearVelocity()
+    return getVectorMag(vx1 - vx2, vy1 - vy2)
+end
+
 function unitizeVector(x, y)
     local mag = math.sqrt(x^2 + y^2)
     return x / mag, y / mag

@@ -14,7 +14,7 @@ function Universe:init()
     -- world with no inherent gravity
     self.world = love.physics.newWorld(0, 0)
 
-    -- table of objects to be destroyed
+    -- table of objects destroyed
     self.destroyedObjects = {}
     
     -- game time
@@ -23,15 +23,35 @@ function Universe:init()
     function beginContact(a, b, coll)
 
         local types = {}
-        print_r(a)
-        print_r(b)
         types[a:getUserData()] = true
         types[b:getUserData()] = true
 
-        local entityFixture = a:getUserData() == 'entity' and a or b
-
         if types['body'] and types['entity'] then
-            table.insert(self.destroyedObjects, entityFixture:getBody())
+
+            local entityFixture = a:getUserData() == 'entity' and a or b
+            local entityBody = entityFixture:getBody()
+            local bodyFixture = a:getUserData() == 'body' and a or b
+            local bodyBody = bodyFixture:getBody()
+            -- TODO: better collision judgement (in case fast rotation) 8/7/18 -AW
+            local mag = getBodyRelVelMag(entityBody, bodyBody)
+            local mom = mag * entityBody:getMass()
+            local entity = entityBody:getUserData()
+            entity:damage(mom * DAMAGE_FROM_MOMENTUM)
+            --table.insert(self.destroyedObjects, entityFixture:getBody())
+        
+        elseif types['entity'] then
+
+            local bodyA = a:getBody()
+            local bodyB = b:getBody()
+            local mag = getBodyRelVelMag(bodyA, bodyB)
+            local momA = mag * bodyA:getMass()
+            local momB = mag * bodyB:getMass()
+            local entityA = bodyA:getUserData()
+            local entityB = bodyB:getUserData()
+            entityA:damage(momB * DAMAGE_FROM_MOMENTUM)
+            entityB:damage(momA * DAMAGE_FROM_MOMENTUM)
+        else
+            error('Logic fault! Unhandled collision case...')
         end
     end
 
@@ -95,8 +115,11 @@ function Universe:update(dt)
     
     -- update entities
     for k, entity in pairs(self.entities) do
-        entity:update(dt)
-        x, y = entity.body:getLinearVelocity()
+        local spawnedEntities = entity:update(dt)
+        -- TODO: is this the best way to add new entities? 8/7/18 -AW
+        for l, spawn in pairs(spawnedEntities) do
+            table.insert(self.entities, spawn)
+        end
     end
     
     -- update Box2D
@@ -105,26 +128,21 @@ function Universe:update(dt)
     -- update game time
     self.time = self.time + dt
 
-    -- destroy objects queued for destruction
-    for k, body in pairs(self.destroyedObjects) do
-        if not body:isDestroyed() then
-            body:destroy()
-        end
-    end
-
-    self.destroyedObjects = {}
-
     for k, entity in pairs(self.entities) do
-        if entity.body:isDestroyed() then
+        if entity.hp <= 0 then
+            entity:destroy()
+            table.insert(self.destroyedObjects, entity)
             table.remove(self.entities, k)
         end
     end
 
     for k, player in pairs(self.player) do
-        if player.body:isDestroyed() then
+        if player.hp <= 0 then
+            player:destroy()            
             table.remove(self.player, k)
         end
     end
+
 end
 
 --

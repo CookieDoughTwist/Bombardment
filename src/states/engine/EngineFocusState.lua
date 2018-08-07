@@ -86,6 +86,18 @@ function EngineFocusState:update(dt)
         if love.keyboard.wasPressed('t') then
             player:toggleStabilization()
         end
+
+        -- addon control
+        -- TODO: reconfigure hotkeys 8/7/18 -AW
+        for n = 1, 9 do
+            if love.keyboard.wasPressed(tostring(n)) and player.addons[n] then
+                if love.keyboard.isDown('lalt') or love.keyboard.isDown('ralt') then
+                    player.addons[n]:deactivate()
+                else
+                    player.addons[n]:activate()
+                end
+            end
+        end
     end
 
     --
