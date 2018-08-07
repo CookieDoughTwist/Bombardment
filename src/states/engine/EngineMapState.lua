@@ -86,21 +86,14 @@ function EngineMapState:render()
         local x, y = entity.body:getPosition()
 
         if (x-self.camX)^2 + (y-self.camY)^2 < m2Range then
-            --[[
-            local polyPoints = {entity.body:getWorldPoints(entity.shape:getPoints())}                        
-            addPointTable(polyPoints, {-self.camX, -self.camY})
-            multiplyTable(polyPoints, bpm)
-            addPointTable(polyPoints, {VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2})
-            love.graphics.polygon('fill', polyPoints)
-            ]]
             local lx = (x - self.camX) * bpm + VIRTUAL_WIDTH_2
             local ly = (y - self.camY) * bpm + VIRTUAL_HEIGHT_2
 
             local rec = {
-                -CRAFT_EDGE, -2 * CRAFT_EDGE,
-                CRAFT_EDGE, -2 * CRAFT_EDGE,
-                CRAFT_EDGE, 6 * CRAFT_EDGE,
-                -CRAFT_EDGE, 6 * CRAFT_EDGE
+                -CRAFT_EDGE, -6 * CRAFT_EDGE,
+                CRAFT_EDGE, -6 * CRAFT_EDGE,
+                CRAFT_EDGE, 2 * CRAFT_EDGE,
+                -CRAFT_EDGE, 2 * CRAFT_EDGE
             }
             rotateTable(rec, entity.body:getAngle())       
             addPointTable(rec, {lx, ly})

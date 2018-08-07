@@ -19,6 +19,9 @@ function Addon:init(entity, config)
     self.fire_effect = def.fire_effect
     self.rotation_speed = def.rotation_speed
 
+    -- TODO: modularize 8/7/18 -AW
+    self.barrelLength = 4
+
     -- compute propeties
     self.cos_arc_2 = math.cos(self.arc_2)
     self.neutralBoresight = {rotateVector(0, -1, self.orientation)}
@@ -115,12 +118,21 @@ end
 
 function Addon:refreshEngagement()
     
+    -- check if engaging anything
     if not self.engaging then
         return
     end
 
+    -- check if engaged target is destroyed
+    if self.engaging.body:isDestroyed() then
+        self.engaging = nil
+        return
+    end
+
+    -- check if engaged target is still in range
     if not self:canEngage(self.engaging) then
         self.engaging = nil
+        return
     end
 
     -- TODO: perhaps recycle some computations from previous checks 8/6/18 -AW
@@ -149,9 +161,9 @@ function Addon:fire(spawnedEntities)
     end
 
     -- FIRE!
-    local lx, ly = self:getPosition()
-    local spawn = Entity(self.entity.body:getWorld(), lx, ly, ENTITY_DEFS[self.projectile])
+    local lx, ly = self:getPosition()    
     local bx, by = self:getBoresight()
+    local ex, ey = lx + bx * self.barrelLength, ly + by * self.barrelLength -- end of barrel
     local vx, vy = self.entity.body:getLinearVelocity()
     local state = {
         angle = self.entity.body:getAngle() + self.orientation + self.angle,
@@ -160,6 +172,7 @@ function Addon:fire(spawnedEntities)
         dr = 0,
         allegiance = 0
     }
+    local spawn = Entity(self.entity.body:getWorld(), ex, ey, ENTITY_DEFS[self.projectile])
     spawn:setState(state)
 
     table.insert(spawnedEntities, spawn)
@@ -219,4 +232,4 @@ end
 
 function Addon:getBoresight()
     return rotateVector(self.neutralBoresight[1], self.neutralBoresight[2], self.entity.body:getAngle() + self.angle)
-end
+end 
