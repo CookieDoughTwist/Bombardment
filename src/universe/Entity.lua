@@ -37,8 +37,8 @@ function Entity:init(world, x, y, def, universe)
     self.thrustLoc = thrustLoc
     self.hp = 50
     self.hpMax = 100
-    if addons then
-        self.addons = {}
+    self.addons = {}
+    if addons then        
         for k, addon_def in pairs(addons) do
             table.insert(self.addons, Addon(self, addon_def))
         end

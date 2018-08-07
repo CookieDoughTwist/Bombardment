@@ -100,7 +100,7 @@ SCENARIO_DEFS = {
         },
         entities = {
             {
-                def_key = 'cal_ship_10_50_10000',
+                def_key = 'cal_ship_tube',
                 x = 800,
                 y = 400,
                 angle = 0,

@@ -104,7 +104,7 @@ function Addon:refreshEngagement()
     end
 
     if not self:canEngage(self.engaging) then
-        self.target = nil
+        self.engaging = nil
     end
 
     -- TODO: perhaps recycle some computations from previous checks 8/6/18 -AW
