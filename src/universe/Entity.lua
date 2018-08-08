@@ -29,13 +29,14 @@ function Entity:init(world, x, y, def, universe)
     -- TODO: remove this (it's here for explosions for now) 8/8/18 -AW
     self.height = height
     
-    -- track orbiting body
+    -- track statistics
     self.orbitingBody = nil
     self.greatestPull = 0
     self.gx = 0
     self.gy = 0
     self.lgx = 0
     self.lgy = 0
+    self.thrustX, self.thrustY = 0, 0
 
     -- existential state
     self.active = true
@@ -277,8 +278,9 @@ function Entity:move()
     local rot = self.body:getAngle() - rotV
     -- thrust force
     local thrustF = self.thrust * self.throttle
+    self.thrustX, self.thrustY = rotateVector(0, -thrustF, rot)
     -- apply thrust force
-    self.body:applyForce(rotateVector(0, -thrustF, rot))
+    self.body:applyForce(self.thrustX, self.thrustY)
     -- get thrust center of gravity offset
     local r = math.sqrt(self.thrustLoc[1]^2 + self.thrustLoc[2]^2)
     -- compute vectored torque

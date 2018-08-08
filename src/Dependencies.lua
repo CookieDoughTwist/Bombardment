@@ -125,6 +125,10 @@ gFonts = {
     ['casanovascotia16'] = love.graphics.newFont(fntLoc .. 'Casanova-Scotia.otf', 16),
     ['casanovascotia32'] = love.graphics.newFont(fntLoc .. 'Casanova-Scotia.otf', 32),
     ['casanovascotia64'] = love.graphics.newFont(fntLoc .. 'Casanova-Scotia.otf', 64),
+    ['timesnewroman16'] = love.graphics.newFont(fntLoc .. 'Times_New_Roman_Normal.ttf', 16),
+    ['timesnewroman32'] = love.graphics.newFont(fntLoc .. 'Times_New_Roman_Normal.ttf', 32),
+    -- https://fontlibrary.org/en/font/cmu-serif
+    ['cmunbi32'] = love.graphics.newFont(fntLoc .. 'cmunbi.ttf', 32),
 }
 
     

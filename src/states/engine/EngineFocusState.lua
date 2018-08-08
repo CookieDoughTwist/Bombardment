@@ -234,13 +234,13 @@ function EngineFocusState:render()
     love.graphics.pop()
 
     -- render UI
-    local focusEntity = self.engine.universe.player[self.focusIdx]
-    if focusEntity then
+    local fEntity = self.engine.universe.player[self.focusIdx]
+    if fEntity then
 
         -- draw HP
         love.graphics.setColor(SKY_BLUE)
         love.graphics.rectangle('fill', 10, 10, 500, 80, 15, 15)
-        local hpRatio = focusEntity.hp / focusEntity.hpMax
+        local hpRatio = fEntity.hp / fEntity.hpMax
         if hpRatio < 0.5 then
             local cRatio = hpRatio / 0.5
             love.graphics.setColor(255, 255 * cRatio, 0)
@@ -255,15 +255,59 @@ function EngineFocusState:render()
         love.graphics.setFont(gFonts['casanovascotia32'])
         love.graphics.setColor(FULL_COLOR)
         love.graphics.printf('ARMOR', 20, 10, VIRTUAL_WIDTH, 'left')        
-        local orbVel = focusEntity:getOrbitalVelocity()        
+        local orbVel = fEntity:getOrbitalVelocity()        
         love.graphics.setFont(gFonts['casanovascotia32'])
         love.graphics.setColor(FULL_COLOR)
         love.graphics.printf(string.format('%.2f m/s', orbVel), 0, 100, VIRTUAL_WIDTH, 'left')
 
         -- draw key vectors
+        -- TODO: modularize this entire section! 8/8/18 -AW
+        local dialR = 120
+        local outerR = 1.5 * dialR
+        local labelR = 1.25 * dialR
+
+        love.graphics.setFont(gFonts['cmunbi32'])
+
         local cx, cy = VIRTUAL_WIDTH_2, 5 * VIRTUAL_HEIGHT / 6
-        love.graphics.setColor(SKY_BLUE)
-        love.graphics.circle('line', cx, cy, 150)
+        love.graphics.setColor(SKY_BLUE_2)
+        love.graphics.setLineWidth(10)
+        -- draw the dial
+        love.graphics.circle('line', cx, cy, dialR)
+        love.graphics.circle('fill', cx, cy, outerR)        
+
+        -- gravity vector
+        local gx, gy = fEntity.lgx, fEntity.lgy
+        -- thrust vector
+        local tx, ty = fEntity.thrustX, fEntity.thrustY
+        -- acceleration unit vector
+        local ax, ay = unitizeVector(gx + tx, gy + ty)
+        ax, ay = rotateVector(ax, ay, -self.angle)
+        love.graphics.setColor(CRIMSON)
+        love.graphics.line(cx, cy, cx + ax * dialR, cy + ay * dialR)
+        local xx, yy = cx + ax * labelR, cy + ay * labelR
+        love.graphics.printf('a', xx - VIRTUAL_WIDTH_2, yy - 24, VIRTUAL_WIDTH, 'center')
+
+        -- bearing vector
+        love.graphics.setLineWidth(5)
+        local bearingAngle = fEntity.body:getAngle()
+        local ux, uy = rotateVector(0, -1, bearingAngle)
+        ux, uy = rotateVector(ux, uy, -self.angle)
+        love.graphics.setColor(DARK_ORANGE)
+        love.graphics.line(cx, cy, cx + ux * dialR, cy + uy * dialR)
+        local xx, yy = cx + ux * labelR, cy + uy * labelR
+        love.graphics.printf('θ', xx - VIRTUAL_WIDTH_2, yy - 24, VIRTUAL_WIDTH, 'center')
+        -- velocity vector
+        local vx, vy = fEntity.body:getLinearVelocity()
+        local uvx, uvy = unitizeVector(vx, vy)
+        uvx, uvy = rotateVector(uvx, uvy, -self.angle)
+        love.graphics.setColor(ROYAL_PURPLE)
+        love.graphics.line(cx, cy, cx + uvx * dialR, cy + uvy * dialR)
+        local xx, yy = cx + uvx * labelR, cy + uvy * labelR
+        love.graphics.printf('v', xx - VIRTUAL_WIDTH_2, yy - 24, VIRTUAL_WIDTH, 'center')
+
+        -- draw dial cap
+        love.graphics.setColor(CRIMSON)
+        love.graphics.circle('fill', cx, cy, 10)
     end
 
     if universe.victory then

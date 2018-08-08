@@ -92,12 +92,17 @@ TWO_PI = 2 * math.pi
 
 -- colors
 FULL_COLOR = {255, 255, 255, 255}   -- enable all colors and no transparency
-SKY_BLUE = {135, 206, 250}
 CRIMSON = {220, 20, 60}
+DARK_ORANGE = {255, 140, 0}
 LEMON_CHIFFON = {255, 250, 205}
+SKY_BLUE = {135, 206, 250}
+ROYAL_PURPLE = {120, 81, 169}
 LIGHT_GRAY = {211, 211, 211}
 GRAY = {128, 128, 128}
 BLACK = {0, 0, 0}
+
+SKY_BLUE_2 = {135, 206, 250, 127}
+CRIMSON_2 = {220, 20, 60, 127}
 
 -- game mechanics
 DAMAGE_FROM_MOMENTUM = 1E-4     -- damage points per unit momentum (damage/(kg*m/s))
