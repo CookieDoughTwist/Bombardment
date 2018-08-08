@@ -29,7 +29,7 @@ function Addon:init(entity, config)
     self.neutralBoresight = {rotateVector(0, -1, self.orientation)}
 
     -- state
-    self.active = false
+    self.active = true
     self.angle = 0
     self.angleTarget = 0
     self.cycle = 0

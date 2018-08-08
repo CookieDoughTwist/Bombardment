@@ -67,17 +67,25 @@ function EngineMapState:render()
     local iZoom_damp = BACKGROUND_DAMPING^(math.log(iZoom)/math.log(2))
     love.graphics.setColor(FULL_COLOR)
     love.graphics.draw(bgimage, VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2, self.engine.backgroundOrientation, 2*iZoom_damp, 2*iZoom_damp, bgWidth_2, bgHeigh_2)
+    -- darken background for clarity
+    love.graphics.setColor(0, 0, 0, 150)
+    love.graphics.rectangle('fill', -VIRTUAL_WIDTH_2, -VIRTUAL_HEIGHT_2, 2 * VIRTUAL_WIDTH, 2 * VIRTUAL_HEIGHT)
 
     for k, body in pairs(universe.bodies) do
-        love.graphics.setColor(100, 100, 100)
+        
+        
         local x, y = body.body:getPosition()
         local r = body.shape:getRadius()
 
         if (x-self.camX)^2 + (y-self.camY)^2 + r < m2Range then
+            body:render(self.camX, self.camY, bpm)
+            --[[
             local lx = (x - self.camX) * bpm + VIRTUAL_WIDTH_2
             local ly = (y - self.camY) * bpm + VIRTUAL_HEIGHT_2
             local lr = r * bpm
+            love.graphics.setColor(100, 100, 100)
             love.graphics.circle('fill', lx, ly, lr)
+            ]]
         end
     end
 

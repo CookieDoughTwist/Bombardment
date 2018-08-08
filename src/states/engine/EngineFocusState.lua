@@ -197,6 +197,7 @@ function EngineFocusState:render()
     local bgZoom = BACKGROUND_ZOOM * iZoom_damp
     love.graphics.setColor(FULL_COLOR)
     love.graphics.draw(bgimage, VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2, self.engine.backgroundOrientation, bgZoom, bgZoom, bgWidth_2, bgHeigh_2)
+    -- darken background for clarity
     love.graphics.setColor(0, 0, 0, 150)
     love.graphics.rectangle('fill', -VIRTUAL_WIDTH_2, -VIRTUAL_HEIGHT_2, 2 * VIRTUAL_WIDTH, 2 * VIRTUAL_HEIGHT)
 

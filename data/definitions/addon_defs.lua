@@ -7,7 +7,7 @@ ADDON_DEFS = {
         fire_sound = 'conventional_shot',
         arc_2 = math.rad(65),
         cooldown = 0.25,
-        projectile_speed = 1E2,
+        projectile_speed = 1E3,
         rotation_speed = math.rad(15)
     }
 }

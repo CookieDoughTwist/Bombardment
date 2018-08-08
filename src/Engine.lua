@@ -9,8 +9,8 @@ function Engine:init(index)
     -- holds the state of the universe
     self.universe = Universe()
     --self.universe:loadScenario('simple_orbit')
-    self.universe:loadScenario('multi_orbit')
-    --self.universe:loadScenario('test_planetoid')
+    --self.universe:loadScenario('multi_orbit')
+    self.universe:loadScenario('test_planetoid')
     --self.universe:loadScenario('no_bodies')
 
     self.state = ''
@@ -54,6 +54,8 @@ end
 
 function Engine:render()
     
+    -- TODO: pull out common render code from states 8/8/18 -AW
+
     -- state machine handles all rendering
     self.stateMachine:render()
 end

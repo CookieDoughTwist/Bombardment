@@ -50,8 +50,8 @@ CRAFT_THROTTLE_RATE = 0.01       -- percent increment per frame
 -- map state
 MAP_SCROLL_SPEED = 10       -- scroll speed (bits/frame)
 MAP_ZOOM_RATIO = 2          -- the ratio increment to zoom
-MAP_ZOOM_MAX = 2048         -- max zoom out (meters/bit)
-MAP_ZOOM_MIN = 4         -- min zoom out (meters/bit)
+MAP_ZOOM_MAX = 1024         -- max zoom out (meters/bit)
+MAP_ZOOM_MIN = 16           -- min zoom out (meters/bit)
 MAP_ROTATION_SPEED = math.rad(1)    -- rotation rate (radians/frame)
 CRAFT_RADIUS = 15
 CRAFT_EDGE = 8

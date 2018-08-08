@@ -11,7 +11,7 @@ BODY_DEFS = {
     ['cal_plan_1E5_1E18'] = {
         radius = 1E4,
         mass = 1E20,
-        resource = 'p2'
+        resource = 'p3'
     },
 
 

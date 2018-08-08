@@ -40,7 +40,22 @@ function Universe:init()
             local entity = entityBody:getUserData()
             entity:damage(mom * DAMAGE_FROM_MOMENTUM)
             --table.insert(self.destroyedObjects, entityFixture:getBody())
-        
+
+        elseif types['entity'] and types['projectile'] then
+
+            local entityFixture = a:getUserData() == 'entity' and a or b
+            local entityBody = entityFixture:getBody()
+            local projFixture = a:getUserData() == 'projectile' and a or b
+            local projBody = projFixture:getBody()
+            local entity = entityBody:getUserData()
+            local proj = projBody:getUserData()
+            -- FIXME: this is a really dumb way to do damage 8/8/18 -AW
+            entity:damage(2)
+            proj:damage(100)
+            local psound = gSounds[CONVENTIONAL_HIT_SOUNDS[math.random(#CONVENTIONAL_HIT_SOUNDS)]]
+            psound:stop()
+            psound:play()
+
         elseif types['entity'] then
 
             local bodyA = a:getBody()
@@ -55,7 +70,7 @@ function Universe:init()
             local psound = gSounds[CONVENTIONAL_HIT_SOUNDS[math.random(#CONVENTIONAL_HIT_SOUNDS)]]
             psound:stop()
             psound:play()
-        elseif types['projectile'] then
+        elseif types['projectile'] then            
         else
             error('Logic fault! Unhandled collision case...')
         end
@@ -134,20 +149,12 @@ function Universe:update(dt)
     -- update game time
     self.time = self.time + dt
 
-    -- TODO: less ghetto way to do objectives 8/7/18 -AW
-    local noEnemies = true
-    local noPlayers = true
-
     -- remove dead entities
     for k, entity in pairs(self.entities) do
         if entity.hp <= 0 then
             entity:destroy()
             table.insert(self.destroyedObjects, entity)
             table.remove(self.entities, k)
-        elseif entity.allegiance < 0 then
-            noEnemies = false
-        elseif entity.allegiance > 0 then
-            noPlayers = false
         end
     end
 
@@ -156,6 +163,18 @@ function Universe:update(dt)
         if player.hp <= 0 then
             player:destroy()            
             table.remove(self.player, k)
+        end
+    end
+
+    -- TODO: less ghetto way to do objectives 8/7/18 -AW
+    local noEnemies = true
+    local noPlayers = true
+
+    for k, entity in pairs(self.entities) do
+        if entity.allegiance < 0 then
+            noEnemies = false
+        elseif entity.allegiance > 0 then
+            noPlayers = false
         end
     end
 
