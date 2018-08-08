@@ -19,10 +19,13 @@ function C2:update(dt)
     -- current craft position
     local lx, ly = self.entity.body:getPosition()
 
+    -- our allegiance
+    local team = self.entity.allegiance
+
     -- identify targets in engagement range
     local engagementTable = {}
     for k, entity in pairs(sensedEntities) do
-        if entity.allegiance < 0 then
+        if entity.allegiance * team < 0 then
             local ex, ey = entity.body:getPosition()
             if getVectorMag(lx - ex, ly - ey) < self.engagementRange then
                 table.insert(engagementTable, entity)

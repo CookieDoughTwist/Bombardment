@@ -23,7 +23,10 @@ function EngineFocusState:enter(params)
     self.focusIdx = params.focusIdx or 1
     -- initialize camera coodinates to the first frame from hopping
     -- TODO: formalize initialization 8/4/18 -AW
-    self.camX, self.camY = self.engine.universe.player[self.focusIdx].body:getPosition()
+    local player = self.engine.universe.player[self.focusIdx]
+    if player then
+        self.camX, self.camY = player.body:getPosition()
+    end
 end
 
 function EngineFocusState:update(dt)
