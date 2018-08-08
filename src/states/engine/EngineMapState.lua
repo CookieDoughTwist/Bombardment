@@ -55,10 +55,18 @@ function EngineMapState:render()
     local universe = self.engine.universe
     local bpm = 1 / self.zoom                       -- bits per meter
     local m2Range = (RENDER_RANGE * self.zoom)^2    -- cull range sqaured in meters squared
+    local iZoom = IMAGE_MPB * bpm
 
     love.graphics.translate(VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2)
     love.graphics.rotate(-self.angle)
     love.graphics.translate(-VIRTUAL_WIDTH_2, -VIRTUAL_HEIGHT_2)
+
+    -- draw background
+    local bgimage = gTextures[self.engine.background]
+    local bgWidth_2, bgHeigh_2 = getImageHalfDimensions(self.engine.background)
+    local iZoom_damp = BACKGROUND_DAMPING^(math.log(iZoom)/math.log(2))
+    love.graphics.setColor(FULL_COLOR)
+    love.graphics.draw(bgimage, VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2, self.engine.backgroundOrientation, 2*iZoom_damp, 2*iZoom_damp, bgWidth_2, bgHeigh_2)
 
     for k, body in pairs(universe.bodies) do
         love.graphics.setColor(100, 100, 100)

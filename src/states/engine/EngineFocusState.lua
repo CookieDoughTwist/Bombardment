@@ -181,6 +181,7 @@ function EngineFocusState:render()
     local universe = self.engine.universe
     local bpm = 1 / self.zoom                       -- bits per meter
     local m2Range = (RENDER_RANGE * self.zoom)^2    -- cull range sqaured in meters squared
+    local iZoom = IMAGE_MPB * bpm
 
     -- push potential rotation of scene
     love.graphics.push()
@@ -188,6 +189,14 @@ function EngineFocusState:render()
     love.graphics.translate(VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2)
     love.graphics.rotate(-self.angle)
     love.graphics.translate(-VIRTUAL_WIDTH_2, -VIRTUAL_HEIGHT_2)
+
+    -- draw background
+    local bgimage = gTextures[self.engine.background]
+    local bgWidth_2, bgHeigh_2 = getImageHalfDimensions(self.engine.background)
+    local iZoom_damp = BACKGROUND_DAMPING^(math.log(iZoom)/math.log(2))
+    local bgZoom = BACKGROUND_ZOOM * iZoom_damp
+    love.graphics.setColor(FULL_COLOR)
+    love.graphics.draw(bgimage, VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2, self.engine.backgroundOrientation, bgZoom, bgZoom, bgWidth_2, bgHeigh_2)
 
     -- render bodies
     for k, body in pairs(universe.bodies) do

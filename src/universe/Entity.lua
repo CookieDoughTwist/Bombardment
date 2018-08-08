@@ -183,11 +183,6 @@ function Entity:render(camX, camY, bpm, showHitbox)
     if self.addons then
         for k, addon in pairs(self.addons) do
             addon:render(lx, ly, bpm, showHitbox, showHitbox)
-
-            -- draw index
-            if showHitbox then
-
-            end
         end
     end
 

@@ -19,8 +19,14 @@ function Engine:init(index)
         ['map'] = function() return EngineMapState(self) end
     }
 
+    -- start in focus state
     self:changeState('focus', {})
 
+    -- background tracker
+    self.background = BACKGROUND_TAGS[math.random(#BACKGROUND_TAGS)]
+    self.backgroundOrientation = math.random() * TWO_PI
+
+    -- pause tracker
     self.paused = false
 end
 

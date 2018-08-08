@@ -61,6 +61,21 @@ gTextures = {
     ['missile_exhaust'] = love.graphics.newImage(imgLoc .. 'entities/projectiles/missiles/missile_exhaust.png'),
     ['conventional_gun'] = love.graphics.newImage(imgLoc .. 'entities/addons/conventional_gun.png'),
     --https://opengameart.org/content/explosion-set-1-m484-games
+
+    -- backgrounds
+    --https://wonderfulengineering.com/35-hd-galaxy-wallpapers-for-free-download/
+    --['b1'] = love.graphics.newImage(imgLoc .. 'backgrounds/b1.png'),
+    ['b2'] = love.graphics.newImage(imgLoc .. 'backgrounds/b2.png'),
+    --['b3'] = love.graphics.newImage(imgLoc .. 'backgrounds/b3.png'),
+    --['b4'] = love.graphics.newImage(imgLoc .. 'backgrounds/b4.png'),
+    --['b5'] = love.graphics.newImage(imgLoc .. 'backgrounds/b5.png'),
+    ['b6'] = love.graphics.newImage(imgLoc .. 'backgrounds/b6.png'),
+    ['b7'] = love.graphics.newImage(imgLoc .. 'backgrounds/b7.png'),
+    ['b8'] = love.graphics.newImage(imgLoc .. 'backgrounds/b8.png'),
+    ['b9'] = love.graphics.newImage(imgLoc .. 'backgrounds/b9.png'),
+    ['b10'] = love.graphics.newImage(imgLoc .. 'backgrounds/b10.png'),
+    ['b11'] = love.graphics.newImage(imgLoc .. 'backgrounds/b11.png'),
+
     --https://www.vectorstock.com/royalty-free-vector/protractor-actual-size-graduation-vector-12617847
 }
 
