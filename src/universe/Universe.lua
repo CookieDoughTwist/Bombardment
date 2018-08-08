@@ -22,6 +22,8 @@ function Universe:init()
     self.victory = false
     self.defeat = false
 
+    -- TODO: some of what we're doing here can actually be more easily achieved by using
+    -- the inputted coll object (a contact object in Box2D) 8/8/18 -AW
     function beginContact(a, b, coll)
 
         local types = {}
@@ -161,20 +163,18 @@ function Universe:update(dt)
     self.time = self.time + dt
 
     -- remove dead entities
-    --[[
-    for k, entity in pairs(self.entities) do
-        if entity.hp <= 0 then
-            entity:destroy()
-            table.insert(self.destroyedObjects, entity)
-            table.remove(self.entities, k)
-        end
-    end
-]]
     -- TODO: figure out how table.remove works with for loops x_x
     -- 8/8/18 -AW
     for n = #self.entities, 1, -1 do
         entity = self.entities[n]
         if entity.hp <= 0 then
+            entity:kill()
+        end
+    end
+
+    for n = #self.entities, 1, -1 do
+        entity = self.entities[n]
+        if entity.remove then
             entity:destroy()
             table.insert(self.destroyedObjects, entity)
             table.remove(self.entities, n)
@@ -182,18 +182,9 @@ function Universe:update(dt)
     end
 
     -- also remove dead entities from player table
-    --[[
-    for k, player in pairs(self.player) do
-        if player.hp <= 0 then
-            player:destroy()            
-            table.remove(self.player, k)
-        end
-    end
-    ]]
     for n = #self.player, 1, -1 do
         entity = self.player[n]
-        if entity.hp <= 0 then
-            entity:destroy()
+        if entity.remove then
             table.remove(self.player, n)
         end
     end

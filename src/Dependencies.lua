@@ -50,6 +50,7 @@ gSounds = {
     ['conventional_hit2'] = love.audio.newSource(sfxLoc .. 'interaction/conventional_hit2.wav'),
     ['conventional_hit3'] = love.audio.newSource(sfxLoc .. 'interaction/conventional_hit3.wav'),
     ['chemical_thruster'] = love.audio.newSource(sfxLoc .. 'interaction/chemical_thruster.wav'),
+    ['explosion1'] = love.audio.newSource(sfxLoc .. 'interaction/explosion1.wav'),
 }
 
 -- images
@@ -65,7 +66,10 @@ gTextures = {
     ['generic_missile'] = love.graphics.newImage(imgLoc .. 'entities/projectiles/missiles/generic_missile.png'),
     ['missile_exhaust'] = love.graphics.newImage(imgLoc .. 'entities/projectiles/missiles/missile_exhaust.png'),
     ['conventional_gun'] = love.graphics.newImage(imgLoc .. 'entities/addons/conventional_gun.png'),
+
+    -- explosions
     --https://opengameart.org/content/explosion-set-1-m484-games
+    ['small_orange_explosion'] = love.graphics.newImage(imgLoc .. 'effects/explosions/small_orange_explosion.png'),
 
     -- http://wallpaperen.com/asteroid-clipart/best-asteroid-clipart-free-to-use-public-domain-space-clip-art/
     ['roid1'] = love.graphics.newImage(imgLoc .. 'entities/doodads/asteroid.png'),
@@ -101,6 +105,11 @@ gTextures = {
     ['b11'] = love.graphics.newImage(imgLoc .. 'backgrounds/b11.png'),
 
     --https://www.vectorstock.com/royalty-free-vector/protractor-actual-size-graduation-vector-12617847
+}
+
+-- texture quads
+gFrames = {
+    ['small_orange_explosion'] = GenerateQuads(gTextures['small_orange_explosion'], 16, 16),
 }
 
 -- fonts

@@ -7,7 +7,8 @@ ADDON_DEFS = {
         fire_sound = 'conventional_shot',
         arc_2 = math.rad(65),
         cooldown = 0.25,
-        projectile_speed = 1E3,
+        -- Box2D may have some hitboxing issues at higher speeds
+        projectile_speed = 7E2,
         rotation_speed = math.rad(15)
     }
 }

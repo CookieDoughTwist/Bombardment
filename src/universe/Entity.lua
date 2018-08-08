@@ -25,6 +25,9 @@ function Entity:init(world, x, y, def, universe)
     self.fixture = love.physics.newFixture(self.body, self.shape)
     self.body:setMass(mass)
     self.body:setInertia(mass * height^2 / 3)  
+
+    -- TODO: remove this (it's here for explosions for now) 8/8/18 -AW
+    self.height = height
     
     -- track orbiting body
     self.orbitingBody = nil
@@ -33,6 +36,12 @@ function Entity:init(world, x, y, def, universe)
     self.gy = 0
     self.lgx = 0
     self.lgy = 0
+
+    -- existential state
+    self.active = true
+    self.remove = false
+    self.exploding = false
+    self.explodeTime = 1
 
     --
     -- craft properties
@@ -46,7 +55,7 @@ function Entity:init(world, x, y, def, universe)
     self.hp = 100
     self.hpMax = 100
     self.addons = {}
-    if addons then        
+    if addons then
         for k, addon_def in pairs(addons) do
             table.insert(self.addons, Addon(self, addon_def))
         end
@@ -102,8 +111,17 @@ function Entity:update(dt)
     self.gx = 0
     self.gy = 0
 
+    if self.exploding then
+        self:updateExplosion(dt)
+    end
+
     -- TODO: modularize updates for boring objects 8/7/18 -AW
     if not self.c2 then
+        return {}
+    end
+
+    -- TODO: cleaner way to make entities do nothing 8/8/18 -AW
+    if not self.active then
         return {}
     end
 
@@ -154,6 +172,25 @@ function Entity:render(camX, camY, bpm, showHitbox)
     local ly = (y - camY) * bpm + VIRTUAL_HEIGHT_2      -- bits
     local la = self.body:getAngle()
     local iZoom = IMAGE_MPB * bpm -- meters/bit
+
+    -- TODO: smarter explosion render logic (probably create a particle class) 8/8/18 -AW
+    if self.exploding then
+        local eZoom = self.height * bpm / 16
+        local etag = 'small_orange_explosion'
+        love.graphics.setColor(FULL_COLOR)
+        if self.explodeTime > 0.5 then
+            love.graphics.draw(gTextures[etag], gFrames[etag][1], lx, ly, la, eZoom, eZoom, 8, 8)
+        else
+            local eRatio = self.explodeTime / 0.5
+            local idx = 6 - math.ceil(5 * eRatio)
+            print(idx)
+            print(self.explodeTime)
+            print(eRatio)
+            io.flush()
+            love.graphics.draw(gTextures[etag], gFrames[etag][idx], lx, ly, la, eZoom, eZoom, 8, 8)
+        end
+        return
+    end
 
     if self.resource then
         local tag = self.resource
@@ -254,15 +291,41 @@ function Entity:damage(points)
     self.hp = self.hp - points
 end
 
-function Entity:destroy()
-    if not self.body:isDestroyed() then
-        self.body:destroy()
+function Entity:kill()
+
+    -- need to separate types from entity
+    if self.fixture:getUserData() == 'projectile' then
+        self.remove = true
+    elseif self.active then
+        gSounds['explosion1']:stop()
+        gSounds['explosion1']:play()
     end
+
+    self.active = false
+    self.exploding = true
+    -- no colliding with anything
+    self.fixture:setGroupIndex(0)
 
     -- TODO: super ghetto, formalize sound handling 8/8/18 -AW
     if self.thrustSound then
         self.thrustSound:stop()
     end
+end
+
+function Entity:destroy()
+
+    if not self.body:isDestroyed() then
+        self.body:destroy()
+    end
+end
+
+function Entity:updateExplosion(dt)
+    if self.explodeTime <= 0 then
+        self.remove = true
+        self.active = false
+    end
+
+    self.explodeTime = self.explodeTime - dt
 end
 
 -- user functions

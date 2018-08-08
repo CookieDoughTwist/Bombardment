@@ -244,9 +244,12 @@ function EngineFocusState:render()
         if hpRatio < 0.5 then
             local cRatio = hpRatio / 0.5
             love.graphics.setColor(255, 255 * cRatio, 0)
-        else
+        elseif hpRatio > 0 then
             local cRatio = (hpRatio - 0.5) / 0.5
             love.graphics.setColor(255 - 255 * cRatio, 255, 0)
+        else
+            -- prevent overkill damage from being displayed
+            hpRatio = 0
         end
         love.graphics.rectangle('fill', 20, 55, 470 * hpRatio, 20)
         love.graphics.setFont(gFonts['casanovascotia32'])
