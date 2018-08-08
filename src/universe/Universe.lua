@@ -157,7 +157,9 @@ function Universe:update(dt)
     end
     
     -- update Box2D
-    self.world:update(dt)
+    for ii = 1, BOX2D_STEPS_PER_FRAME do
+        self.world:update(dt / BOX2D_STEPS_PER_FRAME)
+    end
     
     -- update game time
     self.time = self.time + dt

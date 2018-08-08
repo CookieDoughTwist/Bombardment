@@ -48,6 +48,9 @@ TEXT_BUFFER_X = -2      -- menu horizontal text buffer
 TEXT_BUFFER_Y = 0       -- menu vertical text buffer
 T_TRANSITION = 0.1      -- time to transition to selection
 
+-- game engine
+BOX2D_STEPS_PER_FRAME = 5
+
 -- focus state
 FOCUS_SCROLL_SPEED = 10         -- scroll speed (bits/frame)
 FOCUS_ZOOM_RATIO = 2            -- the ratio increment to zoom

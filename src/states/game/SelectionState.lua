@@ -75,7 +75,7 @@ function SelectionState:render()
     love.graphics.setColor(0, 0, 0, 128)
     love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 
-    drawSelectionsText('Main Menu', -200)
+    drawSelectionsText('SCENARIOS', -200)
     drawMenu(self.currentMenuItem, 12, self.options)
 
     -- draw our transition rect; is normally fully transparent, unless we're moving to a new state

@@ -33,6 +33,17 @@ SCENARIO_DEFS = {
                 allegiance = -1,
                 craft = true,
             },   
+            {
+                def_key = 'cal_ship_tube',
+                x = 250,
+                y = 0,
+                angle = math.pi,
+                dx = 0,
+                dy = math.sqrt(G * BODY_DEFS['cal_roid_1E2_1E15'].mass / 250),
+                dr = 0,
+                allegiance = -1,
+                craft = true,
+            },   
         },
         player = {
             {

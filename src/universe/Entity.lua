@@ -184,10 +184,6 @@ function Entity:render(camX, camY, bpm, showHitbox)
         else
             local eRatio = self.explodeTime / 0.5
             local idx = 6 - math.ceil(5 * eRatio)
-            print(idx)
-            print(self.explodeTime)
-            print(eRatio)
-            io.flush()
             love.graphics.draw(gTextures[etag], gFrames[etag][idx], lx, ly, la, eZoom, eZoom, 8, 8)
         end
         return
