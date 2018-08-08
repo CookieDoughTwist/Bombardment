@@ -261,9 +261,12 @@ function EngineFocusState:render()
         love.graphics.setColor(FULL_COLOR)
         love.graphics.printf(string.format('Orbital Velocity: %.2f m/s', orbVel), 10, 100, VIRTUAL_WIDTH, 'left')
 
+        -- draw throttle bar
+        
+
         -- draw key vectors
         -- TODO: modularize this entire section! 8/8/18 -AW
-        local dialR = 120
+        local dialR = 100
         local outerR = 1.5 * dialR
         local labelR = 1.25 * dialR
 

@@ -134,31 +134,35 @@ function Universe:loadScenario(scenarioName)
 end
 
 function Universe:update(dt)
+        
+    local pdt = dt / BOX2D_STEPS_PER_FRAME
     
-    -- apply gravity
-    for k, entity in pairs(self.entities) do
-        for k, body in pairs(self.bodies) do
-            body:exertGravity(entity)
-        end
-    end
-
-    -- update the celestial bodies
-    for k, body in pairs(self.bodies) do
-        body:update(dt)
-    end
-    
-    -- update entities
-    for k, entity in pairs(self.entities) do
-        local spawnedEntities = entity:update(dt)
-        -- TODO: is this the best way to add new entities? 8/7/18 -AW
-        for l, spawn in pairs(spawnedEntities) do
-            table.insert(self.entities, spawn)
-        end
-    end
-    
-    -- update Box2D
+    -- update the simulation multiple times per frame to better avoid clipping
     for ii = 1, BOX2D_STEPS_PER_FRAME do
-        self.world:update(dt / BOX2D_STEPS_PER_FRAME)
+
+        -- apply gravity
+        for k, entity in pairs(self.entities) do
+            for k, body in pairs(self.bodies) do
+                body:exertGravity(entity)
+            end
+        end
+
+        -- update the celestial bodies
+        for k, body in pairs(self.bodies) do
+            body:update(pdt)
+        end
+        
+        -- update entities
+        for k, entity in pairs(self.entities) do
+            local spawnedEntities = entity:update(pdt)
+            -- TODO: is this the best way to add new entities? 8/7/18 -AW
+            for l, spawn in pairs(spawnedEntities) do
+                table.insert(self.entities, spawn)
+            end
+        end
+
+        -- update Box2D
+        self.world:update(pdt)
     end
     
     -- update game time
