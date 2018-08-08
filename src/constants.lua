@@ -42,10 +42,10 @@ SELECTIONS_TAGS = {
     'show_me_your_stuff',   
 }
 MENU_TEXT_JUMP = 96     -- menu option spacing (bits)
-MENU_BOX_PAD_X = 15     -- menu box padding (bits)    
-MENU_BOX_PAD_Y = -5     -- menu box padding (bits)    
+MENU_BOX_PAD_X = 25     -- menu box padding (bits)    
+MENU_BOX_PAD_Y = 48     -- menu box padding (bits)    
 TEXT_BUFFER_X = -2      -- menu horizontal text buffer
-TEXT_BUFFER_Y = 2       -- menu vertical text buffer
+TEXT_BUFFER_Y = 0       -- menu vertical text buffer
 T_TRANSITION = 0.1      -- time to transition to selection
 
 -- focus state

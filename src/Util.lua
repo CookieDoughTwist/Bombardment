@@ -94,7 +94,8 @@ function drawSelectionsText(title, y)
         VIRTUAL_WIDTH / 2 - textWidth / 2 - (MENU_BOX_PAD_X + 6) / 2 + TEXT_BUFFER_X,
         VIRTUAL_HEIGHT / 2 - MENU_BOX_PAD_Y / 2 + y + TEXT_BUFFER_Y,
         textWidth + MENU_BOX_PAD_X + 6,
-        textHeight + MENU_BOX_PAD_Y, 6)
+        textHeight + MENU_BOX_PAD_Y,
+        6)
 
     -- draw text shadows
     
@@ -108,6 +109,8 @@ end
 
 
 function drawMenu(currentOption, y, tags)
+
+    love.graphics.setFont(gFonts['futureearth32'])
 
     local maxTextWidth = 0
     local maxTextHeight = 0
@@ -126,12 +129,12 @@ function drawMenu(currentOption, y, tags)
     love.graphics.setColor(255, 255, 255, 128)
     love.graphics.rectangle('fill',                                                
         VIRTUAL_WIDTH / 2 - maxTextWidth / 2 - (MENU_BOX_PAD_X + 6) / 2 + TEXT_BUFFER_X,
-        VIRTUAL_HEIGHT / 2 - ((#tags + 1) * (MENU_BOX_PAD_Y / 2)) + y + TEXT_BUFFER_Y,
+        VIRTUAL_HEIGHT / 2 , -- - ((#tags + 1) * (MENU_BOX_PAD_Y / 2)) + y + TEXT_BUFFER_Y,
         maxTextWidth + MENU_BOX_PAD_X + 6,
-        #tags * (maxTextHeight + MENU_BOX_PAD_Y / 2) + MENU_BOX_PAD_Y, 6)
+        #tags * (maxTextHeight + MENU_BOX_PAD_Y / 2) + MENU_BOX_PAD_Y,
+        6)
         
-    for k, tag in pairs(tags) do
-        love.graphics.setFont(gFonts['futureearth64'])
+    for k, tag in pairs(tags) do        
         
         height = VIRTUAL_HEIGHT / 2 + y + 8 + MENU_TEXT_JUMP * (k - 1)
         drawTextShadow(tag, height)

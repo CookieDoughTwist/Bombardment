@@ -241,12 +241,12 @@ function EngineFocusState:render()
         love.graphics.setColor(SKY_BLUE)
         love.graphics.rectangle('fill', 10, 10, 500, 80, 15, 15)
         local hpRatio = fEntity.hp / fEntity.hpMax
-        if hpRatio < 0.5 then
-            local cRatio = hpRatio / 0.5
-            love.graphics.setColor(255, 255 * cRatio, 0)
-        elseif hpRatio > 0 then
+        if hpRatio > 0.5 then
             local cRatio = (hpRatio - 0.5) / 0.5
             love.graphics.setColor(255 - 255 * cRatio, 255, 0)
+        elseif hpRatio > 0 then
+            local cRatio = hpRatio / 0.5
+            love.graphics.setColor(255, 255 * cRatio, 0)        
         else
             -- prevent overkill damage from being displayed
             hpRatio = 0
@@ -255,10 +255,11 @@ function EngineFocusState:render()
         love.graphics.setFont(gFonts['casanovascotia32'])
         love.graphics.setColor(FULL_COLOR)
         love.graphics.printf('ARMOR', 20, 10, VIRTUAL_WIDTH, 'left')        
-        local orbVel = fEntity:getOrbitalVelocity()        
+        local ovx, ovy = fEntity:getOrbitalVelocity()
+        local orbVel = getVectorMag(ovx, ovy)
         love.graphics.setFont(gFonts['casanovascotia32'])
         love.graphics.setColor(FULL_COLOR)
-        love.graphics.printf(string.format('%.2f m/s', orbVel), 0, 100, VIRTUAL_WIDTH, 'left')
+        love.graphics.printf(string.format('Orbital Velocity: %.2f m/s', orbVel), 10, 100, VIRTUAL_WIDTH, 'left')
 
         -- draw key vectors
         -- TODO: modularize this entire section! 8/8/18 -AW
@@ -297,8 +298,7 @@ function EngineFocusState:render()
         local xx, yy = cx + ux * labelR, cy + uy * labelR
         love.graphics.printf('θ', xx - VIRTUAL_WIDTH_2, yy - 24, VIRTUAL_WIDTH, 'center')
         -- velocity vector
-        local vx, vy = fEntity.body:getLinearVelocity()
-        local uvx, uvy = unitizeVector(vx, vy)
+        local uvx, uvy = unitizeVector(ovx, ovy)    -- from orbital velocity calculation
         uvx, uvy = rotateVector(uvx, uvy, -self.angle)
         love.graphics.setColor(ROYAL_PURPLE)
         love.graphics.line(cx, cy, cx + uvx * dialR, cy + uvy * dialR)

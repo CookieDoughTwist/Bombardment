@@ -370,12 +370,13 @@ end
 function Entity:getOrbitalVelocity()
 
     if not self.orbitingBody then
-        return 0
+        return 0, 0
     end
 
     local ovx, ovy = self.orbitingBody.body:getLinearVelocity()
     local vx, vy = self.body:getLinearVelocity()
 
     -- TODO: CHECK: this is might not be "orbital velocity" 8/5/18 -AW
-    return math.sqrt((vx - ovx)^2 + (vy - ovy)^2)
+    --return math.sqrt((vx - ovx)^2 + (vy - ovy)^2)
+    return vx - ovx, vy - ovy
 end
