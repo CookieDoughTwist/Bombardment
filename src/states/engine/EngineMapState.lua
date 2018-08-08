@@ -77,7 +77,7 @@ function EngineMapState:render()
         local x, y = body.body:getPosition()
         local r = body.shape:getRadius()
 
-        if (x-self.camX)^2 + (y-self.camY)^2 + r < m2Range then
+        if (x-self.camX)^2 + (y-self.camY)^2 < m2Range + r^2 then
             body:render(self.camX, self.camY, bpm)
             --[[
             local lx = (x - self.camX) * bpm + VIRTUAL_WIDTH_2

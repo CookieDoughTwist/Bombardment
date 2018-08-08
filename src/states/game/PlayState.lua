@@ -13,8 +13,8 @@ function PlayState:init()
 end
 
 function PlayState:enter(params)
-    index = params.index
-    self.engine = Engine(index)
+    local index = params.index
+    self.engine = Engine(SELECTIONS_TAGS[index])
 end
 
 function PlayState:update(dt)

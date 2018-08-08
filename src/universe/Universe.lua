@@ -65,8 +65,11 @@ function Universe:init()
             local momB = mag * bodyB:getMass()
             local entityA = bodyA:getUserData()
             local entityB = bodyB:getUserData()
-            entityA:damage(momB * DAMAGE_FROM_MOMENTUM)
-            entityB:damage(momA * DAMAGE_FROM_MOMENTUM)
+            --entityA:damage(momB * DAMAGE_FROM_MOMENTUM)
+            --entityB:damage(momA * DAMAGE_FROM_MOMENTUM)
+            -- FIXME: this is a really dumb way to do damage 8/8/18 -AW
+            entityA:damage(0.1 * mag)
+            entityB:damage(0.1 * mag)
             local psound = gSounds[CONVENTIONAL_HIT_SOUNDS[math.random(#CONVENTIONAL_HIT_SOUNDS)]]
             psound:stop()
             psound:play()
@@ -158,6 +161,7 @@ function Universe:update(dt)
     self.time = self.time + dt
 
     -- remove dead entities
+    --[[
     for k, entity in pairs(self.entities) do
         if entity.hp <= 0 then
             entity:destroy()
@@ -165,12 +169,32 @@ function Universe:update(dt)
             table.remove(self.entities, k)
         end
     end
+]]
+    -- TODO: figure out how table.remove works with for loops x_x
+    -- 8/8/18 -AW
+    for n = #self.entities, 1, -1 do
+        entity = self.entities[n]
+        if entity.hp <= 0 then
+            entity:destroy()
+            table.insert(self.destroyedObjects, entity)
+            table.remove(self.entities, n)
+        end
+    end
 
     -- also remove dead entities from player table
+    --[[
     for k, player in pairs(self.player) do
         if player.hp <= 0 then
             player:destroy()            
             table.remove(self.player, k)
+        end
+    end
+    ]]
+    for n = #self.player, 1, -1 do
+        entity = self.player[n]
+        if entity.hp <= 0 then
+            entity:destroy()
+            table.remove(self.player, n)
         end
     end
 

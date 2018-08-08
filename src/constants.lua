@@ -17,7 +17,7 @@ VIRTUAL_HEIGHT = 1080
 VIRTUAL_WIDTH_2 = VIRTUAL_WIDTH / 2
 VIRTUAL_HEIGHT_2 = VIRTUAL_HEIGHT / 2
 
-RENDER_RANGE = 2000     -- bit radius for render culling (bits)
+RENDER_RANGE = 4000     -- bit radius for render culling (bits)
 
 -- title screen
 SHADOW_OFFSET = 5       -- offset of shadow text (bits)
@@ -29,8 +29,17 @@ ENTER_PERIOD = 1.25
 
 -- selection screen
 SELECTIONS_START = {
-    'CAMPAIGN',
-    'SANDBOX'
+    'GETTING STARTED',
+    'GRAVITY IS HARD',
+    'THEY CAN SHOOT TOO',
+    'SHOW ME YOUR STUFF',
+}
+-- TODO: modularize selection table
+SELECTIONS_TAGS = {
+    'getting_started',
+    'gravity_is_hard',
+    'they_can_shoot_too', 
+    'show_me_your_stuff',   
 }
 MENU_TEXT_JUMP = 96     -- menu option spacing (bits)
 MENU_BOX_PAD_X = 15     -- menu box padding (bits)    

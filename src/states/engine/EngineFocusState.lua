@@ -68,10 +68,12 @@ function EngineFocusState:update(dt)
         end
         player:rotate(rotVal)
         
-        -- craft thrust            
+        -- craft thrust
+        -- FIXME: reenable after submission (don't want to confuse people) 8/8/18 -AW   
+        --[[
         if love.keyboard.wasPressed('w') then
             player:toggleThruster()
-        end
+        end]]
         if love.keyboard.isDown('lshift') then
             player:throttleUp()
         end
@@ -211,7 +213,8 @@ function EngineFocusState:render()
         local r = body.shape:getRadius()
 
         -- only render if the body will appear on the screen
-        if (x - self.camX)^2 + (y - self.camY)^2 + r < m2Range then
+        -- TODO: check this formula 8/8/18 -AW
+        if (x - self.camX)^2 + (y - self.camY)^2 < m2Range + r^2 then
             body:render(self.camX, self.camY, bpm, self.showHitbox)
         end
     end

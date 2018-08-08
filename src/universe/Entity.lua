@@ -63,10 +63,14 @@ function Entity:init(world, x, y, def, universe)
     end
 
     -- control state
-    self.thrusterOn = false
-    self.throttle = 0.5
+    -- FIXME: reenable after submission (don't want to confuse people) 8/8/18 -AW 
+    --self.thrusterOn = false
+    self.thrusterOn = true
+    self.throttle = 0.0
     self.rotateThrottle = 0
-    self.stabilize = false
+    -- FIXME: reenable after submission (don't want to confuse people) 8/8/18 -AW 
+    --self.stabilize = false
+    self.stabilize = true
 
     -- object hostility
     self.allegiance = 0
