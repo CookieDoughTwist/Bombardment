@@ -70,6 +70,7 @@ BACKGROUND_TAGS = {'b2', 'b7', 'b8', 'b9', 'b10', 'b11'}
 --{'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11'}
 BACKGROUND_DAMPING = 1.001
 BACKGROUND_ZOOM = 2
+CONVENTIONAL_HIT_SOUNDS = {'conventional_hit1', 'conventional_hit2', 'conventional_hit3'}
 
 -- physics
 G = 6.674E-11           -- gravitational constant

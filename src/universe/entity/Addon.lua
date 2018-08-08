@@ -17,6 +17,7 @@ function Addon:init(entity, config)
     self.barrel = def.barrel
     self.projectile = def.projectile
     self.fire_effect = def.fire_effect
+    self.fire_sound = def.fire_sound
     self.rotation_speed = def.rotation_speed
 
     -- TODO: modularize 8/7/18 -AW
@@ -191,6 +192,10 @@ function Addon:fire(spawnedEntities)
     -- TODO: less ghetto way to assign user data 8/7/18 -AW
     spawn.fixture:setUserData('projectile')
     table.insert(spawnedEntities, spawn)
+
+    -- play sound
+    gSounds[self.fire_sound]:stop()
+    gSounds[self.fire_sound]:play()
 
     -- start cooldown
     self.cycle = self.cooldown

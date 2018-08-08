@@ -16,7 +16,7 @@ function Entity:init(world, x, y, def, universe)
     local thrustLoc = def.thrustLoc
     local addons = def.addons
 
-    -- graphic resource
+    -- resources
     self.resource = resource
 
     -- initialize Box2D
@@ -55,6 +55,9 @@ function Entity:init(world, x, y, def, universe)
     -- C2: Command and Control
     if universe then
         self.c2 = C2(self, universe)
+
+        -- TODO: super ghetto way to do thruster sounds 8/8/18 -AW
+        self.thrustSound = love.audio.newSource('resources/sounds/interaction/chemical_thruster.wav')
     end
 
     -- control state
@@ -106,6 +109,13 @@ function Entity:update(dt)
     if self.thrusterOn then
         self.thrusted = true
         self:move()
+
+        self.thrustSound:setVolume(self.throttle / 2)
+        if not self.thrustSound:isPlaying() then
+            self.thrustSound:play()
+        end
+    elseif self.thrustSound:isPlaying() then
+            self.thrustSound:stop()
     end
 
     -- gimbal torque
@@ -241,6 +251,11 @@ end
 function Entity:destroy()
     if not self.body:isDestroyed() then
         self.body:destroy()
+    end
+
+    -- TODO: super ghetto, formalize sound handling 8/8/18 -AW
+    if self.thrustSound then
+        self.thrustSound:stop()
     end
 end
 

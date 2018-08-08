@@ -52,6 +52,9 @@ function Universe:init()
             local entityB = bodyB:getUserData()
             entityA:damage(momB * DAMAGE_FROM_MOMENTUM)
             entityB:damage(momA * DAMAGE_FROM_MOMENTUM)
+            local psound = gSounds[CONVENTIONAL_HIT_SOUNDS[math.random(#CONVENTIONAL_HIT_SOUNDS)]]
+            psound:stop()
+            psound:play()
         elseif types['projectile'] then
         else
             error('Logic fault! Unhandled collision case...')

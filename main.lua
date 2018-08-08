@@ -34,6 +34,9 @@ function love.load()
     gSounds['spacebg']:setVolume(0.4)
     gSounds['spacebg']:play()
 
+    -- set looping sounds
+    gSounds['chemical_thruster']:setLooping(true)
+
     -- initialize state machine with all state-returning functions
     gStateMachine = StateMachine {
         ['title'] = function() return TitleState() end,

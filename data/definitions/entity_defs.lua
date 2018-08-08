@@ -13,9 +13,9 @@ ENTITY_DEFS = {
         width = 10,
         height = 50,
         mass = 786E3,
-        thrust = 1E5,
+        thrust = 1E6,
         gimbal = 1E5,
-        vectoring = math.rad(5),
+        vectoring = math.rad(2),
         thrustLoc = {0, 30},
     },
     ['cal_ship_10_50_10000'] = {
@@ -23,9 +23,9 @@ ENTITY_DEFS = {
         width = 10,
         height = 50,
         mass = 786E3,
-        thrust = 1E5,
+        thrust = 1E6,
         gimbal = 1E6,
-        vectoring = math.rad(5),
+        vectoring = math.rad(2),
         thrustLoc = {0, 30},
 
         addons = {            
