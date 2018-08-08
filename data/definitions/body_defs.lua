@@ -15,6 +15,11 @@ BODY_DEFS = {
     },
 
 
+    ['small_planet'] = {
+        radius = 1E3,
+        mass = 1E17,
+        resource = 'p4'
+    },
 
 
 

@@ -67,12 +67,25 @@ gTextures = {
     ['conventional_gun'] = love.graphics.newImage(imgLoc .. 'entities/addons/conventional_gun.png'),
     --https://opengameart.org/content/explosion-set-1-m484-games
 
+    -- http://wallpaperen.com/asteroid-clipart/best-asteroid-clipart-free-to-use-public-domain-space-clip-art/
+    ['roid1'] = love.graphics.newImage(imgLoc .. 'entities/doodads/asteroid.png'),
 
     -- planets
     ['p1'] = love.graphics.newImage(imgLoc .. 'bodies/p1.png'),
     ['p2'] = love.graphics.newImage(imgLoc .. 'bodies/p2.png'),
     ['p3'] = love.graphics.newImage(imgLoc .. 'bodies/p3.png'),
-    
+    -- https://www.kisspng.com/free/planet.html
+    ['p4'] = love.graphics.newImage(imgLoc .. 'bodies/p4.png'),
+    -- TODO: edit image alignment issues 8/8/18 -AW
+    --['f1'] = love.graphics.newImage(imgLoc .. 'bodies/f1.png'),
+    --['f2'] = love.graphics.newImage(imgLoc .. 'bodies/f2.png'),
+    ['f3'] = love.graphics.newImage(imgLoc .. 'bodies/f3.png'),
+    --['f4'] = love.graphics.newImage(imgLoc .. 'bodies/f4.png'),
+    --['f5'] = love.graphics.newImage(imgLoc .. 'bodies/f5.png'),
+    ['f6'] = love.graphics.newImage(imgLoc .. 'bodies/f6.png'),
+    --['f7'] = love.graphics.newImage(imgLoc .. 'bodies/f7.png'),
+    --['f8'] = love.graphics.newImage(imgLoc .. 'bodies/f8.png'),
+
     -- backgrounds
     --https://wonderfulengineering.com/35-hd-galaxy-wallpapers-for-free-download/
     --['b1'] = love.graphics.newImage(imgLoc .. 'backgrounds/b1.png'),

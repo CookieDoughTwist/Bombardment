@@ -105,9 +105,17 @@ function Universe:loadScenario(scenarioName)
     end
 
     for k, v in pairs(entities) do
-        local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[v.def_key], self)
-        val:setState(v)
-        table.insert(self.entities, val)
+        -- TODO: modular way to split crafts 8/8/18 -AW
+        if v.craft then
+            local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[v.def_key], self)
+            val:setState(v)
+            val.AI = true
+            table.insert(self.entities, val)
+        else
+            local val = Entity(self.world, v.x, v.y, ENTITY_DEFS[v.def_key])
+            val:setState(v)
+            table.insert(self.entities, val)
+        end
     end
 
     for k, v in pairs(players) do

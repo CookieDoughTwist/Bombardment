@@ -10,8 +10,9 @@ function Engine:init(index)
     self.universe = Universe()
     --self.universe:loadScenario('simple_orbit')
     --self.universe:loadScenario('multi_orbit')
-    self.universe:loadScenario('test_planetoid')
+    --self.universe:loadScenario('test_planetoid')
     --self.universe:loadScenario('no_bodies')
+    self.universe:loadScenario('getting_started')
 
     self.state = ''
     self.stateMachine = StateMachine {

@@ -52,6 +52,8 @@ function Entity:init(world, x, y, def, universe)
         end
     end
 
+    self.AI = false
+
     -- C2: Command and Control
     if universe then
         self.c2 = C2(self, universe)

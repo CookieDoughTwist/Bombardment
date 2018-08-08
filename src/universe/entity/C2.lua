@@ -50,6 +50,12 @@ function C2:update(dt)
             end
         end
     end
+
+    -- if primitive AI is on
+    if self.entity.AI then
+        -- attempt to broadside weapons
+
+    end
 end
 
 -- TODO: update this function to be an actual sensor 8/6/18 -AW

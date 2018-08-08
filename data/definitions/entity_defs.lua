@@ -14,7 +14,7 @@ ENTITY_DEFS = {
         height = 50,
         mass = 786E3,
         thrust = 1E7,
-        gimbal = 1E5,
+        gimbal = 1E6,
         vectoring = math.rad(2),
         thrustLoc = {0, 30},
     },
@@ -24,7 +24,8 @@ ENTITY_DEFS = {
         height = 50,
         mass = 786E3,
         thrust = 1E7,
-        gimbal = 1E6,
+        -- TODO: unrealistically powerful gimbal to be nice (remove when polishing) 8/8/18 -AW
+        gimbal = 1E8,
         vectoring = math.rad(2),
         thrustLoc = {0, 30},
 
@@ -56,5 +57,23 @@ ENTITY_DEFS = {
         width = 0.25,
         height = 1,
         mass = 1E3,       
-    }
+    },
+    ['roid_mini'] = {
+        resource = 'roid1',
+        width = 0.25,
+        height = 4,
+        mass = 4.5,       
+    },
+    ['roid_small'] = {
+        resource = 'roid1',
+        width = 0.25,
+        height = 40,
+        mass = 45,       
+    },
+    ['roid_medium'] = {
+        resource = 'roid1',
+        width = 0.25,
+        height = 400,
+        mass = 450,       
+    },
 }
