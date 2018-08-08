@@ -66,7 +66,7 @@ CRAFT_VECTOR = {
 
 -- resource constants
 IMAGE_MPB = 0.125       -- standard resource meters per bit
-BACKGROUND_TAGS = {'b2', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11'}
+BACKGROUND_TAGS = {'b2', 'b7', 'b8', 'b9', 'b10', 'b11'}
 --{'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11'}
 BACKGROUND_DAMPING = 1.001
 BACKGROUND_ZOOM = 2
@@ -84,6 +84,7 @@ TWO_PI = 2 * math.pi
 FULL_COLOR = {255, 255, 255, 255}   -- enable all colors and no transparency
 SKY_BLUE = {135, 206, 250}
 CRIMSON = {220, 20, 60}
+LEMON_CHIFFON = {255, 250, 205}
 LIGHT_GRAY = {211, 211, 211}
 GRAY = {128, 128, 128}
 BLACK = {0, 0, 0}

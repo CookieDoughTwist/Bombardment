@@ -197,6 +197,8 @@ function EngineFocusState:render()
     local bgZoom = BACKGROUND_ZOOM * iZoom_damp
     love.graphics.setColor(FULL_COLOR)
     love.graphics.draw(bgimage, VIRTUAL_WIDTH_2, VIRTUAL_HEIGHT_2, self.engine.backgroundOrientation, bgZoom, bgZoom, bgWidth_2, bgHeigh_2)
+    love.graphics.setColor(0, 0, 0, 150)
+    love.graphics.rectangle('fill', -VIRTUAL_WIDTH_2, -VIRTUAL_HEIGHT_2, 2 * VIRTUAL_WIDTH, 2 * VIRTUAL_HEIGHT)
 
     -- render bodies
     for k, body in pairs(universe.bodies) do
@@ -206,7 +208,7 @@ function EngineFocusState:render()
 
         -- only render if the body will appear on the screen
         if (x - self.camX)^2 + (y - self.camY)^2 + r < m2Range then
-            body:render(self.camX, self.camY, bpm)
+            body:render(self.camX, self.camY, bpm, self.showHitbox)
         end
     end
 
@@ -252,6 +254,16 @@ function EngineFocusState:render()
         local cx, cy = VIRTUAL_WIDTH_2, 5 * VIRTUAL_HEIGHT / 6
         love.graphics.setColor(SKY_BLUE)
         love.graphics.circle('line', cx, cy, 150)
+    end
+
+    if universe.victory then
+        love.graphics.setFont(gFonts['casanovascotia64'])
+        love.graphics.setColor(FULL_COLOR)
+        love.graphics.printf('VICTORY', 0, VIRTUAL_HEIGHT / 8, VIRTUAL_WIDTH, 'center')
+    elseif universe.defeat then
+        love.graphics.setFont(gFonts['casanovascotia64'])
+        love.graphics.setColor(FULL_COLOR)
+        love.graphics.printf('DEFEAT', 0, VIRTUAL_HEIGHT / 8, VIRTUAL_WIDTH, 'center')
     end
 
     -- show pause

@@ -184,10 +184,12 @@ function Addon:fire(spawnedEntities)
         dy = vy + by * self.projectile_speed,
         dr = 0,
         allegiance = 0
-    }
+    }    
+
     local spawn = Entity(self.entity.body:getWorld(), ex, ey, ENTITY_DEFS[self.projectile])
     spawn:setState(state)
-
+    -- TODO: less ghetto way to assign user data 8/7/18 -AW
+    spawn.fixture:setUserData('projectile')
     table.insert(spawnedEntities, spawn)
 
     -- start cooldown

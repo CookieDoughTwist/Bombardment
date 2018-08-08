@@ -62,6 +62,12 @@ gTextures = {
     ['conventional_gun'] = love.graphics.newImage(imgLoc .. 'entities/addons/conventional_gun.png'),
     --https://opengameart.org/content/explosion-set-1-m484-games
 
+
+    -- planets
+    ['p1'] = love.graphics.newImage(imgLoc .. 'bodies/p1.png'),
+    ['p2'] = love.graphics.newImage(imgLoc .. 'bodies/p2.png'),
+    ['p3'] = love.graphics.newImage(imgLoc .. 'bodies/p3.png'),
+    
     -- backgrounds
     --https://wonderfulengineering.com/35-hd-galaxy-wallpapers-for-free-download/
     --['b1'] = love.graphics.newImage(imgLoc .. 'backgrounds/b1.png'),
@@ -69,7 +75,7 @@ gTextures = {
     --['b3'] = love.graphics.newImage(imgLoc .. 'backgrounds/b3.png'),
     --['b4'] = love.graphics.newImage(imgLoc .. 'backgrounds/b4.png'),
     --['b5'] = love.graphics.newImage(imgLoc .. 'backgrounds/b5.png'),
-    ['b6'] = love.graphics.newImage(imgLoc .. 'backgrounds/b6.png'),
+    --['b6'] = love.graphics.newImage(imgLoc .. 'backgrounds/b6.png'),
     ['b7'] = love.graphics.newImage(imgLoc .. 'backgrounds/b7.png'),
     ['b8'] = love.graphics.newImage(imgLoc .. 'backgrounds/b8.png'),
     ['b9'] = love.graphics.newImage(imgLoc .. 'backgrounds/b9.png'),

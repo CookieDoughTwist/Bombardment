@@ -8,11 +8,15 @@ function Body:init(world, x, y, def)
     
     local radius = def.radius
     local mass = def.mass
+    local resource = def.resource
     
     self.body = love.physics.newBody(world, x, y, 'kinematic')
     self.shape = love.physics.newCircleShape(radius)
     self.fixture = love.physics.newFixture(self.body, self.shape)
     
+    self.resource = resource
+    self.orientation = math.random() * TWO_PI
+
     -- mass stored external to body (Box2D zeros out mass on kinematic objects)
     self.mass = mass
 end
@@ -39,12 +43,25 @@ function Body:update(dt)
     
 end
 
-function Body:render(camX, camY, bpm)
+function Body:render(camX, camY, bpm, showHitbox)
     local x, y = self.body:getPosition()
     local r = self.shape:getRadius()
     local lx = (x - camX) * bpm + VIRTUAL_WIDTH_2
     local ly = (y - camY) * bpm + VIRTUAL_HEIGHT_2
-    local lr = r * bpm
-    love.graphics.setColor(100, 100, 100)
-    love.graphics.circle('fill', lx, ly, lr)
+    local lr = r * bpm    
+    if self.resource then
+        local cimage = gTextures[self.resource]
+        local iWidth_2, iHeight_2 = getImageHalfDimensions(self.resource)
+        local iZoom = lr / iWidth_2
+        love.graphics.setColor(FULL_COLOR)
+        love.graphics.draw(cimage, lx, ly, self.orientation, iZoom, iZoom, iWidth_2, iHeight_2)
+    else
+        love.graphics.setColor(100, 100, 100)
+        love.graphics.circle('fill', lx, ly, lr)
+    end
+
+    if showHitbox then
+        love.graphics.setColor(100, 100, 100, 100)
+        love.graphics.circle('fill', lx, ly, lr)
+    end
 end

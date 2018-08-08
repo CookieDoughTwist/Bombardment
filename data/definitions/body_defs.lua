@@ -5,11 +5,13 @@
 BODY_DEFS = {
     ['cal_roid_1E2_1E15'] = {
         radius = 1E2,
-        mass = 1E15
+        mass = 1E15,
+        resource = 'p1'
     },
     ['cal_plan_1E5_1E18'] = {
         radius = 1E4,
-        mass = 1E20
+        mass = 1E20,
+        resource = 'p2'
     },
 
 

@@ -15,6 +15,8 @@ function SelectionState:init()
     self.options = SELECTIONS_START
     
     self.canInput = true
+
+    gSounds['reselect']:setVolume(0.2)
 end
 
 function SelectionState:enter(params)

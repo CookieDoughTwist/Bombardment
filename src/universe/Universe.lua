@@ -17,8 +17,10 @@ function Universe:init()
     -- table of objects destroyed
     self.destroyedObjects = {}
     
-    -- game time
-    self.time = 0
+    -- game state
+    self.time = 0    
+    self.victory = false
+    self.defeat = false
 
     function beginContact(a, b, coll)
 
@@ -50,6 +52,7 @@ function Universe:init()
             local entityB = bodyB:getUserData()
             entityA:damage(momB * DAMAGE_FROM_MOMENTUM)
             entityB:damage(momA * DAMAGE_FROM_MOMENTUM)
+        elseif types['projectile'] then
         else
             error('Logic fault! Unhandled collision case...')
         end
@@ -128,14 +131,24 @@ function Universe:update(dt)
     -- update game time
     self.time = self.time + dt
 
+    -- TODO: less ghetto way to do objectives 8/7/18 -AW
+    local noEnemies = true
+    local noPlayers = true
+
+    -- remove dead entities
     for k, entity in pairs(self.entities) do
         if entity.hp <= 0 then
             entity:destroy()
             table.insert(self.destroyedObjects, entity)
             table.remove(self.entities, k)
+        elseif entity.allegiance < 0 then
+            noEnemies = false
+        elseif entity.allegiance > 0 then
+            noPlayers = false
         end
     end
 
+    -- also remove dead entities from player table
     for k, player in pairs(self.player) do
         if player.hp <= 0 then
             player:destroy()            
@@ -143,6 +156,12 @@ function Universe:update(dt)
         end
     end
 
+    -- TODO: less ghetto way to do objectives 8/7/18 -AW
+    if noEnemies then
+        self.victory = true
+    elseif noPlayers then
+        self.defeat = true
+    end
 end
 
 --
