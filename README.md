@@ -12,16 +12,20 @@ I am compelled to open with game's inadequacies. First, I certainly chose a game
 
 ## Quickstart Controls
 ### Ship Controls
-* Q/E - torque ccw/cw
-* LShift/LCtrl - throttle up/throttle down
-* Z/X - throttle max/throttle min
-* T - toggle gimbal stabilizer
+Key Stroke | Effect
+-|-
+Q/E | torque ccw/cw
+LShift/LCtrl | throttle up/throttle down
+Z/X | throttle max/throttle min
+T | toggle gimbal stabilizer
 ### Camera Controls
-* +/-, WhlUp/WhlDown - zoom in/zoom out
-* PgUp/PgDn - rotate ccw/rotate cw
-* Arrow Keys - camera pan (when camera unlocked)
-* Y - toggle camera lock
-* [/] - cycle craft (if you have more than one)
+Key Stroke | Effect
+-|-
++/-, WhlUp/WhlDown | zoom in/zoom out
+PgUp/PgDn | rotate ccw/rotate cw
+Arrow Keys | camera pan (when camera unlocked)
+Y | toggle camera lock
+[/] | cycle craft (if you have more than one)
 
 ## Infodump
 Some hopefully helpful tips.
@@ -30,13 +34,13 @@ Some hopefully helpful tips.
 * The armor bar is your HP. If it goes to 0 your craft explodes.
 * Orbital velocity is your craft velocity relative to the most gravitationally significant body from the current position.
 * The navigation dial displays some key vectors:
- * Θ - current craft bearing (where your ship is pointing)
- * v - current orbital velocity (velocity relative to planet)
- * a - current vector of acceleration (sum of gravity and thrust)
+  * Θ - current craft bearing (where your ship is pointing)
+  * v - current orbital velocity (velocity relative to planet)
+  * a - current vector of acceleration (sum of gravity and thrust)
 
 ### Physics
 * There is no air resistance in space, so Newton's first law is very apparent.
- * __If you have stabilization toggled on, your craft gimbal will resist rotational velocity whenever you're not actively turning your ship.__
+  * __If you have stabilization toggled on, your craft gimbal will resist rotational velocity whenever you're not actively turning your ship.__
 * Whenever you apply thrust to your craft, your orbit will necessarily change. Understanding how the shape of your orbit is affected by your craft thrust is the key to planning a successful intercept (tutorial to come eventually...).
 
 ## Game Design Notes
