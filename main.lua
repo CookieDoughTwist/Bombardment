@@ -37,6 +37,14 @@ function love.load()
     -- set looping sounds
     gSounds['chemical_thruster']:setLooping(true)
 
+    -- set volumes
+    -- TODO: should probably make a volume table 8/8/18 -AW
+    gSounds['explosion_shot']:setVolume(0.4)
+    gSounds['conventional_hit1']:setVolume(0.4)
+    gSounds['conventional_hit2']:setVolume(0.4)
+    gSounds['conventional_hit3']:setVolume(0.4)
+    --gSounds['explosion1']:setVolume(2.0)
+
     -- initialize state machine with all state-returning functions
     gStateMachine = StateMachine {
         ['title'] = function() return TitleState() end,

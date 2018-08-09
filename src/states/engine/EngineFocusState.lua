@@ -27,6 +27,8 @@ function EngineFocusState:enter(params)
     if player then
         self.camX, self.camY = player.body:getPosition()
     end
+
+    self.angle = params.angle or 0
 end
 
 function EngineFocusState:update(dt)
@@ -177,7 +179,7 @@ function EngineFocusState:update(dt)
 
     -- toggle on map state
     if love.keyboard.wasPressed('m') then
-        self.engine:changeState('map', {centerObject = player})
+        self.engine:changeState('map', {centerBody = player, angle = self.angle})
     end
 end
 
@@ -299,7 +301,7 @@ function EngineFocusState:render()
         love.graphics.setColor(DARK_ORANGE)
         love.graphics.line(cx, cy, cx + ux * dialR, cy + uy * dialR)
         local xx, yy = cx + ux * labelR, cy + uy * labelR
-        love.graphics.printf('θ', xx - VIRTUAL_WIDTH_2, yy - 24, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Θ', xx - VIRTUAL_WIDTH_2, yy - 24, VIRTUAL_WIDTH, 'center')
         -- velocity vector
         local uvx, uvy = unitizeVector(ovx, ovy)    -- from orbital velocity calculation
         uvx, uvy = rotateVector(uvx, uvy, -self.angle)

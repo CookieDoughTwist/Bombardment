@@ -21,7 +21,10 @@ function EngineMapState:enter(params)
     -- initialize camera coodinates to the first frame from hopping
     -- TODO: formalize initialization 8/4/18 -AW
     -- camera position update
-    if self.centerObject then
+
+    self.angle = params.angle
+
+    if self.centerObject and not self.centerObject.body:isDestroyed() then
         self.camX, self.camY = self.centerObject.body:getPosition()
     end
 end
@@ -40,13 +43,21 @@ function EngineMapState:update(dt)
     end
 
     -- camera position update
-    if self.centerObject then
+    if self.centerObject and not self.centerObject.body:isDestroyed() then
         self.camX, self.camY = self.centerObject.body:getPosition()
+    end
+
+    -- rotate camera
+    if love.keyboard.isDown('pagedown') then
+        self.angle = self.angle + FOCUS_ROTATION_SPEED
+    end
+    if love.keyboard.isDown('pageup') then
+        self.angle = self.angle - FOCUS_ROTATION_SPEED
     end
 
     -- toggle off map state
     if love.keyboard.wasPressed('m') then
-        self.engine:changeState('focus', {})
+        self.engine:changeState('focus', {angle = self.angle})
     end
 end
 

@@ -45,6 +45,7 @@ gSounds = {
     -- https://freesound.org/people/almusic34/sounds/176682/
     ['spacebg'] = love.audio.newSource(sfxLoc .. 'almusic34_space4.mp3'),
     ['reselect'] = love.audio.newSource(sfxLoc .. 'laserswitch.wav'),
+    ['explosion_shot'] = love.audio.newSource(sfxLoc .. 'interaction/explosion_shot.wav'),
     ['conventional_shot'] = love.audio.newSource(sfxLoc .. 'interaction/conventional_shot.wav'),
     ['conventional_hit1'] = love.audio.newSource(sfxLoc .. 'interaction/conventional_hit1.wav'),
     ['conventional_hit2'] = love.audio.newSource(sfxLoc .. 'interaction/conventional_hit2.wav'),
