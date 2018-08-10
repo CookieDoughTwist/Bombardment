@@ -26,9 +26,14 @@ PgUp/PgDn | rotate ccw/rotate cw
 Arrow Keys | camera pan (when camera unlocked)
 Y | toggle camera lock
 [/] | cycle craft (if you have more than one)
+M | toggle map mode (you can zoom out further but cannot control your craft)
+H | toggle hit box and range indicators
 
 ## Infodump
 Some hopefully helpful tips.
+
+### How to Play
+The goal of the gmae is to destroy all enemy craft. This can be accomplished most easily by shooting them with the weapons on your crft. Most weapon systems are mounted on the side of your craft and are active by default. Weapons will automatically aim and fire when in range. Be aware that weapons have nonnegligible turning time. The key to this game is planning interceptions and executing favorable encounters.
 
 ### UI
 * The armor bar is your HP. If it goes to 0 your craft explodes.
